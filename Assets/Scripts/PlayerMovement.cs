@@ -35,6 +35,7 @@ public class PlayerMovement : Movement
 
     void FixedUpdate()
     {
-        Move();
+        if(_canMove)
+            Move();
     }
 }

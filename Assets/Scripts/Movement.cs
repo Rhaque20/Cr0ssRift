@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,17 +11,25 @@ public class Movement : MonoBehaviour
     protected Animator _anim;
     protected Rigidbody _rigid;
 
+    protected bool _canMove = true;
+
     protected Vector3 _direction = Vector3.zero;
     // Start is called before the first frame update
     protected void Start()
     {
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _rigid = GetComponent<Rigidbody>();
+        GetComponent<GlobalVariables>().setMove += SetMove;
     }
 
     protected virtual void Move()
     {
 
+    }
+
+    protected void SetMove(bool value)
+    {
+        _canMove = value;
     }
 
     protected virtual void FaceDirection(float x)

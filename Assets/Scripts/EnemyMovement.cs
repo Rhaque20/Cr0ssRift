@@ -9,10 +9,20 @@ public class EnemyMovement : Movement
     [SerializeField] private Transform _targetPos;
     [SerializeField] private float _bubbleDistance = 1f;
     [SerializeField] private bool _ignoreBubble = false;
+
+    public Transform targetPos
+    {
+        get { return _targetPos; }
+    }
     protected void Start()
     {
         base.Start();
         _targetPos = GameObject.Find("Player").transform;
+    }
+
+    public void SetIgnoreBubble(bool value)
+    {
+        _ignoreBubble = value;
     }
 
     protected override void Move()
@@ -32,6 +42,7 @@ public class EnemyMovement : Movement
 
     void FixedUpdate()
     {
-        Move();
+        if(_canMove)
+            Move();
     }
 }

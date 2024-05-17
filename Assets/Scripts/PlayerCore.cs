@@ -12,14 +12,13 @@ public class PlayerCore : CombatCore
 
     protected bool _hasBuffer = false;
 
-    [SerializeField]protected BoxCollider _hurtBox;
+    
     
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         _playerInput = GetComponent<PlayerInput>();
-        _anim = transform.GetChild(0).GetComponent<Animator>();
-
         PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerInputActions;
 
 
@@ -30,23 +29,34 @@ public class PlayerCore : CombatCore
 
     public override void Attack()
     {
-        if(!_isAttacking)
+        if(!_isAttacking && _canAttack)
         {
             _isAttacking = true;
             _animOverrideController["Attack"] = _normalAttacks[_currentChain].ReturnAttackAnimation(0);
             _animOverrideController["Recover"] = _normalAttacks[_currentChain].ReturnAttackAnimation(1);
             _anim.Play("Attack");
         }
-        else if (!_hasBuffer)
+        else if (!_hasBuffer && _canAttack)
         {
             _hasBuffer = true;
         }
     }
 
-    public override void HitScan()
-    {
-        Debug.Log("Scanning with box size of "+_hurtBox.transform.localScale);
-    }
+    // public override void HitScan()
+    // {
+    //     _hurtBox.gameObject.SetActive(true);
+    //     Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
+    //     _hurtBox.gameObject.SetActive(false);
+
+    //     if (entitiesHit.Length > 0)
+    //     {
+    //         foreach(Collider entity in entitiesHit)
+    //         {
+    //             Debug.Log("Hit "+entity.name);
+    //             entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+    //         }
+    //     }
+    // }
 
     public override void Recover()
     {

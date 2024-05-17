@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerVariables: MonoBehaviour
+public class PlayerVariables: GlobalVariables
 {
 
     [SerializeField]private AnimatorOverrideController _animOverrideController;

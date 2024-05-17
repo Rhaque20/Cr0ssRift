@@ -7,11 +7,14 @@ public class CombatCore : MonoBehaviour
     [SerializeField]protected AnimatorOverrideController _animOverrideController;
     protected Animator _anim;
 
-    protected bool _isAttacking = false;
+    [SerializeField]protected BoxCollider _hurtBox;
+    [SerializeField]protected LayerMask _hitLayers;
+
+    protected bool _isAttacking = false, _canAttack = true;
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
-        
+        _anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
     public virtual void Attack()
@@ -25,6 +28,32 @@ public class CombatCore : MonoBehaviour
     }
 
     public virtual void HitScan()
+    {
+        _hurtBox.gameObject.SetActive(true);
+        Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
+        _hurtBox.gameObject.SetActive(false);
+
+        if (entitiesHit.Length > 0)
+        {
+            foreach(Collider entity in entitiesHit)
+            {
+                Debug.Log("Hit "+entity.name);
+                entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+            }
+        }
+    }
+
+    public virtual void SkillSelect()
+    {
+
+    }
+
+    public void SetCanAttack(bool value)
+    {
+        _canAttack = value;
+    }
+
+    public virtual void SkillSelect(int i)
     {
         
     }

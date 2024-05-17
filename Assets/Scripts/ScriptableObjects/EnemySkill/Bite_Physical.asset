@@ -18,6 +18,6 @@ MonoBehaviour:
   _attribute: 0
   _attackAnimations:
   - {fileID: 7400000, guid: 592327c4dd0d9b84d93a5153b2798b4f, type: 2}
-  - {fileID: 7400000, guid: 592327c4dd0d9b84d93a5153b2798b4f, type: 2}
+  - {fileID: 7400000, guid: ed0aec0fe0da04842940b3ba2c26247d, type: 2}
   _coolDown: 0
   _idleTime: 2
