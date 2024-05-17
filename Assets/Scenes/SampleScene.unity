@@ -1862,8 +1862,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf06d9f402e4814b9b93c2d6d5cd06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NormalAttacks:
+  _normalAttacks:
   - {fileID: 11400000, guid: 8221708c4c092cc40ad1d4602446cb54, type: 2}
+  - {fileID: 11400000, guid: 1a7c772bc4504024c938bee75a626f52, type: 2}
+  - {fileID: 11400000, guid: d473edd7dadbd5d44ade603db38805ef, type: 2}
   _hurtBox: {fileID: 1982498094}
 --- !u!114 &1369303205
 MonoBehaviour:
@@ -1877,6 +1879,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c09d14a8e7168d4ab9206b89cea64f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animOverrideController: {fileID: 22100000, guid: 7f03c32047c207048859abbf21e8cd1a,
+    type: 2}
 --- !u!1 &1533533122
 GameObject:
   m_ObjectHideFlags: 0

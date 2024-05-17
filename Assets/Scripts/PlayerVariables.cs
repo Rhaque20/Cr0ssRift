@@ -20,7 +20,7 @@ public class PlayerVariables: MonoBehaviour
         get { return _playerInputActions;}
     }
 
-    public AnimatorOverrideController animatorOverrideController
+    public AnimatorOverrideController animOverrideController
     {
         get {return _animOverrideController;}
     }

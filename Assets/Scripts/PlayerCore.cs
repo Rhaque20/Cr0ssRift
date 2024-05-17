@@ -10,7 +10,7 @@ public class PlayerCore : CombatCore
 
     protected int _currentChain = 0;
 
-    protected bool _isAttacking = false;
+    protected bool _isAttacking = false, _hasBuffer = false;
 
     protected Animator _anim;
 
@@ -39,6 +39,10 @@ public class PlayerCore : CombatCore
             _animOverrideController["Recover"] = _normalAttacks[_currentChain].ReturnAttackAnimation(1);
             _anim.Play("Attack");
         }
+        else if (!_hasBuffer)
+        {
+            _hasBuffer = true;
+        }
     }
 
     public override void HitScan()
@@ -48,6 +52,13 @@ public class PlayerCore : CombatCore
 
     public override void Recover()
     {
+        _currentChain = (_currentChain + 1) % _normalAttacks.Length;
         _isAttacking = false;
+
+        if(_hasBuffer)
+        {
+            _hasBuffer = false;
+            Attack();
+        }
     }
 }
