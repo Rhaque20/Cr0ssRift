@@ -10,9 +10,7 @@ public class PlayerCore : CombatCore
 
     protected int _currentChain = 0;
 
-    protected bool _isAttacking = false, _hasBuffer = false;
-
-    protected Animator _anim;
+    protected bool _hasBuffer = false;
 
     [SerializeField]protected BoxCollider _hurtBox;
     

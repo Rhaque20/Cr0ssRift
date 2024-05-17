@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CombatCore : MonoBehaviour
 {
-    protected AnimatorOverrideController _animOverrideController;
+    [SerializeField]protected AnimatorOverrideController _animOverrideController;
+    protected Animator _anim;
+
+    protected bool _isAttacking = false;
     // Start is called before the first frame update
     void Start()
     {
