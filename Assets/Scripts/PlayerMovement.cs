@@ -11,7 +11,7 @@ public class PlayerMovement : Movement
     {
         base.Start();
         _playerInput = GetComponent<PlayerInput>();
-        PlayerControls playerInputActions = new PlayerControls();
+        PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerInputActions;
         playerInputActions.Combat.Enable();
         playerInputActions.Combat.Movement.performed += GetDirectionFromInput;
         playerInputActions.Combat.Movement.canceled += ctx => _direction = Vector3.zero;

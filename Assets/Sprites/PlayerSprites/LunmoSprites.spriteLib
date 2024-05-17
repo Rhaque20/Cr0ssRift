@@ -65,8 +65,29 @@ MonoBehaviour:
       m_FromMain: 0
       m_SpriteOverride: {fileID: 1121170237904261277, guid: d0a74a4351f32fa4da908e17607782b4,
         type: 3}
+    - m_Name: 3_4Flipped
+      m_Hash: 762767964
+      m_Sprite: {fileID: -3314190540123184260, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3314190540123184260, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+    - m_Name: SideFlipped
+      m_Hash: 536425269
+      m_Sprite: {fileID: 2860786502087040012, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2860786502087040012, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+    - m_Name: BackFlipped
+      m_Hash: 314382129
+      m_Sprite: {fileID: 6120607704130290846, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 6120607704130290846, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 3
+    m_EntryOverrideCount: 6
   - m_Name: MidTorso
     m_Hash: 978135219
     m_CategoryList: []
@@ -92,8 +113,29 @@ MonoBehaviour:
       m_FromMain: 0
       m_SpriteOverride: {fileID: -6170712057431888249, guid: d0a74a4351f32fa4da908e17607782b4,
         type: 3}
+    - m_Name: 3_4Flipped
+      m_Hash: 762767964
+      m_Sprite: {fileID: -7850813333918121030, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -7850813333918121030, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+    - m_Name: SideFlipped
+      m_Hash: 536425269
+      m_Sprite: {fileID: 4534982333333103793, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4534982333333103793, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+    - m_Name: BackFlipped
+      m_Hash: 314382129
+      m_Sprite: {fileID: 282785478828592831, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 282785478828592831, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 3
+    m_EntryOverrideCount: 6
   - m_Name: LowerTorso
     m_Hash: 1033630384
     m_CategoryList: []
@@ -119,8 +161,29 @@ MonoBehaviour:
       m_FromMain: 0
       m_SpriteOverride: {fileID: -4556145521055198051, guid: d0a74a4351f32fa4da908e17607782b4,
         type: 3}
+    - m_Name: 3_4Flipped
+      m_Hash: 762767964
+      m_Sprite: {fileID: -5403940529448917419, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -5403940529448917419, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+    - m_Name: SideFlipped
+      m_Hash: 536425269
+      m_Sprite: {fileID: 1017290846348082519, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1017290846348082519, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+    - m_Name: BackFlipped
+      m_Hash: 314382129
+      m_Sprite: {fileID: 7023290227852607218, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 7023290227852607218, guid: d0a74a4351f32fa4da908e17607782b4,
+        type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 3
+    m_EntryOverrideCount: 6
   - m_Name: RightBicep
     m_Hash: 980206860
     m_CategoryList: []
@@ -468,5 +531,5 @@ MonoBehaviour:
     m_FromMain: 0
     m_EntryOverrideCount: 3
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 638514693178027239
+  m_ModificationHash: 638514800371533412
   m_Version: 1

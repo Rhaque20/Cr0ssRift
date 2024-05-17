@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField]
-    protected float _moveSpeed = 10f;
+    [SerializeField] protected float _moveSpeed = 10f;
     protected Animator _anim;
     protected Rigidbody _rigid;
 
