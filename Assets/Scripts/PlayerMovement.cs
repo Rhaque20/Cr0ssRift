@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : Movement
+public class PlayerMovement : Movement, ISwitchCharacter
 {
     PlayerInput _playerInput;
     // Start is called before the first frame update
@@ -37,5 +37,15 @@ public class PlayerMovement : Movement
     {
         if(_canMove)
             Move();
+    }
+
+    public void SwitchOut()
+    {
+        GetComponent<GlobalVariables>().setMove -= SetMove;
+    }
+
+    public void SwitchIn()
+    {
+        GetComponent<GlobalVariables>().setMove += SetMove;
     }
 }

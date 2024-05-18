@@ -11,6 +11,8 @@ public class PlayerVariables: GlobalVariables
     private PlayerInput _playerInput;
     private PlayerControls _playerInputActions;
 
+    public Action onSwitchOut;
+
     public PlayerInput playerInput
     {
         get { return _playerInput; }
