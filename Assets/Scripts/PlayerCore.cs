@@ -42,21 +42,22 @@ public class PlayerCore : CombatCore
         }
     }
 
-    // public override void HitScan()
-    // {
-    //     _hurtBox.gameObject.SetActive(true);
-    //     Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
-    //     _hurtBox.gameObject.SetActive(false);
+    public override void HitScan()
+    {
+        _hurtBox.gameObject.SetActive(true);
+        Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
+        _hurtBox.gameObject.SetActive(false);
 
-    //     if (entitiesHit.Length > 0)
-    //     {
-    //         foreach(Collider entity in entitiesHit)
-    //         {
-    //             Debug.Log("Hit "+entity.name);
-    //             entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-    //         }
-    //     }
-    // }
+        if (entitiesHit.Length > 0)
+        {
+            foreach(Collider entity in entitiesHit)
+            {
+                Debug.Log("Hit "+entity.name);
+                entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                entity.GetComponent<Stats>().DealDamage(_normalAttacks[_currentChain].damage,_normalAttacks[_currentChain].attribute);
+            }
+        }
+    }
 
     public override void Recover()
     {

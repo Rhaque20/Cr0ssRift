@@ -19,4 +19,24 @@ public class Skill: ScriptableObject
         
         return _attackAnimations[index];
     }
+
+    public int damage
+    {
+        get { return _damage; }
+    }
+
+    public int armorDamage
+    {
+        get { return _armorDamage; }
+    }
+
+    public int statusDamage
+    {
+        get { return _statusDamage; }
+    }
+
+    public EnumLib.Element attribute
+    {
+        get { return _attribute; }
+    }
 }
