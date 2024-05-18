@@ -10,7 +10,9 @@ public class GlobalVariables : MonoBehaviour
 {
     public Action<bool> setMove;
     public Action<bool> onArmorBreak;
-
     public Action<float> onHealthUpdate;
     public Action<float> onArmorUpdate;
+
+    public Action statusTick;
+    public Action onDeath;
 }

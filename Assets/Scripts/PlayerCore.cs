@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCore : CombatCore
+public class PlayerCore : CombatCore,ISwitchCharacter
 {
     protected PlayerInput _playerInput;
     [SerializeField] protected PlayerSkill[] _normalAttacks = new PlayerSkill[1];
@@ -72,5 +72,16 @@ public class PlayerCore : CombatCore
         }
 
         GetComponent<PlayerVariables>().setMove?.Invoke(true);
+    }
+
+    public void SwitchOut()
+    {
+        _hasBuffer = false;
+        _canAttack = true;
+    }
+
+    public void SwitchIn()
+    {
+        
     }
 }

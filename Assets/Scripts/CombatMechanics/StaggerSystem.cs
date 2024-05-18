@@ -24,6 +24,21 @@ public class StaggerSystem : MonoBehaviour
         GetComponent<GlobalVariables>().onArmorBreak += value => _isArmored = value;
     }
 
+    protected void Recovery()
+    {
+        if(!_isArmored)
+        {
+            _anim.SetBool("Staggered",false);
+            GetComponent<GlobalVariables>().setMove?.Invoke(true);
+            _staggerTimer = null;
+        }
+        
+
+        _spriteRenderer.color = Color.white;
+
+        GetComponent<CombatCore>().Recover();
+    }
+
     protected IEnumerator StaggerTimer()
     {
         if (!_isArmored)
@@ -38,17 +53,7 @@ public class StaggerSystem : MonoBehaviour
 
         yield return new WaitForSeconds(_staggerDuration);
 
-        if(!_isArmored)
-        {
-            _anim.SetBool("Staggered",false);
-            GetComponent<GlobalVariables>().setMove?.Invoke(true);
-            _staggerTimer = null;
-        }
-        
-
-        _spriteRenderer.color = Color.white;
-
-        GetComponent<CombatCore>().Recover();
+        Recovery();
     }
 
     public virtual void KnockBack(Vector3 attackerPos)
