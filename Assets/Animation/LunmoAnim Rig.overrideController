@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LunmoAnim
+  m_Name: LunmoAnim Rig
   m_Controller: {fileID: 9100000, guid: 252c37605db07554fb03ce3e00d292ff, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 216403403836ea14dbae53355644c506, type: 2}
@@ -14,4 +14,8 @@ AnimatorOverrideController:
   - m_OriginalClip: {fileID: 7400000, guid: ca805579d8e28f642be15bea8a94582a, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: ea90e6b2205b4b949ab95bc2adaf446e, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 7d849e9d06af53645ab5845d3b7a74b6, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 7ea82555e2e436a42821b6f995af3d91, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 98acbcd2892576145bf4b03b3f8af9a9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7ea82555e2e436a42821b6f995af3d91, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 98acbcd2892576145bf4b03b3f8af9a9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c5388f0168688fa409fbb4b8367b4b22, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 03d99b5dcf81d3647b38fc9167fc7994, type: 2}

@@ -29,6 +29,7 @@ public class CombatCore : MonoBehaviour
 
     public virtual void HitScan()
     {
+        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.transform.localScale);
         _hurtBox.gameObject.SetActive(true);
         Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
         _hurtBox.gameObject.SetActive(false);

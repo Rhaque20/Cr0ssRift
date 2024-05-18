@@ -33,9 +33,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 4304400899104427157}
     m_Position: {x: 750, y: 30, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -592375776787118182}
-    m_Position: {x: 785, y: 95, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -236,33 +233,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ea90e6b2205b4b949ab95bc2adaf446e, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-592375776787118182
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: LunmoRec2Rig
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8f4d3ee80555e8546b39bd6462f43c38, type: 2}
+  m_Motion: {fileID: 7400000, guid: ab8ae664ab8d2bc4492817ca979a1096, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -274,7 +245,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player
+  m_Name: PlayerRig
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Blend
@@ -450,7 +421,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 7ea82555e2e436a42821b6f995af3d91, type: 2}
+    m_Motion: {fileID: 7400000, guid: 98acbcd2892576145bf4b03b3f8af9a9, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -458,7 +429,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: c5388f0168688fa409fbb4b8367b4b22, type: 2}
+    m_Motion: {fileID: 7400000, guid: 03d99b5dcf81d3647b38fc9167fc7994, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
