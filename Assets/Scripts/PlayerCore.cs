@@ -35,6 +35,7 @@ public class PlayerCore : CombatCore
             _animOverrideController["Attack"] = _normalAttacks[_currentChain].ReturnAttackAnimation(0);
             _animOverrideController["Recover"] = _normalAttacks[_currentChain].ReturnAttackAnimation(1);
             _anim.Play("Attack");
+            GetComponent<PlayerVariables>().setMove?.Invoke(false);
         }
         else if (!_hasBuffer && _canAttack)
         {
@@ -69,5 +70,7 @@ public class PlayerCore : CombatCore
             _hasBuffer = false;
             Attack();
         }
+
+        GetComponent<PlayerVariables>().setMove?.Invoke(true);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Stats : MonoBehaviour
@@ -8,17 +9,40 @@ public class Stats : MonoBehaviour
     [SerializeField]protected int _defense = 0;
     [SerializeField]protected EnumLib.Element _attribute;
 
+    protected GlobalVariables _allVariables;
+
     protected int _currentHP = 0, _currentArmor = 0;
+
+    protected Coroutine _regenerateArmor = null;
 
     protected void Start()
     {
         _currentArmor = _maxArmor;
         _currentHP = _maxHP;
+        _allVariables = GetComponent<GlobalVariables>();
     }
 
-    public void DealArmorDamage(int armorDamage)
+
+    protected IEnumerator RegenerateArmor()
     {
-        _currentArmor = Mathf.Clamp(_currentArmor - armorDamage, 0,_maxArmor);
+        yield return new WaitForSeconds(5f);
+        _currentArmor = _maxArmor;
+        _allVariables.onArmorBreak?.Invoke(true);
+        _regenerateArmor = null;
+    }
+
+    public virtual void DealArmorDamage(int armorDamage,EnumLib.Element attribute)
+    {
+        if (_maxArmor != 0 && (ElementModifier(attribute) >= 2.0f || attribute == EnumLib.Element.Physical))
+        {
+            _currentArmor = Mathf.Clamp(_currentArmor - armorDamage, 0,_maxArmor);
+            if (_currentArmor <= 0 && _regenerateArmor == null)
+            {
+                _allVariables.onArmorBreak?.Invoke(false);
+                _regenerateArmor = StartCoroutine(RegenerateArmor());
+            }
+        }
+
     }
 
     public double ElementModifier(EnumLib.Element attribute)
@@ -49,13 +73,15 @@ public class Stats : MonoBehaviour
         return modifier;
     }
 
-    public void DealDamage(int damage, EnumLib.Element attribute)
+    public virtual void DealDamage(int damage, EnumLib.Element attribute)
     {
         double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * ElementModifier(attribute);
 
         int finalDamage = (int)Mathf.Round((float)damageCalc);
 
         _currentHP = Mathf.Clamp(_currentHP - finalDamage,0,_maxHP);
+
+        _allVariables.onHealthUpdate?.Invoke(_currentHP/_maxHP);
 
         if (_currentHP == 0)
         {

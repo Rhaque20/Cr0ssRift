@@ -8,7 +8,7 @@ public class StaggerSystem : MonoBehaviour
     protected Rigidbody _rigid;
     protected SpriteRenderer _spriteRenderer;
     protected Animator _anim;
-    protected bool _isArmored = false;
+    [SerializeField]protected bool _isArmored = false;
 
     [SerializeField] protected float _staggerDuration = 2f;
 
@@ -21,28 +21,40 @@ public class StaggerSystem : MonoBehaviour
         _rigid = GetComponent<Rigidbody>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _anim = transform.GetChild(0).GetComponent<Animator>();
+        GetComponent<GlobalVariables>().onArmorBreak += value => _isArmored = value;
     }
 
     protected IEnumerator StaggerTimer()
     {
-        GetComponent<GlobalVariables>().setMove?.Invoke(false);
+        if (!_isArmored)
+        {
+            GetComponent<GlobalVariables>().setMove?.Invoke(false);
+            _anim.Play("Stagger");
+            _anim.SetBool("Staggered",true);
+        }
+        
         _spriteRenderer.color = Color.red;
-        _anim.Play("Stagger");
-        _anim.SetBool("Staggered",true);
+        
 
         yield return new WaitForSeconds(_staggerDuration);
 
-        _anim.SetBool("Staggered",false);
+        if(!_isArmored)
+        {
+            _anim.SetBool("Staggered",false);
+            GetComponent<GlobalVariables>().setMove?.Invoke(true);
+            _staggerTimer = null;
+        }
+        
+
         _spriteRenderer.color = Color.white;
-        GetComponent<GlobalVariables>().setMove?.Invoke(true);
-        _staggerTimer = null;
 
         GetComponent<CombatCore>().Recover();
     }
 
-    public void KnockBack(Vector3 attackerPos)
+    public virtual void KnockBack(Vector3 attackerPos)
     {
-        _rigid.AddForce((attackerPos - transform.position) * -_knockBackPower);
+        if (!_isArmored)
+            _rigid.AddForce((attackerPos - transform.position) * -_knockBackPower);
 
         if(_staggerTimer != null)
         {

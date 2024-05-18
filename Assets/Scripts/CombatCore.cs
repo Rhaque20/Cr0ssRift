@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CombatCore : MonoBehaviour
@@ -38,6 +39,8 @@ public class CombatCore : MonoBehaviour
             {
                 Debug.Log("Hit "+entity.name);
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                entity.GetComponent<Stats>().DealArmorDamage(10,EnumLib.Element.Physical);
+                entity.GetComponent<Stats>().DealDamage(10,EnumLib.Element.Physical);
             }
         }
     }

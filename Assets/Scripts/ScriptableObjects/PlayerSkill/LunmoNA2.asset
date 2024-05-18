@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ddd79168ce167d4a980ead41d7bbe1f, type: 3}
   m_Name: LunmoNA2
   m_EditorClassIdentifier: 
-  _damage: 10
-  _traumaDamage: 0
+  _damage: 20
+  _armorDamage: 10
+  _statusDamage: 0
   _attribute: 0
   _attackAnimations:
   - {fileID: 7400000, guid: ebe34e36493873f49b0ed97e5e6c3865, type: 2}
