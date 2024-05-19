@@ -37,10 +37,12 @@ public class CombatCore : MonoBehaviour
         {
             foreach(Collider entity in entitiesHit)
             {
+                Stats stat = entity.GetComponent<Stats>();
                 Debug.Log("Hit "+entity.name);
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-                entity.GetComponent<Stats>().DealArmorDamage(10,EnumLib.Element.Physical);
-                entity.GetComponent<Stats>().DealDamage(10,EnumLib.Element.Physical);
+                stat.DealArmorDamage(10,EnumLib.Element.Physical);
+                stat.DealDamage(10,EnumLib.Element.Physical);
+                stat.DealStatusDamage(EnumLib.Status.Paralyze,10);
             }
         }
     }

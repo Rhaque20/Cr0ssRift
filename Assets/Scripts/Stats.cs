@@ -23,12 +23,17 @@ public class Stats : MonoBehaviour
     }
 
 
-    protected IEnumerator RegenerateArmor()
+    protected virtual IEnumerator RegenerateArmor()
     {
         yield return new WaitForSeconds(5f);
         _currentArmor = _maxArmor;
         _allVariables.onArmorBreak?.Invoke(true);
         _regenerateArmor = null;
+    }
+
+    public virtual void DealStatusDamage(EnumLib.Status status,int statusDamage)
+    {
+
     }
 
     public virtual void DealArmorDamage(int armorDamage,EnumLib.Element attribute)

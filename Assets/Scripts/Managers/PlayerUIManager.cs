@@ -6,6 +6,7 @@ public class PlayerUIManager : MonoBehaviour
     public static PlayerUIManager instance;
 
     [SerializeField]private PlayerBars _playerBars;
+    [SerializeField]private StatusUI _statusUI;
 
     void Awake()
     {
@@ -20,6 +21,16 @@ public class PlayerUIManager : MonoBehaviour
     public void SetArmorBar(float ratio)
     {
         _playerBars.SetArmorBar(ratio);
+    }
+
+    public void StatusBuildUpDisplay(EnumLib.Status status, float ratio)
+    {
+        _statusUI.SetStatusBuildUpDisplay(status,ratio);
+    }
+
+    public void StatusDisplayTick(EnumLib.Status status,float ratio)
+    {
+        _statusUI.SetStatusDisplayTick(status,ratio);
     }
 
 
