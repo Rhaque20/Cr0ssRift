@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CombatCore : MonoBehaviour
+public class CombatCore : MonoBehaviour, IOnDeath
 {
     [SerializeField]protected AnimatorOverrideController _animOverrideController;
     protected Animator _anim;
@@ -63,6 +63,11 @@ public class CombatCore : MonoBehaviour
     }
 
     public virtual void SkillSelect(int i)
+    {
+        
+    }
+
+    public virtual void OnDeath()
     {
         
     }

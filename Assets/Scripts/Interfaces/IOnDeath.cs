@@ -1,0 +1,4 @@
+interface IOnDeath
+{
+    void OnDeath();
+}

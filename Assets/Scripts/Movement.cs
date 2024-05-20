@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class Movement : MonoBehaviour,IOnDeath
 {
     [SerializeField] protected float _moveSpeed = 10f;
     protected Animator _anim;
@@ -35,5 +35,10 @@ public class Movement : MonoBehaviour
     protected virtual void FaceDirection(float x)
     {
         transform.localScale = new Vector3(Mathf.Sign(x),transform.localScale.y,transform.localScale.z);
+    }
+
+    public virtual void OnDeath()
+    {
+        
     }
 }

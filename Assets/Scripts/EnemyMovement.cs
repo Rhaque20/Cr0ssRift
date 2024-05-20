@@ -17,7 +17,19 @@ public class EnemyMovement : Movement
     protected void Start()
     {
         base.Start();
-        _targetPos = GameObject.Find("Player").transform;
+        RelocatePlayer();
+        PlayerPartyManager.instance.playerSwitched += RelocatePlayer;
+        GetComponent<EnemyStats>().onDeath += OnDeath;
+    }
+
+    public override void OnDeath()
+    {
+        PlayerPartyManager.instance.playerSwitched -= RelocatePlayer;
+    }
+
+    void RelocatePlayer()
+    {
+        _targetPos = PlayerPartyManager.instance.getActivePlayer.transform;
     }
 
     public void SetIgnoreBubble(bool value)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class StaggerSystem : MonoBehaviour
+public class StaggerSystem : MonoBehaviour, IOnDeath
 {
     protected Rigidbody _rigid;
     protected SpriteRenderer _spriteRenderer;
@@ -21,7 +21,13 @@ public class StaggerSystem : MonoBehaviour
         _rigid = GetComponent<Rigidbody>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _anim = transform.GetChild(0).GetComponent<Animator>();
-        GetComponent<GlobalVariables>().onArmorBreak += value => _isArmored = value;
+        GetComponent<GlobalVariables>().onArmorBreak += SetIsArmored;
+        GetComponent<Stats>().onDeath += OnDeath;
+    }
+
+    public void SetIsArmored(bool value)
+    {
+        _isArmored = value;
     }
 
     protected void Recovery()
@@ -68,5 +74,13 @@ public class StaggerSystem : MonoBehaviour
 
         _staggerTimer = StartCoroutine(StaggerTimer());
 
+    }
+
+    public void OnDeath()
+    {
+        if (_staggerTimer != null)
+            StopCoroutine(_staggerTimer);
+
+        GetComponent<GlobalVariables>().onArmorBreak -= SetIsArmored;
     }
 }

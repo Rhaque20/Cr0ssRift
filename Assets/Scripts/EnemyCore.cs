@@ -12,6 +12,8 @@ public class EnemyCore : CombatCore
     protected Coroutine _idleTimer = null;
 
     protected EnemyMovement _enemyMove;
+
+    protected EnemyVariables _enemyVariables;
     void Start()
     {
         base.Start();
@@ -24,7 +26,20 @@ public class EnemyCore : CombatCore
         _canAttack = false;
 
         _idleTimer = StartCoroutine(IdleTimer(Random.Range(1f,3f)));
+
+        _enemyVariables = GetComponent<EnemyVariables>();
+
+        PlayerPartyManager.instance.playerSwitched += UpdateTarget;
+
+        GetComponent<EnemyStats>().onDeath += OnDeath;
             
+    }
+
+    public override void OnDeath()
+    {
+        PlayerPartyManager.instance.playerSwitched -= UpdateTarget;
+        if (_idleTimer != null)
+            StopCoroutine(_idleTimer);
     }
 
     protected IEnumerator IdleTimer(float idleTime)
@@ -36,7 +51,7 @@ public class EnemyCore : CombatCore
 
     public override void Recover()
     {
-        GetComponent<EnemyVariables>().setMove?.Invoke(true);
+        _enemyVariables.setMove?.Invoke(true);
         if (_idleTimer != null)
             StopCoroutine(_idleTimer);
         _isAttacking = false;
@@ -53,7 +68,7 @@ public class EnemyCore : CombatCore
         _animOverrideController["Attack"] = _activeSkill.ReturnAttackAnimation(0);
         _animOverrideController["Recover"] = _activeSkill.ReturnAttackAnimation(1);
         _anim.Play("Attack");
-        GetComponent<EnemyVariables>().setMove?.Invoke(false);
+        _enemyVariables.setMove?.Invoke(false);
     }
 
     public override void SkillSelect()
@@ -64,8 +79,13 @@ public class EnemyCore : CombatCore
             _canAttack = false;
 
             _activeSkill = _moveSet[0];
-
+;
         }
+    }
+
+    public void UpdateTarget()
+    {
+        _targetPos = PlayerPartyManager.instance.getActivePlayer.transform;
     }
 
     // public override void HitScan()

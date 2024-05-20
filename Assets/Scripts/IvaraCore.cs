@@ -148,6 +148,16 @@ public class IvaraCore : PlayerCore
 
     }
 
+    public override void OnDeath()
+    {
+        if (_aimTelegraph.gameObject.activeSelf)
+        {
+            _aimTelegraph.gameObject.SetActive(false);
+        }
+
+        SwitchOut();
+    }
+
     void Update()
     {
         if (_chargedAttackAction.IsPressed())

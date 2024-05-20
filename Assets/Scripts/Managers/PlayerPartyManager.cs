@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class PlayerPartyManager : MonoBehaviour
     public static PlayerPartyManager instance;
 
     PlayerControls _playerControls;
+
+    public Action playerSwitched;
 
     private int _active = 0;
 

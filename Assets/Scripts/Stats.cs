@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class Stats : MonoBehaviour
     protected int _currentHP = 0, _currentArmor = 0;
 
     protected Coroutine _regenerateArmor = null;
+
+    public Action onDeath;
 
     protected void Start()
     {
@@ -78,6 +81,11 @@ public class Stats : MonoBehaviour
         return modifier;
     }
 
+    public virtual void Death()
+    {
+        
+    }
+
     public virtual void DealDamage(int damage, EnumLib.Element attribute)
     {
         double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * ElementModifier(attribute);
@@ -90,8 +98,8 @@ public class Stats : MonoBehaviour
 
         if (_currentHP == 0)
         {
-            gameObject.SetActive(false);
             Debug.Log("Defeated "+this.name);
+            Death();
         }
 
     }
