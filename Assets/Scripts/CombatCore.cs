@@ -11,7 +11,7 @@ public class CombatCore : MonoBehaviour
 
     protected bool _isAttacking = false, _canAttack = true;
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         _anim = transform.GetChild(0).GetComponent<Animator>();
     }

@@ -13,18 +13,24 @@ public class PlayerCore : CombatCore,ISwitchCharacter
     protected bool _hasBuffer = false;
 
     protected InputAction _chargedAttackAction,_normalAttackAction;
+    protected PlayerControls _playerControls;
     
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         base.Start();
         _playerInput = GetComponent<PlayerInput>();
-        PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerInputActions;
+        _playerControls = GetComponent<PlayerVariables>().playerControls;
 
 
-        playerInputActions.Combat.NormalAttack.performed += ctx => Attack();
+        // _playerControls.Combat.NormalAttack.performed += ctx => Attack();
 
-        _animOverrideController =  GetComponent<PlayerVariables>().animOverrideController;
+        _animOverrideController = GetComponent<PlayerVariables>().animOverrideController;
+    }
+
+    public void AttackAction(InputAction.CallbackContext ctx)
+    {
+        Attack();
     }
 
     public override void Attack()
@@ -74,14 +80,22 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         GetComponent<PlayerVariables>().setMove?.Invoke(true);
     }
 
-    public void SwitchOut()
+    public virtual void SwitchOut()
     {
         _hasBuffer = false;
         _canAttack = true;
+        _playerControls.Combat.NormalAttack.performed -= AttackAction;
+        Debug.Log("Unsubscribing "+this.name+"'s Attack function");
     }
 
-    public void SwitchIn()
+    public virtual void SwitchIn()
     {
-        
+        // Deal with fact subscription breaks on using normal attack with switch character
+        if (_playerControls == null)
+        {
+            Start();
+        }
+        Debug.Log("Subscribing "+this.name+"'s Attack function");
+        _playerControls.Combat.NormalAttack.performed += AttackAction;
     }
 }

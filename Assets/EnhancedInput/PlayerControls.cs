@@ -53,6 +53,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""608edf88-662a-41a1-aa7c-59a5f12c3abd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ChargeAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa9ca529-4305-4056-9f3e-3f187ce88200"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -149,6 +169,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_Movement = m_Combat.FindAction("Movement", throwIfNotFound: true);
         m_Combat_NormalAttack = m_Combat.FindAction("NormalAttack", throwIfNotFound: true);
         m_Combat_ChargeAttack = m_Combat.FindAction("ChargeAttack", throwIfNotFound: true);
+        m_Combat_SwitchLeft = m_Combat.FindAction("SwitchLeft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -213,6 +234,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_Movement;
     private readonly InputAction m_Combat_NormalAttack;
     private readonly InputAction m_Combat_ChargeAttack;
+    private readonly InputAction m_Combat_SwitchLeft;
     public struct CombatActions
     {
         private @PlayerControls m_Wrapper;
@@ -220,6 +242,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Combat_Movement;
         public InputAction @NormalAttack => m_Wrapper.m_Combat_NormalAttack;
         public InputAction @ChargeAttack => m_Wrapper.m_Combat_ChargeAttack;
+        public InputAction @SwitchLeft => m_Wrapper.m_Combat_SwitchLeft;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -238,6 +261,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChargeAttack.started += instance.OnChargeAttack;
             @ChargeAttack.performed += instance.OnChargeAttack;
             @ChargeAttack.canceled += instance.OnChargeAttack;
+            @SwitchLeft.started += instance.OnSwitchLeft;
+            @SwitchLeft.performed += instance.OnSwitchLeft;
+            @SwitchLeft.canceled += instance.OnSwitchLeft;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -251,6 +277,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChargeAttack.started -= instance.OnChargeAttack;
             @ChargeAttack.performed -= instance.OnChargeAttack;
             @ChargeAttack.canceled -= instance.OnChargeAttack;
+            @SwitchLeft.started -= instance.OnSwitchLeft;
+            @SwitchLeft.performed -= instance.OnSwitchLeft;
+            @SwitchLeft.canceled -= instance.OnSwitchLeft;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -282,5 +311,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnChargeAttack(InputAction.CallbackContext context);
+        void OnSwitchLeft(InputAction.CallbackContext context);
     }
 }

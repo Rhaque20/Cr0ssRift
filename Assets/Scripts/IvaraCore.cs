@@ -29,14 +29,13 @@ public class IvaraCore : PlayerCore
 
     Camera _activeCamera;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
-        _playerInput = GetComponent<PlayerInput>();
-        PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerInputActions;
+        PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerControls;
 
 
-        playerInputActions.Combat.NormalAttack.performed += ctx => Attack();
+        //playerInputActions.Combat.NormalAttack.performed += ctx => Attack();
         //playerInputActions.Combat.NormalAttack.canceled += ctx => Attack();
         //playerInputActions.Combat.ChargeAttack.performed += HoldInput;
 
@@ -97,6 +96,10 @@ public class IvaraCore : PlayerCore
             {
                 _aimTelegraph.gameObject.SetActive(false);
             }
+        }
+        else
+        {
+            Debug.Log("Not enough bolt power");
         }
     }
 

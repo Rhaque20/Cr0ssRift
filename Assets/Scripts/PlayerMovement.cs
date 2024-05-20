@@ -4,15 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : Movement, ISwitchCharacter
 {
     PlayerInput _playerInput;
+    PlayerControls _playerControls;
     // Start is called before the first frame update
     void Start()
     {
+        _playerControls = GetComponent<PlayerVariables>().playerControls;
         base.Start();
-        _playerInput = GetComponent<PlayerInput>();
-        PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerInputActions;
-        playerInputActions.Combat.Enable();
-        playerInputActions.Combat.Movement.performed += GetDirectionFromInput;
-        playerInputActions.Combat.Movement.canceled += ctx => _direction = Vector3.zero;
+        
+        // _playerControls.Combat.Movement.performed += GetDirectionFromInput;
         
     }
 
@@ -21,6 +20,11 @@ public class PlayerMovement : Movement, ISwitchCharacter
         Vector2 inputVector = ctx.ReadValue<Vector2>();
 
         _direction = new Vector3(inputVector.x, 0, inputVector.y);
+    }
+
+    void CancelDirection(InputAction.CallbackContext ctx)
+    {
+        _direction = Vector3.zero;
     }
 
     protected override void Move()
@@ -39,11 +43,20 @@ public class PlayerMovement : Movement, ISwitchCharacter
 
     public void SwitchOut()
     {
-        GetComponent<GlobalVariables>().setMove -= SetMove;
+        GetComponent<PlayerVariables>().setMove -= SetMove;
+        _playerControls.Combat.Movement.performed -= GetDirectionFromInput;
+        _playerControls.Combat.Movement.canceled -= ctx => _direction = Vector3.zero;
     }
 
     public void SwitchIn()
     {
-        GetComponent<GlobalVariables>().setMove += SetMove;
+        _canMove = true;
+        GetComponent<PlayerVariables>().setMove += SetMove;
+        if (_playerControls == null)
+        {
+            Start();
+        }
+        _playerControls.Combat.Movement.performed += GetDirectionFromInput;
+        _playerControls.Combat.Movement.canceled += CancelDirection;
     }
 }

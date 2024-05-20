@@ -8,19 +8,13 @@ public class PlayerVariables: GlobalVariables
 {
 
     [SerializeField]private AnimatorOverrideController _animOverrideController;
-    private PlayerInput _playerInput;
-    private PlayerControls _playerInputActions;
+    private PlayerControls _playerControls;
 
     public Action onSwitchOut;
 
-    public PlayerInput playerInput
+    public PlayerControls playerControls
     {
-        get { return _playerInput; }
-    }
-
-    public PlayerControls playerInputActions
-    {
-        get { return _playerInputActions;}
+        get { return _playerControls;}
     }
 
     public AnimatorOverrideController animOverrideController
@@ -28,10 +22,9 @@ public class PlayerVariables: GlobalVariables
         get {return _animOverrideController;}
     }
 
-    private void Awake()
+    public void Initialize(PlayerControls _playerCont)
     {
-        _playerInput = GetComponent<PlayerInput>();
-        _playerInputActions = new PlayerControls();
+        _playerControls = _playerCont;
         if (_animOverrideController != null)
             transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = _animOverrideController;
     }
