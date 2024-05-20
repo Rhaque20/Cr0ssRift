@@ -1,20 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class IvaraCore : PlayerCore
 {
     [SerializeField]private float _boltPower = 0;
     [SerializeField]private float _maxHeldTime = 0.5f;
     [SerializeField]private float _chargeRate = 0.5f;
+    [SerializeField]private float _projectileForce = 200f;
 
     [SerializeField]private float _damping = 20;
 
     [SerializeField]private LayerMask _mousePointMask;
 
     [SerializeField]Transform _aimTelegraph;
+
+    [SerializeField]Image _chargeBar;
+
+    Image _isReadyIcon;
 
     private bool _charging = false;
 
@@ -28,6 +31,7 @@ public class IvaraCore : PlayerCore
 
     void Start()
     {
+        base.Start();
         _playerInput = GetComponent<PlayerInput>();
         PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerInputActions;
 
@@ -47,6 +51,11 @@ public class IvaraCore : PlayerCore
         {
             _aimTelegraph.gameObject.SetActive(false);
         }
+
+        if(_chargeBar)
+        {
+            _isReadyIcon = _chargeBar.transform.GetChild(0).GetComponent<Image>();
+        }
     }
 
     public override void Attack()
@@ -62,6 +71,15 @@ public class IvaraCore : PlayerCore
         {
             Debug.Log("Releasing a bolt");
             _boltPower = 0;
+            _isReadyIcon.color = Color.white;
+            _chargeBar.gameObject.SetActive(false);
+            _isAttacking = true;
+
+            _animOverrideController["Attack"] = _normalAttacks[0].ReturnAttackAnimation(0);
+            _animOverrideController["Recover"] = _normalAttacks[0].ReturnAttackAnimation(1);
+            _anim.Play("Attack");
+
+            GetComponent<PlayerVariables>().setMove?.Invoke(false);
             if (_bullet != null)
             {
                 GameObject temp = Instantiate(_bullet);
@@ -72,7 +90,7 @@ public class IvaraCore : PlayerCore
 
                 temp.transform.rotation = _aimTelegraph.transform.rotation;
 
-                temp.GetComponent<Rigidbody>().AddForce(1000f*_firingDirection.normalized);
+                temp.GetComponent<Rigidbody>().AddForce(_projectileForce*_firingDirection.normalized, ForceMode.Impulse);
             }
 
             if (_aimTelegraph != null)
@@ -90,9 +108,20 @@ public class IvaraCore : PlayerCore
             _charging = true;
             _boltPower += _chargeRate * Time.deltaTime;
 
+            if (_chargeBar)
+            {
+                _chargeBar.fillAmount = _boltPower/1.0f;
+            }
+
+            if(!_chargeBar.gameObject.activeSelf)
+            {
+                _chargeBar.gameObject.SetActive(true);
+            }
+
             if(_boltPower >= 1.0f)
             {
                 _charging = false;
+                _isReadyIcon.color = Color.black;
             }
         }
     }
@@ -106,9 +135,6 @@ public class IvaraCore : PlayerCore
 
         if(Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue,_mousePointMask))
         {
-            Debug.Log("Aim tracking "+raycastHit.point);
-
-
             _firingDirection = raycastHit.point - transform.position;
             _firingDirection.y = 0;
             Quaternion rotation = Quaternion.LookRotation(_firingDirection);
