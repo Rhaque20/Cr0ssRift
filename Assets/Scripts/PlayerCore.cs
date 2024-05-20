@@ -12,7 +12,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
     protected bool _hasBuffer = false;
 
-    
+    protected InputAction _chargedAttackAction,_normalAttackAction;
     
     // Start is called before the first frame update
     void Start()

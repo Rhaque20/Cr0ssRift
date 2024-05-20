@@ -21,6 +21,11 @@ public class CombatCore : MonoBehaviour
 
     }
 
+    public virtual void ChargeAttack()
+    {
+        
+    }
+
     public virtual void Recover()
     {
 

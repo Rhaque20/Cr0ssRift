@@ -11,6 +11,7 @@ public class Skill: ScriptableObject
     [SerializeField] protected EnumLib.Element _attribute;
 
     [SerializeField] protected AnimationClip[] _attackAnimations = new AnimationClip[2];
+    [SerializeField] protected bool _isChargeable = false;
 
     public AnimationClip ReturnAttackAnimation(int index)
     {
@@ -38,5 +39,10 @@ public class Skill: ScriptableObject
     public EnumLib.Element attribute
     {
         get { return _attribute; }
+    }
+
+    public bool isChargeable
+    {
+        get { return _isChargeable;}
     }
 }
