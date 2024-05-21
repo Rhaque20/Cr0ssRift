@@ -86,6 +86,16 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             {
                 Debug.Log("Hit "+entity.name);
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                // Will need to rescale this once skills roll in
+                if (_normalAttacks[_currentChain].canOverrideElement)
+                {
+                    _normalAttacks[_currentChain].attribute = _playerStats.familiarElement;
+                }
+                else
+                {
+                    _normalAttacks[_currentChain].attribute = EnumLib.Element.Physical;
+                }
+                
                 entity.GetComponent<Stats>().DamageProcess(_normalAttacks[_currentChain],_playerStats);
             }
         }

@@ -23,6 +23,11 @@ public class PlayerStats : Stats
         get{ return _hasFamiliarSummoned;}
     }
 
+    public EnumLib.Element familiarElement
+    {
+        get { return _familiarElement;}
+    }
+
     public PlayerVariables playerVariables
     {
         get { return _playerVariables; }

@@ -39,6 +39,7 @@ public class Skill: ScriptableObject
     public EnumLib.Element attribute
     {
         get { return _attribute; }
+        set {_attribute = value; }
     }
 
     public bool isChargeable
