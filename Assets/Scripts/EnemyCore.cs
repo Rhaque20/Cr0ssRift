@@ -29,15 +29,34 @@ public class EnemyCore : CombatCore
 
         _enemyVariables = GetComponent<EnemyVariables>();
 
-        PlayerPartyManager.instance.playerSwitched += UpdateTarget;
+        PlayerPartyManager.instance.onPlayerSwitched += UpdateTarget;
 
         GetComponent<EnemyStats>().onDeath += OnDeath;
             
     }
 
+    public override void HitScan()
+    {
+        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.transform.localScale);
+        _hurtBox.gameObject.SetActive(true);
+        Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
+        _hurtBox.gameObject.SetActive(false);
+
+        if (entitiesHit.Length > 0)
+        {
+            foreach(Collider entity in entitiesHit)
+            {
+                Stats stat = entity.GetComponent<Stats>();
+                Debug.Log("Hit "+entity.name);
+                stat.DamageProcess(_activeSkill);
+                entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+            }
+        }
+    }
+
     public override void OnDeath()
     {
-        PlayerPartyManager.instance.playerSwitched -= UpdateTarget;
+        PlayerPartyManager.instance.onPlayerSwitched -= UpdateTarget;
         if (_idleTimer != null)
             StopCoroutine(_idleTimer);
     }

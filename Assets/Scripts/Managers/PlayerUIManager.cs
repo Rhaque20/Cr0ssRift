@@ -13,6 +13,19 @@ public class PlayerUIManager : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        ResetPlayerBarsDisplay();
+        PlayerPartyManager.instance.onPlayerSwitched += ResetPlayerBarsDisplay;
+    }
+
+    void ResetPlayerBarsDisplay()
+    {
+        PlayerStats stats = PlayerPartyManager.instance.getActivePlayer.GetComponent<PlayerStats>();
+        SetHealthBar(stats.currentHP,stats.maxHP);
+        SetArmorBar((float)stats.currentArmor/(float)stats.maxArmor);
+    }
+
     public void SetHealthBar(int _currentHP, int _maxHP)
     {
         _playerBars.SetHealthBar(_currentHP, _maxHP);

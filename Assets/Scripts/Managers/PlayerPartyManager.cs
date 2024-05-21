@@ -11,7 +11,7 @@ public class PlayerPartyManager : MonoBehaviour
 
     PlayerControls _playerControls;
 
-    public Action playerSwitched;
+    public Action onPlayerSwitched;
 
     private int _active = 0;
 
@@ -86,6 +86,8 @@ public class PlayerPartyManager : MonoBehaviour
         SetCharacterPosition(_tempActive);
 
         _active = _tempActive;
+
+        onPlayerSwitched?.Invoke();
 
     }
 
