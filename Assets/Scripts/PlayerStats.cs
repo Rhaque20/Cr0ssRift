@@ -6,23 +6,49 @@ public class PlayerStats : Stats
     // Once you add the party manager, set the statustracker through party manager
     [SerializeField]protected PlayerStatusTracker _playerStatusTracker;
 
-    protected override IEnumerator RegenerateArmor()
-    {
-        yield return new WaitForSeconds(5f);
-        _currentArmor = _maxArmor;
-        _allVariables.onArmorBreak?.Invoke(true);
-        _regenerateArmor = null;
-        PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
-    }
+
     public override void DealArmorDamage(int armorDamage,EnumLib.Element attribute)
     {
-        base.DealArmorDamage(armorDamage,attribute);
+        if (_maxArmor != 0 && (ElementModifier(attribute) >= 2.0f || attribute == EnumLib.Element.Physical))
+        {
+            _currentArmor = Mathf.Clamp(_currentArmor - armorDamage, 0,_maxArmor);
+            if (_currentArmor <= 0 && _regenerateArmor == null)
+            {
+                _allVariables.onArmorBreak?.Invoke(false);
+            }
+        }
 
         PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
 
     }
 
-    public override void DealStatusDamage(EnumLib.Status status,int statusDamage)
+    // public override void FullRestoreArmor()
+    // {
+    //     _currentArmor = _maxArmor;
+    //     _allVariables.onArmorBreak?.Invoke(true);
+        
+    //     PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
+    // }
+
+    public override void RecoverHealth(int healAmount)
+    {
+        base.RecoverHealth(healAmount);
+        if(_currentHP != 0 && gameObject.activeSelf)
+        {
+            PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP);
+        }
+    }
+
+    public override void RecoverArmor(int armorRecover)
+    {
+        base.RecoverArmor(armorRecover);
+        if(_currentHP != 0 && gameObject.activeSelf)
+        {
+            PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
+        } 
+    }
+
+    public override void DealStatusDamage(int statusDamage,EnumLib.Status status)
     {
         if (_playerStatusTracker != null)
         {

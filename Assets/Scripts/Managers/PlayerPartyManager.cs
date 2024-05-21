@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerPartyManager : MonoBehaviour
 {
     [SerializeField]List<GameObject> _players = new List<GameObject>();
+    [SerializeField]List<GameObject> _playerStates = new List<GameObject>();
     public static PlayerPartyManager instance;
 
     PlayerControls _playerControls;
@@ -15,13 +16,15 @@ public class PlayerPartyManager : MonoBehaviour
 
     private int _active = 0;
 
+    List<OffFieldRecovery> _offFieldRecovery = new ();
+
     void Awake()
     {
         instance = this;
 
         _playerControls = new PlayerControls();
         _playerControls.Combat.Enable();
-        _playerControls.Combat.SwitchLeft.performed += ctx => SwitchCharacter(true);
+        _playerControls.Combat.SwitchLeft.performed += ctx => SwitchDirection(true);
 
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -32,6 +35,10 @@ public class PlayerPartyManager : MonoBehaviour
 
             _players[i].GetComponent<PlayerVariables>().Initialize(_playerControls);
 
+            _offFieldRecovery.Add(_playerStates[i].GetComponent<OffFieldRecovery>());
+
+            _offFieldRecovery[i].SetOwner(_players[i].GetComponent<PlayerStats>());
+
             if(i == 0)
             {
                 ISwitchCharacter[] switchComps = _players[i].GetComponentsInChildren<ISwitchCharacter>(false);
@@ -40,9 +47,11 @@ public class PlayerPartyManager : MonoBehaviour
                 {
                     comp.SwitchIn();
                 }
+                _offFieldRecovery[i].SwitchIn();
             }
             else
             {
+                _offFieldRecovery[i].SwitchOut();
                 _players[i].SetActive(false);
             }
         }
@@ -54,13 +63,23 @@ public class PlayerPartyManager : MonoBehaviour
         _players[tempactive].transform.position = _players[_active].transform.position;
     }
 
-    public void SwitchCharacter(bool _switchLeft)
+    public void SwitchDirection(bool _switchLeft)
     {
-        int _tempActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
+        int _tempActive = 0;
+
+        if (_switchLeft)
+            _tempActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
+        else
+            _tempActive = (_active + 1) % _players.Count;
 
         if (_tempActive == _active)
             return;
+        
+        SwitchCharacter(_tempActive);
+    }
 
+    public void SwitchCharacter(int _tempActive)
+    {
         ISwitchCharacter[] switchComps = _players[_active].GetComponentsInChildren<ISwitchCharacter>(false);
 
         Debug.Log("Switching out of "+_players[_active].name);
@@ -69,6 +88,8 @@ public class PlayerPartyManager : MonoBehaviour
         {
             comp.SwitchOut();
         }
+
+        _offFieldRecovery[_active].SwitchOut();
 
         _players[_active].SetActive(false);
 
@@ -84,6 +105,8 @@ public class PlayerPartyManager : MonoBehaviour
         _players[_tempActive].SetActive(true);
 
         SetCharacterPosition(_tempActive);
+
+        _offFieldRecovery[_tempActive].SwitchIn();
 
         _active = _tempActive;
 

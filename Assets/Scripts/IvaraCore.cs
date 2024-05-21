@@ -150,6 +150,22 @@ public class IvaraCore : PlayerCore
 
     }
 
+
+    public override void SwitchOut()
+    {
+        base.SwitchOut();
+        if (_aimTelegraph.gameObject.activeSelf)
+            _aimTelegraph.gameObject.SetActive(false);
+    }
+
+    public override void SwitchIn()
+    {
+        base.SwitchIn();
+
+        if (!_aimTelegraph.gameObject.activeSelf && _boltPower >= 1f)
+            _aimTelegraph.gameObject.SetActive(true);
+    }
+
     public override void OnDeath()
     {
         if (_aimTelegraph.gameObject.activeSelf)

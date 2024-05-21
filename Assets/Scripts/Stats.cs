@@ -38,6 +38,11 @@ public class Stats : MonoBehaviour
         get { return _maxArmor; }
     }
 
+    public GlobalVariables allVariables
+    {
+        get { return _allVariables; }
+    }
+
     public void Start()
     {
         _currentArmor = _maxArmor;
@@ -49,19 +54,32 @@ public class Stats : MonoBehaviour
     protected virtual IEnumerator RegenerateArmor()
     {
         yield return new WaitForSeconds(5f);
-        _currentArmor = _maxArmor;
-        _allVariables.onArmorBreak?.Invoke(true);
+        FullRestoreArmor();
         _regenerateArmor = null;
     }
 
-    public void RecoverHealth(int healAmount)
+    public virtual void FullRestoreArmor()
     {
-        _currentHP = Mathf.Clamp(_currentHP + healAmount,0,_maxHP);
+        _currentArmor = _maxArmor;
+        _allVariables.onArmorBreak?.Invoke(true);
     }
 
-    public void RecoverArmor(int armorRecover)
+    public virtual void RecoverHealth(int healAmount)
     {
-        _currentArmor = Mathf.Clamp(_currentArmor + armorRecover,0,_maxArmor);
+        if(_currentHP != 0)
+        {
+            _currentHP = Mathf.Clamp(_currentHP + healAmount,0,_maxHP);
+            _allVariables.onHealthUpdate?.Invoke(_currentHP/_maxHP);
+        }
+    }
+
+    public virtual void RecoverArmor(int armorRecover)
+    {
+        if (_currentArmor != 0)
+        {
+            _currentArmor = Mathf.Clamp(_currentArmor + armorRecover,0,_maxArmor);
+            _allVariables.onArmorUpdate?.Invoke((float)_currentArmor/(float)_maxArmor);
+        } 
     }
 
     public void DamageProcess(Skill skillReceived)
