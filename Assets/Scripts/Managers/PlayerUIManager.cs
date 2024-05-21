@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
+    const int MAINBAR = 0;
     public static PlayerUIManager instance;
 
-    [SerializeField]private PlayerBars _playerBars;
+    [SerializeField]private PlayerBars[] _playerBars = new PlayerBars[4];
     [SerializeField]private StatusUI _statusUI;
 
     void Awake()
@@ -19,6 +20,11 @@ public class PlayerUIManager : MonoBehaviour
         PlayerPartyManager.instance.onPlayerSwitched += ResetPlayerBarsDisplay;
     }
 
+    public void ToggleMiniBarDisplay(int index, bool value)
+    {
+        _playerBars[index + 1].gameObject.SetActive(value);
+    }
+
     void ResetPlayerBarsDisplay()
     {
         PlayerStats stats = PlayerPartyManager.instance.getActivePlayer.GetComponent<PlayerStats>();
@@ -28,23 +34,44 @@ public class PlayerUIManager : MonoBehaviour
 
     public void SetHealthBar(int _currentHP, int _maxHP)
     {
-        _playerBars.SetHealthBar(_currentHP, _maxHP);
+        _playerBars[MAINBAR].SetHealthBar(_currentHP, _maxHP);
+    }
+
+    public void SetHealthBar(int _currentHP, int _maxHP, int index)
+    {
+        _playerBars[index + 1].SetHealthBar(_currentHP, _maxHP);
     }
 
     public void SetArmorBar(float ratio)
     {
-        _playerBars.SetArmorBar(ratio);
+        _playerBars[MAINBAR].SetArmorBar(ratio);
+    }
+
+    public void SetArmorBar(float ratio, int index)
+    {
+        _playerBars[index + 1].SetArmorBar(ratio);
     }
 
     public void SetSPBar(float ratio)
     {
-        _playerBars.SetSPBar(ratio);
+        _playerBars[MAINBAR].SetSPBar(ratio);
+    }
+
+    public void SetSPBar(float ratio, int index)
+    {
+        _playerBars[index + 1].SetSPBar(ratio);
     }
 
     public void SetSPDrainBar(float ratio)
     {
-        _playerBars.SetSPDrainBar(ratio);
+        _playerBars[MAINBAR].SetSPDrainBar(ratio);
     }
+
+    public void SetSPDrainBar(float ratio, int index)
+    {
+        _playerBars[index + 1].SetSPDrainBar(ratio);
+    }
+
     public void StatusBuildUpDisplay(EnumLib.Status status, float ratio)
     {
         _statusUI.SetStatusBuildUpDisplay(status,ratio);

@@ -74,6 +74,10 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
             {
                 PlayerUIManager.instance.SetSPDrainBar(1 - (penaltyTime/_penaltyDuration));
             }
+            else
+            {
+                PlayerUIManager.instance.SetSPDrainBar(1 - (penaltyTime/_penaltyDuration),transform.GetSiblingIndex());
+            }
 
             penaltyTime -= Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
@@ -82,6 +86,8 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
 
         if (_isOnField)
             PlayerUIManager.instance.SetSPDrainBar(0);
+        else
+            PlayerUIManager.instance.SetSPDrainBar(0,transform.GetSiblingIndex());
 
         _owner.RecoverSP(100);
         
@@ -142,6 +148,9 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
     public void SwitchOut()
     {
         _isOnField = false;
+        _owner.RecoverHealth(0);
+        _owner.RecoverArmor(0);
+        _owner.RecoverSP(0);
     }
 
     public void SwitchIn()

@@ -49,6 +49,7 @@ public class PlayerPartyManager : MonoBehaviour
                 }
                 _offFieldRecovery[i].SwitchIn();
                 _players[i].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[i].SetPenalize;
+                PlayerUIManager.instance.ToggleMiniBarDisplay(i,false);
             }
             else
             {
@@ -90,9 +91,9 @@ public class PlayerPartyManager : MonoBehaviour
             comp.SwitchOut();
         }
 
-        _offFieldRecovery[_active].SwitchOut();
-
         _players[_active].SetActive(false);
+
+        _offFieldRecovery[_active].SwitchOut();
 
         switchComps = _players[_tempActive].GetComponentsInChildren<ISwitchCharacter>(false);
 
@@ -111,6 +112,9 @@ public class PlayerPartyManager : MonoBehaviour
 
         _players[_tempActive].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[_tempActive].SetPenalize;
         _players[_active].GetComponent<PlayerVariables>().onForcedUnSummon -= _offFieldRecovery[_active].SetPenalize;
+
+        PlayerUIManager.instance.ToggleMiniBarDisplay(_active,true);
+        PlayerUIManager.instance.ToggleMiniBarDisplay(_tempActive,false);
 
         _active = _tempActive;
 

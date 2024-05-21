@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
 {
     public void SwitchIn()
@@ -13,6 +15,7 @@ public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
             StopCoroutine(_staggerTimer);
             _staggerTimer = null;
         }
+        _spriteRenderer.color = Color.white;
         Recovery();
     }
 }

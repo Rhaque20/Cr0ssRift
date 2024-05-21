@@ -73,9 +73,13 @@ public class PlayerStats : Stats
     public override void RecoverHealth(int healAmount)
     {
         base.RecoverHealth(healAmount);
-        if(!_isDead && gameObject.activeSelf)
+        if(!_isDead)
         {
-            PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP);
+            if(gameObject.activeSelf)
+                PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP);
+            else
+                PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP,transform.GetSiblingIndex());
+            
         }
     }
 
@@ -90,19 +94,24 @@ public class PlayerStats : Stats
             _playerVariables.onForcedUnSummon?.Invoke();
         }
 
-        if(!_isDead && gameObject.activeSelf)
+        if(!_isDead)
         {
-
-            PlayerUIManager.instance.SetSPBar(_currentSP/100);
+            if (gameObject.activeSelf)
+                PlayerUIManager.instance.SetSPBar(_currentSP/100);
+            else
+                PlayerUIManager.instance.SetSPBar(_currentSP/100,transform.GetSiblingIndex());
         }
     }
 
     public override void RecoverArmor(int armorRecover)
     {
         base.RecoverArmor(armorRecover);
-        if(_currentHP != 0 && gameObject.activeSelf)
+        if(_currentHP != 0)
         {
-            PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
+            if(gameObject.activeSelf)
+                PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
+            else
+                PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor,transform.GetSiblingIndex());
         } 
     }
 
