@@ -61,7 +61,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             {
                 Debug.Log("Hit "+entity.name);
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-                entity.GetComponent<Stats>().DealDamage(_normalAttacks[_currentChain].damage,_normalAttacks[_currentChain].attribute);
+                entity.GetComponent<Stats>().DamageProcess(_normalAttacks[_currentChain]);
             }
         }
     }

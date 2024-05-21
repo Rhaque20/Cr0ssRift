@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerVariables: GlobalVariables
 {
@@ -27,5 +24,7 @@ public class PlayerVariables: GlobalVariables
         _playerControls = _playerCont;
         if (_animOverrideController != null)
             transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = _animOverrideController;
+
+        GetComponent<PlayerStats>().Start();
     }
 }

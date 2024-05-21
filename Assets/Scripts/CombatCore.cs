@@ -47,7 +47,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
                 stat.DealArmorDamage(10,EnumLib.Element.Physical);
                 stat.DealDamage(10,EnumLib.Element.Physical);
-                stat.DealStatusDamage(EnumLib.Status.Paralyze,10);
+                stat.DealStatusDamage(10,EnumLib.Status.Paralyze);
             }
         }
     }
