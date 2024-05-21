@@ -36,6 +36,15 @@ public class PlayerUIManager : MonoBehaviour
         _playerBars.SetArmorBar(ratio);
     }
 
+    public void SetSPBar(float ratio)
+    {
+        _playerBars.SetSPBar(ratio);
+    }
+
+    public void SetSPDrainBar(float ratio)
+    {
+        _playerBars.SetSPDrainBar(ratio);
+    }
     public void StatusBuildUpDisplay(EnumLib.Status status, float ratio)
     {
         _statusUI.SetStatusBuildUpDisplay(status,ratio);

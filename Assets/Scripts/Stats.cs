@@ -14,7 +14,11 @@ public class Stats : MonoBehaviour
 
     protected int _currentHP = 0, _currentArmor = 0;
 
+    protected float _damageModifier = 1,_armorDamageModifier = 1;
+
     protected Coroutine _regenerateArmor = null;
+
+    protected bool _isDead = false;
 
     public Action onDeath;
 
@@ -41,6 +45,16 @@ public class Stats : MonoBehaviour
     public GlobalVariables allVariables
     {
         get { return _allVariables; }
+    }
+
+    public float damageModifier
+    {
+        get { return _damageModifier; }
+    }
+
+    public float armorDamageModifier
+    {
+        get { return _armorDamageModifier; }
     }
 
     public void Start()
@@ -82,9 +96,9 @@ public class Stats : MonoBehaviour
         } 
     }
 
-    public void DamageProcess(Skill skillReceived)
+    public void DamageProcess(Skill skillReceived, Stats _attackerStats)
     {
-        DealDamage(skillReceived.damage,skillReceived.attribute);
+        DealDamage(skillReceived.damage,skillReceived.attribute, _attackerStats);
         DealArmorDamage(skillReceived.armorDamage,skillReceived.attribute);
         DealStatusDamage(skillReceived.statusDamage,(EnumLib.Status)skillReceived.attribute);
     }
@@ -141,7 +155,7 @@ public class Stats : MonoBehaviour
         
     }
 
-    public virtual void DealDamage(int damage, EnumLib.Element attribute)
+    public virtual void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats)
     {
         double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * ElementModifier(attribute);
 
@@ -153,6 +167,7 @@ public class Stats : MonoBehaviour
 
         if (_currentHP == 0)
         {
+            _isDead = true;
             Debug.Log("Defeated "+this.name);
             Death();
         }

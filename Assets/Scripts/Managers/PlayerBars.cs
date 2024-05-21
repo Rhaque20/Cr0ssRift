@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerBars : MonoBehaviour
 {
-    [SerializeField]private Image _healthBar,_spBar,_armorBar;
+    [SerializeField]private Image _healthBar,_spBar,_armorBar, _healthDrainBar, _spDrainBar;
     [SerializeField]private TMP_Text _curHPText,_maxHPText;
 
     public void SetHealthBar(int _currentHP,int _maxHP)
@@ -18,6 +18,11 @@ public class PlayerBars : MonoBehaviour
     public void SetSPBar(float ratio)
     {
         _spBar.fillAmount = ratio;
+    }
+
+    public void SetSPDrainBar(float ratio)
+    {
+        _spDrainBar.fillAmount = ratio;
     }
 
     public void SetArmorBar(float ratio)

@@ -48,6 +48,7 @@ public class PlayerPartyManager : MonoBehaviour
                     comp.SwitchIn();
                 }
                 _offFieldRecovery[i].SwitchIn();
+                _players[i].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[i].SetPenalize;
             }
             else
             {
@@ -107,6 +108,9 @@ public class PlayerPartyManager : MonoBehaviour
         SetCharacterPosition(_tempActive);
 
         _offFieldRecovery[_tempActive].SwitchIn();
+
+        _players[_tempActive].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[_tempActive].SetPenalize;
+        _players[_active].GetComponent<PlayerVariables>().onForcedUnSummon -= _offFieldRecovery[_active].SetPenalize;
 
         _active = _tempActive;
 

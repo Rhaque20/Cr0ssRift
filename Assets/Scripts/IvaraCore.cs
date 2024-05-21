@@ -85,7 +85,7 @@ public class IvaraCore : PlayerCore
 
                 temp.transform.position = new Vector3(transform.position.x,transform.position.y + 0.25f,transform.position.z);
 
-                temp.GetComponent<Projectile>().SetUpProjectile(this,_normalAttacks[0]);
+                temp.GetComponent<Projectile>().SetUpProjectile(_playerStats,_normalAttacks[0]);
 
                 Destroy(temp,1.5f);
 

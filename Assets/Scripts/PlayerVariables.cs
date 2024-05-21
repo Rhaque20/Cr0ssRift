@@ -9,6 +9,10 @@ public class PlayerVariables: GlobalVariables
 
     public Action onSwitchOut;
 
+    public Action<bool> onSummonFamiliar;
+
+    public Action onForcedUnSummon;
+
     public PlayerControls playerControls
     {
         get { return _playerControls;}

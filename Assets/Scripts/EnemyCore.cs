@@ -14,6 +14,8 @@ public class EnemyCore : CombatCore
     protected EnemyMovement _enemyMove;
 
     protected EnemyVariables _enemyVariables;
+
+    protected EnemyStats _enemyStats;
     void Start()
     {
         base.Start();
@@ -32,6 +34,8 @@ public class EnemyCore : CombatCore
         PlayerPartyManager.instance.onPlayerSwitched += UpdateTarget;
 
         GetComponent<EnemyStats>().onDeath += OnDeath;
+
+        _enemyStats = GetComponent<EnemyStats>();
             
     }
 
@@ -48,7 +52,7 @@ public class EnemyCore : CombatCore
             {
                 Stats stat = entity.GetComponent<Stats>();
                 Debug.Log("Hit "+entity.name);
-                stat.DamageProcess(_activeSkill);
+                stat.DamageProcess(_activeSkill,_enemyStats);
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
             }
         }

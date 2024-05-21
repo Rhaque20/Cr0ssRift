@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleFamiliar"",
+                    ""type"": ""Button"",
+                    ""id"": ""94d220f6-b279-4daa-bfbc-f618b64e4d58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -82,7 +91,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -93,7 +102,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -104,7 +113,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -115,7 +124,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -126,7 +135,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""NormalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -134,10 +143,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""38a18170-798b-4928-ad67-da3261853b5e"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""ChargeAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -152,14 +161,25 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""559e7b6c-0ba4-4882-9c24-e1a2655980f0"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ToggleFamiliar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""Default"",
-            ""bindingGroup"": ""Default"",
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
             ""devices"": []
         }
     ]
@@ -170,6 +190,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_NormalAttack = m_Combat.FindAction("NormalAttack", throwIfNotFound: true);
         m_Combat_ChargeAttack = m_Combat.FindAction("ChargeAttack", throwIfNotFound: true);
         m_Combat_SwitchLeft = m_Combat.FindAction("SwitchLeft", throwIfNotFound: true);
+        m_Combat_ToggleFamiliar = m_Combat.FindAction("ToggleFamiliar", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -235,6 +256,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_NormalAttack;
     private readonly InputAction m_Combat_ChargeAttack;
     private readonly InputAction m_Combat_SwitchLeft;
+    private readonly InputAction m_Combat_ToggleFamiliar;
     public struct CombatActions
     {
         private @PlayerControls m_Wrapper;
@@ -243,6 +265,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @NormalAttack => m_Wrapper.m_Combat_NormalAttack;
         public InputAction @ChargeAttack => m_Wrapper.m_Combat_ChargeAttack;
         public InputAction @SwitchLeft => m_Wrapper.m_Combat_SwitchLeft;
+        public InputAction @ToggleFamiliar => m_Wrapper.m_Combat_ToggleFamiliar;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -264,6 +287,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchLeft.started += instance.OnSwitchLeft;
             @SwitchLeft.performed += instance.OnSwitchLeft;
             @SwitchLeft.canceled += instance.OnSwitchLeft;
+            @ToggleFamiliar.started += instance.OnToggleFamiliar;
+            @ToggleFamiliar.performed += instance.OnToggleFamiliar;
+            @ToggleFamiliar.canceled += instance.OnToggleFamiliar;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -280,6 +306,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchLeft.started -= instance.OnSwitchLeft;
             @SwitchLeft.performed -= instance.OnSwitchLeft;
             @SwitchLeft.canceled -= instance.OnSwitchLeft;
+            @ToggleFamiliar.started -= instance.OnToggleFamiliar;
+            @ToggleFamiliar.performed -= instance.OnToggleFamiliar;
+            @ToggleFamiliar.canceled -= instance.OnToggleFamiliar;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -297,13 +326,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public CombatActions @Combat => new CombatActions(this);
-    private int m_DefaultSchemeIndex = -1;
-    public InputControlScheme DefaultScheme
+    private int m_KeyboardSchemeIndex = -1;
+    public InputControlScheme KeyboardScheme
     {
         get
         {
-            if (m_DefaultSchemeIndex == -1) m_DefaultSchemeIndex = asset.FindControlSchemeIndex("Default");
-            return asset.controlSchemes[m_DefaultSchemeIndex];
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
     public interface ICombatActions
@@ -312,5 +341,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnChargeAttack(InputAction.CallbackContext context);
         void OnSwitchLeft(InputAction.CallbackContext context);
+        void OnToggleFamiliar(InputAction.CallbackContext context);
     }
 }

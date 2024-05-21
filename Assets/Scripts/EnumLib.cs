@@ -5,4 +5,5 @@ public static class EnumLib
 {
     public enum Element{Physical,Fire,Ice,Lightning};
     public enum Status{Weaken,Burn,Frozen,Paralyze};
+    public enum Condition{Target,FlareGuard,};
 }

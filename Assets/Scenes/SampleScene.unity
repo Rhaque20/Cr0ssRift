@@ -1094,6 +1094,8 @@ MonoBehaviour:
   _healthBar: {fileID: 35077356}
   _spBar: {fileID: 584290500}
   _armorBar: {fileID: 1474629048}
+  _healthDrainBar: {fileID: 1023212012}
+  _spDrainBar: {fileID: 1724329484}
   _curHPText: {fileID: 1814994103}
   _maxHPText: {fileID: 2048308698}
 --- !u!1 &245771882
@@ -1862,7 +1864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &428258174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2541,7 +2543,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.408
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -3102,7 +3104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &740827654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3263,7 +3265,7 @@ GameObject:
   - component: {fileID: 751016039}
   - component: {fileID: 751016040}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4040,7 +4042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &842753525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4389,6 +4391,8 @@ MonoBehaviour:
   _normalAttacks:
   - {fileID: 11400000, guid: 6b27198f980085e4ea6bc74c2941aa0a, type: 2}
   - {fileID: 11400000, guid: 518715e578a15434d9920ca558cf5a13, type: 2}
+  _hasFamiliarSummoned: 0
+  _canSummonFamiliar: 1
 --- !u!114 &869079489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5098,6 +5102,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _owner: {fileID: 0}
   _healDelay: 1
+  _penaltyDuration: 5
+  _spDrainOnField: 10
+  _spRegenOnField: 2
+  _spRegenOffField: 5
 --- !u!1 &1122129476
 GameObject:
   m_ObjectHideFlags: 0
@@ -7817,7 +7825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.76100624, b: 0.76100624, a: 1}
+  m_Color: {r: 0.95864683, g: 0.38364774, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7830,7 +7838,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -7869,6 +7877,8 @@ MonoBehaviour:
     m_Bits: 128
   _normalAttacks:
   - {fileID: 11400000, guid: 2e61e7f8984558f40bd8906db53804db, type: 2}
+  _hasFamiliarSummoned: 0
+  _canSummonFamiliar: 1
   _boltPower: 0
   _maxHeldTime: 0.5
   _chargeRate: 0.5
@@ -7908,7 +7918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1750158015
 Transform:
   m_ObjectHideFlags: 0
@@ -8865,7 +8875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1957927273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9490,6 +9500,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _owner: {fileID: 0}
   _healDelay: 1
+  _penaltyDuration: 5
+  _spDrainOnField: 2.5
+  _spRegenOnField: 2
+  _spRegenOffField: 5
 --- !u!114 &2110504461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9783,6 +9797,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904259956238929784, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: _familiarElement
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5904259956238929784, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}

@@ -7,13 +7,17 @@ using UnityEngine;
 public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
 {
     [SerializeField]private PlayerStats _owner;
-    private bool _isOnField = false, _canRecover = true;
+    private bool _isOnField = false, _canRecover = true, _isPenalized = false;
 
     protected Coroutine _regenerateArmor = null;
 
-    [SerializeField] private float _healDelay = 1f;
+    [SerializeField] private float _healDelay = 1f, _penaltyDuration = 5;
+
+    [SerializeField] private float _spDrainOnField = 2.5f,_spRegenOnField = 2f, _spRegenOffField = 5f;
 
     private float _interval = 0;
+
+    Coroutine _penaltyTimer = null;
 
     public void SetOwner(PlayerStats owner)
     {
@@ -60,21 +64,74 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
         _regenerateArmor = null;
     }
 
+    private IEnumerator PenaltyTimer()
+    {
+        float penaltyTime = _penaltyDuration;
+
+        while(penaltyTime > 0f)
+        {
+            if (_isOnField)
+            {
+                PlayerUIManager.instance.SetSPDrainBar(1 - (penaltyTime/_penaltyDuration));
+            }
+
+            penaltyTime -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        _owner.playerVariables.onForcedUnSummon?.Invoke();
+
+        if (_isOnField)
+            PlayerUIManager.instance.SetSPDrainBar(0);
+
+        _owner.RecoverSP(100);
+        
+        _penaltyTimer = null;
+        
+    }
+
+    public void SetPenalize()
+    {
+        Debug.Log(this.name+" got hit with the penalty");
+        _isPenalized = !_isPenalized;
+
+        if(_isPenalized)
+        {
+            if(_penaltyTimer != null)
+                StopCoroutine(_penaltyTimer);
+            
+            _penaltyTimer = StartCoroutine(PenaltyTimer());
+        }
+    }
+
     public void Update()
     {
-        if (_owner != null && !_isOnField && _canRecover)
+        if(_canRecover && !_isPenalized)
         {
-            _interval += Time.deltaTime;
-
-            if (_interval >= _healDelay)
+            if (!_isOnField)
             {
-                Debug.Log("Recovering");
-                _owner.RecoverHealth(5);
-                _owner.RecoverArmor(5);
-                _interval = 0;
+                _interval += Time.deltaTime;
+
+                if (_interval >= _healDelay)
+                {
+                    Debug.Log("Recovering");
+                    _owner.RecoverHealth(5);
+                    _owner.RecoverArmor(5);
+                    _interval = 0;
+                }
+
+                _owner.RecoverSP(_spRegenOffField * Time.deltaTime);
+                
             }
-            
+            else
+            {
+                if(_owner.hasFamiliarSummoned)
+                    _owner.RecoverSP(_spDrainOnField * Time.deltaTime * -1);
+                else
+                    _owner.RecoverSP(_spRegenOnField * Time.deltaTime);
+            }
+                
         }
+        
     }
 
     public void OnDeath()

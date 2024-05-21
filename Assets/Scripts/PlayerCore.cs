@@ -12,25 +12,50 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
     protected bool _hasBuffer = false;
 
+    [SerializeField]protected bool _hasFamiliarSummoned = false,_canSummonFamiliar = true;
+
     protected InputAction _chargedAttackAction,_normalAttackAction;
     protected PlayerControls _playerControls;
+
+    protected PlayerStats _playerStats;
+
+    protected PlayerVariables _playerVariables;
     
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         _playerInput = GetComponent<PlayerInput>();
-        _playerControls = GetComponent<PlayerVariables>().playerControls;
+        _playerVariables = GetComponent<PlayerVariables>();
+        _playerControls = _playerVariables.playerControls;
 
+        _playerStats = GetComponent<PlayerStats>();
 
-        // _playerControls.Combat.NormalAttack.performed += ctx => Attack();
+        _animOverrideController = _playerVariables.animOverrideController;
+        _playerVariables.onForcedUnSummon += SetCanSummonFamiliar;
+    }
 
-        _animOverrideController = GetComponent<PlayerVariables>().animOverrideController;
+    protected void SetCanSummonFamiliar()
+    {
+        _canSummonFamiliar = !_canSummonFamiliar;
     }
 
     public void AttackAction(InputAction.CallbackContext ctx)
     {
         Attack();
+    }
+
+    public void ActivateFamiliarAction(InputAction.CallbackContext ctx)
+    {
+        if (_canSummonFamiliar)
+            _playerVariables.onSummonFamiliar?.Invoke(!_hasFamiliarSummoned);
+        else
+            Debug.Log("Wait for familiar to recharge");
+    }
+
+    public void ActivateFamiliar(bool value)
+    {
+        _hasFamiliarSummoned = value;
     }
 
     public override void Attack()
@@ -41,7 +66,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             _animOverrideController["Attack"] = _normalAttacks[_currentChain].ReturnAttackAnimation(0);
             _animOverrideController["Recover"] = _normalAttacks[_currentChain].ReturnAttackAnimation(1);
             _anim.Play("Attack");
-            GetComponent<PlayerVariables>().setMove?.Invoke(false);
+            _playerVariables.setMove?.Invoke(false);
         }
         else if (!_hasBuffer && _canAttack)
         {
@@ -61,7 +86,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             {
                 Debug.Log("Hit "+entity.name);
                 entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-                entity.GetComponent<Stats>().DamageProcess(_normalAttacks[_currentChain]);
+                entity.GetComponent<Stats>().DamageProcess(_normalAttacks[_currentChain],_playerStats);
             }
         }
     }
@@ -77,7 +102,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             Attack();
         }
 
-        GetComponent<PlayerVariables>().setMove?.Invoke(true);
+        _playerVariables.setMove?.Invoke(true);
     }
 
     public virtual void SwitchOut()
@@ -85,17 +110,33 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         _hasBuffer = false;
         _canAttack = true;
         _playerControls.Combat.NormalAttack.performed -= AttackAction;
-        Debug.Log("Unsubscribing "+this.name+"'s Attack function");
+        _playerControls.Combat.ToggleFamiliar.performed -= ActivateFamiliarAction;
+
+        _hasFamiliarSummoned = false;
+        
+        _playerVariables.onSummonFamiliar?.Invoke(_hasFamiliarSummoned);
+
+        _playerVariables.onForcedUnSummon -= SetCanSummonFamiliar;
+
+        _playerVariables.onSummonFamiliar -= _playerStats.SetElement;
+        _playerVariables.onSummonFamiliar -= ActivateFamiliar;
     }
 
     public virtual void SwitchIn()
     {
-        // Deal with fact subscription breaks on using normal attack with switch character
+  
         if (_playerControls == null)
         {
             Start();
         }
-        Debug.Log("Subscribing "+this.name+"'s Attack function");
+
         _playerControls.Combat.NormalAttack.performed += AttackAction;
+        _playerControls.Combat.ToggleFamiliar.performed += ActivateFamiliarAction;
+
+        _playerVariables.onForcedUnSummon += SetCanSummonFamiliar;
+
+        _playerVariables.onSummonFamiliar += _playerStats.SetElement;
+        _playerVariables.onSummonFamiliar += ActivateFamiliar;
+        
     }
 }

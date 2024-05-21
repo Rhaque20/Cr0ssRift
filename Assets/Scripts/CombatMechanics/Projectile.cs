@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     protected Skill _activeSkill;
-    protected CombatCore _instigator;
+    protected Stats _instigator;
 
     protected BoxCollider _hurtBox;
 
@@ -16,12 +16,12 @@ public class Projectile : MonoBehaviour
         _hurtBox = GetComponent<BoxCollider>();
     }
     
-    public void SetUpProjectile(CombatCore instigator, Skill activeSkill)
+    public void SetUpProjectile(Stats instigator, Skill activeSkill)
     {
         _activeSkill = activeSkill;
         _instigator = instigator;
 
-        if (instigator as PlayerCore)
+        if (instigator as PlayerStats)
         {
             _isFriendly = true;
             Debug.Log("Fired from friendly");
@@ -36,11 +36,11 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") && _isFriendly)
         {
-            other.GetComponent<EnemyStats>().DamageProcess(_activeSkill);
+            other.GetComponent<EnemyStats>().DamageProcess(_activeSkill, _instigator);
         }
         else if (other.gameObject.CompareTag("Player") && !_isFriendly)
         {
-            other.GetComponent<PlayerStats>().DamageProcess(_activeSkill);
+            other.GetComponent<PlayerStats>().DamageProcess(_activeSkill,_instigator);
         }
     }
     
