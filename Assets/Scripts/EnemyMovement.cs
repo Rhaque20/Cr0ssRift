@@ -18,13 +18,13 @@ public class EnemyMovement : Movement
     {
         base.Start();
         RelocatePlayer();
-        PlayerPartyManager.instance.playerSwitched += RelocatePlayer;
+        PlayerPartyManager.instance.onPlayerSwitched += RelocatePlayer;
         GetComponent<EnemyStats>().onDeath += OnDeath;
     }
 
     public override void OnDeath()
     {
-        PlayerPartyManager.instance.playerSwitched -= RelocatePlayer;
+        PlayerPartyManager.instance.onPlayerSwitched -= RelocatePlayer;
     }
 
     void RelocatePlayer()
