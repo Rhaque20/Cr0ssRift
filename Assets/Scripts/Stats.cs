@@ -18,7 +18,27 @@ public class Stats : MonoBehaviour
 
     public Action onDeath;
 
-    protected void Start()
+    public int currentHP
+    {
+        get { return _currentHP; }
+    }
+
+    public int maxHP
+    {
+        get { return _maxHP; }
+    }
+
+    public int currentArmor
+    {
+        get { return _currentArmor; }
+    }
+    
+    public int maxArmor
+    {
+        get { return _maxArmor; }
+    }
+
+    public void Start()
     {
         _currentArmor = _maxArmor;
         _currentHP = _maxHP;
@@ -34,7 +54,24 @@ public class Stats : MonoBehaviour
         _regenerateArmor = null;
     }
 
-    public virtual void DealStatusDamage(EnumLib.Status status,int statusDamage)
+    public void RecoverHealth(int healAmount)
+    {
+        _currentHP = Mathf.Clamp(_currentHP + healAmount,0,_maxHP);
+    }
+
+    public void RecoverArmor(int armorRecover)
+    {
+        _currentArmor = Mathf.Clamp(_currentArmor + armorRecover,0,_maxArmor);
+    }
+
+    public void DamageProcess(Skill skillReceived)
+    {
+        DealDamage(skillReceived.damage,skillReceived.attribute);
+        DealArmorDamage(skillReceived.armorDamage,skillReceived.attribute);
+        DealStatusDamage(skillReceived.statusDamage,(EnumLib.Status)skillReceived.attribute);
+    }
+
+    public virtual void DealStatusDamage(int statusDamage,EnumLib.Status status)
     {
 
     }
