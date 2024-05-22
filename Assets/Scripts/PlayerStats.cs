@@ -88,7 +88,7 @@ public class PlayerStats : Stats
 
         _currentSP = Mathf.Clamp(_currentSP + spAmount,0,100);
 
-        if (_currentSP <= 0f)
+        if (_currentSP <= 0f && _hasFamiliarSummoned)
         {
             _playerVariables.onSummonFamiliar?.Invoke(false);
             _playerVariables.onForcedUnSummon?.Invoke();

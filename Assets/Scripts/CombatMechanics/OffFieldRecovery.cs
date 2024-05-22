@@ -7,7 +7,9 @@ using UnityEngine;
 public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
 {
     [SerializeField]private PlayerStats _owner;
-    private bool _isOnField = false, _canRecover = true, _isPenalized = false;
+    private bool _isOnField = false, _canRecover = true;
+
+    [SerializeField]private bool _isPenalized = false;
 
     protected Coroutine _regenerateArmor = null;
 
@@ -97,11 +99,11 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
 
     public void SetPenalize()
     {
-        Debug.Log(this.name+" got hit with the penalty");
         _isPenalized = !_isPenalized;
 
         if(_isPenalized)
         {
+            Debug.Log(this.name+" got hit with the penalty");
             if(_penaltyTimer != null)
                 StopCoroutine(_penaltyTimer);
             
