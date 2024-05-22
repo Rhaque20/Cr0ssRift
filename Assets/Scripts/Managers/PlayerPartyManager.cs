@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerPartyManager : MonoBehaviour
 {
@@ -17,6 +17,10 @@ public class PlayerPartyManager : MonoBehaviour
     private int _active = 0;
 
     List<OffFieldRecovery> _offFieldRecovery = new ();
+
+    public Action<bool> onGameOver;
+
+    bool _gamePaused = false;
 
     void Awake()
     {
@@ -61,6 +65,22 @@ public class PlayerPartyManager : MonoBehaviour
 
     }
 
+    void Start()
+    {
+        _playerControls.Combat.PauseGame.performed += ctx => {
+            _gamePaused = !_gamePaused;
+            PlayerUIManager.instance.TriggerPauseScreen(_gamePaused);
+            TimeManager.instance.PauseGame(_gamePaused);
+            };
+    }
+
+    public void RestartLevel()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        TimeManager.instance.PauseGame(false);
+        SceneManager.LoadScene(scene.name);
+    }
+
     void SetCharacterPosition(int tempactive)
     {
         _players[tempactive].transform.position = _players[_active].transform.position;
@@ -82,6 +102,7 @@ public class PlayerPartyManager : MonoBehaviour
             {
                 // Trigger GAME OVER;
                 // Maybe still trigger switch out?
+                onGameOver?.Invoke(true);
                 Debug.Log("Gameover!");
             }
             else

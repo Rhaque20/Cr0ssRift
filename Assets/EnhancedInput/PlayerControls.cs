@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""eef061fc-59c6-4f9d-b172-9df29eabe1e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleFamiliar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""113089bb-7b7c-4e05-938b-14289f4dab77"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -191,6 +211,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_ChargeAttack = m_Combat.FindAction("ChargeAttack", throwIfNotFound: true);
         m_Combat_SwitchLeft = m_Combat.FindAction("SwitchLeft", throwIfNotFound: true);
         m_Combat_ToggleFamiliar = m_Combat.FindAction("ToggleFamiliar", throwIfNotFound: true);
+        m_Combat_PauseGame = m_Combat.FindAction("PauseGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -257,6 +278,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_ChargeAttack;
     private readonly InputAction m_Combat_SwitchLeft;
     private readonly InputAction m_Combat_ToggleFamiliar;
+    private readonly InputAction m_Combat_PauseGame;
     public struct CombatActions
     {
         private @PlayerControls m_Wrapper;
@@ -266,6 +288,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @ChargeAttack => m_Wrapper.m_Combat_ChargeAttack;
         public InputAction @SwitchLeft => m_Wrapper.m_Combat_SwitchLeft;
         public InputAction @ToggleFamiliar => m_Wrapper.m_Combat_ToggleFamiliar;
+        public InputAction @PauseGame => m_Wrapper.m_Combat_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -290,6 +313,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ToggleFamiliar.started += instance.OnToggleFamiliar;
             @ToggleFamiliar.performed += instance.OnToggleFamiliar;
             @ToggleFamiliar.canceled += instance.OnToggleFamiliar;
+            @PauseGame.started += instance.OnPauseGame;
+            @PauseGame.performed += instance.OnPauseGame;
+            @PauseGame.canceled += instance.OnPauseGame;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -309,6 +335,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ToggleFamiliar.started -= instance.OnToggleFamiliar;
             @ToggleFamiliar.performed -= instance.OnToggleFamiliar;
             @ToggleFamiliar.canceled -= instance.OnToggleFamiliar;
+            @PauseGame.started -= instance.OnPauseGame;
+            @PauseGame.performed -= instance.OnPauseGame;
+            @PauseGame.canceled -= instance.OnPauseGame;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -342,5 +371,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnChargeAttack(InputAction.CallbackContext context);
         void OnSwitchLeft(InputAction.CallbackContext context);
         void OnToggleFamiliar(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
 }

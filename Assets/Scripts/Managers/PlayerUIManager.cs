@@ -9,6 +9,8 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]private PlayerBars[] _playerBars = new PlayerBars[4];
     [SerializeField]private StatusUI _statusUI;
 
+    [SerializeField]private GameObject _gameOverScreen,_pauseScreen;
+
     void Awake()
     {
         instance = this;
@@ -18,6 +20,10 @@ public class PlayerUIManager : MonoBehaviour
     {
         ResetPlayerBarsDisplay();
         PlayerPartyManager.instance.onPlayerSwitched += ResetPlayerBarsDisplay;
+        PlayerPartyManager.instance.onGameOver += TriggerGameOverScreen;
+
+        _gameOverScreen.SetActive(false);
+        _pauseScreen.SetActive(false);
     }
 
     public void ToggleMiniBarDisplay(int index, bool value)
@@ -80,6 +86,16 @@ public class PlayerUIManager : MonoBehaviour
     public void StatusDisplayTick(EnumLib.Status status,float ratio)
     {
         _statusUI.SetStatusDisplayTick(status,ratio);
+    }
+
+    public void TriggerPauseScreen(bool value)
+    {
+        _pauseScreen.SetActive(value);
+    }
+
+    public void TriggerGameOverScreen(bool value)
+    {
+        _gameOverScreen.SetActive(value);
     }
 
 
