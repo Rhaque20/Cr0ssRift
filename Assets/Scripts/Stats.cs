@@ -57,6 +57,11 @@ public class Stats : MonoBehaviour
         get { return _armorDamageModifier; }
     }
 
+    public bool isDead
+    {
+        get { return _isDead; }
+    }
+
     public void Start()
     {
         _currentArmor = _maxArmor;
@@ -96,7 +101,7 @@ public class Stats : MonoBehaviour
         } 
     }
 
-    public void DamageProcess(Skill skillReceived, Stats _attackerStats)
+    public virtual void DamageProcess(Skill skillReceived, Stats _attackerStats)
     {
         DealDamage(skillReceived.damage,skillReceived.attribute, _attackerStats);
         DealArmorDamage(skillReceived.armorDamage,skillReceived.attribute);
@@ -152,7 +157,14 @@ public class Stats : MonoBehaviour
 
     public virtual void Death()
     {
+        onDeath?.Invoke();
+
+        Delegate[] delegateArray = onDeath.GetInvocationList();
+        Debug.Log("List of delegates is length "+delegateArray.Length);
+        foreach (Delegate d in delegateArray)
+            onDeath -= (Action)d;
         
+        gameObject.SetActive(false);
     }
 
     public virtual void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats)

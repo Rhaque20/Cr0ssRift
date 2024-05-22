@@ -34,6 +34,7 @@ public class PlayerPartyManager : MonoBehaviour
             _players.Add(transform.GetChild(i).gameObject);
 
             _players[i].GetComponent<PlayerVariables>().Initialize(_playerControls);
+            _players[i].GetComponent<PlayerVariables>().onDeath += ForceSwitch;
 
             _offFieldRecovery.Add(_playerStates[i].GetComponent<OffFieldRecovery>());
 
@@ -65,19 +66,81 @@ public class PlayerPartyManager : MonoBehaviour
         _players[tempactive].transform.position = _players[_active].transform.position;
     }
 
+    public void ForceSwitch()
+    {
+        int _tempActive = (_active + 1) % _players.Count;
+        PlayerStats _newStats = _players[_tempActive].GetComponent<PlayerStats>();
+
+        PlayerUIManager.instance.SetHealthBar(0,1,_active);
+
+        if (_newStats.isDead)
+        {
+            _tempActive = (_tempActive + 1) % _players.Count;
+            _newStats = _players[_tempActive].GetComponent<PlayerStats>();
+
+            if (_newStats.isDead)
+            {
+                // Trigger GAME OVER;
+                // Maybe still trigger switch out?
+                Debug.Log("Gameover!");
+            }
+            else
+            {
+                SwitchCharacter(_tempActive);
+            }
+        }
+        else
+        {
+            SwitchCharacter(_tempActive);
+        }
+
+    }
+
     public void SwitchDirection(bool _switchLeft)
     {
-        int _tempActive = 0;
+        int _leftActive,_rightActive;
 
-        if (_switchLeft)
-            _tempActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
+            _leftActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
+            _rightActive = (_active + 1) % _players.Count;
+
+        PlayerStats _newStats;
+
+        if(_switchLeft)
+        {
+            _newStats = _players[_leftActive].GetComponent<PlayerStats>();
+            if (!_newStats.isDead)
+            {
+                SwitchCharacter(_leftActive);
+                return;
+            }
+            else
+            {
+                _newStats = _players[_rightActive].GetComponent<PlayerStats>();
+                if(!_newStats.isDead)
+                {
+                    SwitchCharacter(_rightActive);
+                    return;
+                }
+            }
+        }
         else
-            _tempActive = (_active + 1) % _players.Count;
-
-        if (_tempActive == _active)
-            return;
-        
-        SwitchCharacter(_tempActive);
+        {
+            _newStats = _players[_rightActive].GetComponent<PlayerStats>();
+            if (!_newStats.isDead)
+            {
+                SwitchCharacter(_rightActive);
+                return;
+            }
+            else
+            {
+                _newStats = _players[_leftActive].GetComponent<PlayerStats>();
+                if (!_newStats.isDead)
+                {
+                    SwitchCharacter(_leftActive);
+                    return;
+                }
+            }
+        }
     }
 
     public void SwitchCharacter(int _tempActive)

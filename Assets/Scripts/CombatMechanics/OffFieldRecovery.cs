@@ -25,6 +25,7 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
     {
         _owner = owner;
         _owner.allVariables.onArmorBreak += TriggerRegenerateArmor;
+        _owner.allVariables.onDeath += OnDeath;
     }
 
     public void SetFieldStatus(bool value)

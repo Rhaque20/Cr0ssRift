@@ -189,8 +189,8 @@ GameObject:
   - component: {fileID: 1090924290829819641}
   - component: {fileID: 4047552453774066945}
   - component: {fileID: 1921159755131004772}
-  - component: {fileID: 4561451666488794170}
   - component: {fileID: 5904259956238929784}
+  - component: {fileID: 5637823050822549862}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -275,6 +275,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 230bef07-da27-426b-a4e4-9b4cff61e4da
     m_ActionName: Combat/ChargedAttack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 608edf88-662a-41a1-aa7c-59a5f12c3abd
+    m_ActionName: Combat/SwitchLeft[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 94d220f6-b279-4daa-bfbc-f618b64e4d58
+    m_ActionName: Combat/ToggleFamiliar[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat
@@ -355,21 +363,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8221708c4c092cc40ad1d4602446cb54, type: 2}
   - {fileID: 11400000, guid: 1a7c772bc4504024c938bee75a626f52, type: 2}
   - {fileID: 11400000, guid: d473edd7dadbd5d44ade603db38805ef, type: 2}
---- !u!114 &4561451666488794170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5482788087448792120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f71c21e3182e56046977a581207437c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isArmored: 1
-  _staggerDuration: 2
-  _knockBackPower: 50
+  _hasFamiliarSummoned: 0
+  _canSummonFamiliar: 1
 --- !u!114 &5904259956238929784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,3 +382,22 @@ MonoBehaviour:
   _defense: 8
   _attribute: 0
   _playerStatusTracker: {fileID: 0}
+  _familiarElement: 0
+  _currentSP: 100
+  _playerVariables: {fileID: 0}
+  _hasFamiliarSummoned: 0
+--- !u!114 &5637823050822549862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482788087448792120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3f92b0abdcc0342a7171f396cbc7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isArmored: 1
+  _staggerDuration: 2
+  _knockBackPower: 50

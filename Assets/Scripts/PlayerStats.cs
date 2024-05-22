@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerStats : Stats
+public class PlayerStats : Stats,ISwitchCharacter
 {
     // Once you add the party manager, set the statustracker through party manager
     [SerializeField]protected PlayerStatusTracker _playerStatusTracker;
@@ -11,6 +11,10 @@ public class PlayerStats : Stats
     [SerializeField]protected PlayerVariables _playerVariables;
 
     [SerializeField]protected bool _hasFamiliarSummoned = false;
+
+    protected bool _mercyFramesActive = false;
+
+    protected Coroutine _mercyTimer = null;
 
 
     public float currentSP
@@ -31,6 +35,13 @@ public class PlayerStats : Stats
     public PlayerVariables playerVariables
     {
         get { return _playerVariables; }
+    }
+
+
+    public override void DamageProcess(Skill skillReceived, Stats _attackerStats)
+    {
+        if(!_mercyFramesActive)
+            base.DamageProcess(skillReceived, _attackerStats);
     }
 
 
@@ -81,6 +92,23 @@ public class PlayerStats : Stats
                 PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP,transform.GetSiblingIndex());
             
         }
+    }
+
+    private IEnumerator MercyTimer()
+    {
+        _mercyFramesActive = true;
+
+        if (_currentArmor == 0)
+        {
+            Physics.IgnoreLayerCollision(6,7,true);
+            yield return new WaitForSeconds(2f + _playerVariables.playerStaggerSystem.staggerDuration);
+        }
+        else
+            yield return new WaitForSeconds(_playerVariables.playerStaggerSystem.staggerDuration * 0.5f);
+        
+        Physics.IgnoreLayerCollision(6,7,false);
+        _mercyFramesActive = false;
+        _mercyTimer = null;
     }
 
     public void RecoverSP(float spAmount)
@@ -136,9 +164,29 @@ public class PlayerStats : Stats
 
         if (_currentHP == 0)
         {
-            //gameObject.SetActive(false);
+            _isDead = true;
             Debug.Log("Defeated "+this.name);
+            _playerVariables.onDeath?.Invoke();
+        }
+        else
+        {
+            if (_mercyTimer == null)
+                _mercyTimer = StartCoroutine(MercyTimer());
         }
 
+    }
+
+    public void SwitchOut()
+    {
+        if (_mercyTimer != null)
+        {
+            StopCoroutine(_mercyTimer);
+            _mercyFramesActive = false;
+        }
+    }
+
+    public void SwitchIn()
+    {
+        
     }
 }

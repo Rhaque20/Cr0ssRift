@@ -14,6 +14,11 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
 
     protected Coroutine _staggerTimer = null;
 
+    public float staggerDuration
+    {
+        get { return _staggerDuration; }
+    }
+
     protected void Start()
     {
         _rigid = GetComponent<Rigidbody>();
@@ -28,7 +33,7 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         _isArmored = value;
     }
 
-    protected void Recovery()
+    protected virtual void Recovery()
     {
         if(!_isArmored)
         {
