@@ -14,6 +14,11 @@ public class Movement : MonoBehaviour,IOnDeath
     protected bool _canMove = true;
 
     protected Vector3 _direction = Vector3.zero;
+
+    public Vector3 direction
+    {
+        get { return _direction; }
+    }
     // Start is called before the first frame update
     protected void Start()
     {

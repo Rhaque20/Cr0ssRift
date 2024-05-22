@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74983a245ed084a45bc87ff987283ac6, type: 3}
+  m_Name: FlameCharge
+  m_EditorClassIdentifier: 
+  _damage: 50
+  _armorDamage: 40
+  _statusDamage: 70
+  _attribute: 1
+  _attackAnimations:
+  - {fileID: 7400000, guid: adc653cfff1ea3640ad9807e89aa4e19, type: 2}
+  - {fileID: 7400000, guid: 4e57283e83d68c24c84d28228fc54e70, type: 2}
+  - {fileID: 7400000, guid: 2e7e16edabf59be4b95e27d3c1ffd7c2, type: 2}
+  _isChargeable: 1
+  _coolDown: 0
+  _idleTime: 2
