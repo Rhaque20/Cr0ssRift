@@ -80,6 +80,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed35e041-907d-428f-af7f-b3f9326a2221"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""ddae0c6b-a14c-4154-bf9f-368a594993f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,7 +192,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""559e7b6c-0ba4-4882-9c24-e1a2655980f0"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -190,6 +208,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11e332a0-603d-48a1-bffe-d509185fcbca"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9350460-ded9-42a2-b979-394d3f41781d"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -212,6 +252,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_SwitchLeft = m_Combat.FindAction("SwitchLeft", throwIfNotFound: true);
         m_Combat_ToggleFamiliar = m_Combat.FindAction("ToggleFamiliar", throwIfNotFound: true);
         m_Combat_PauseGame = m_Combat.FindAction("PauseGame", throwIfNotFound: true);
+        m_Combat_Parry = m_Combat.FindAction("Parry", throwIfNotFound: true);
+        m_Combat_Dodge = m_Combat.FindAction("Dodge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -279,6 +321,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_SwitchLeft;
     private readonly InputAction m_Combat_ToggleFamiliar;
     private readonly InputAction m_Combat_PauseGame;
+    private readonly InputAction m_Combat_Parry;
+    private readonly InputAction m_Combat_Dodge;
     public struct CombatActions
     {
         private @PlayerControls m_Wrapper;
@@ -289,6 +333,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SwitchLeft => m_Wrapper.m_Combat_SwitchLeft;
         public InputAction @ToggleFamiliar => m_Wrapper.m_Combat_ToggleFamiliar;
         public InputAction @PauseGame => m_Wrapper.m_Combat_PauseGame;
+        public InputAction @Parry => m_Wrapper.m_Combat_Parry;
+        public InputAction @Dodge => m_Wrapper.m_Combat_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -316,6 +362,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseGame.started += instance.OnPauseGame;
             @PauseGame.performed += instance.OnPauseGame;
             @PauseGame.canceled += instance.OnPauseGame;
+            @Parry.started += instance.OnParry;
+            @Parry.performed += instance.OnParry;
+            @Parry.canceled += instance.OnParry;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -338,6 +390,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseGame.started -= instance.OnPauseGame;
             @PauseGame.performed -= instance.OnPauseGame;
             @PauseGame.canceled -= instance.OnPauseGame;
+            @Parry.started -= instance.OnParry;
+            @Parry.performed -= instance.OnParry;
+            @Parry.canceled -= instance.OnParry;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -372,5 +430,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSwitchLeft(InputAction.CallbackContext context);
         void OnToggleFamiliar(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
     }
 }

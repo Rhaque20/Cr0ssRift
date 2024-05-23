@@ -17,10 +17,15 @@ public class DefenseCore : MonoBehaviour, IOnDeath
 
     protected Movement _movement;
 
+    public bool isParrying
+    {
+        get { return _isParrying;}
+    }
+
     protected virtual void Start()
     {
         _rigid = GetComponent<Rigidbody>();
-        _anim = GetComponent<Animator>();
+        _anim = transform.GetChild(0).GetComponent<Animator>();
         _movement = GetComponent<Movement>();
     }
 
@@ -34,6 +39,19 @@ public class DefenseCore : MonoBehaviour, IOnDeath
         {
             // Set movement enable here
         }
+
+        _anim.SetTrigger("iFrameEnd");
+        _iFrames = null;
+    }
+
+    public virtual bool CanActivate()
+    {
+        return false;
+    }
+
+    public virtual void OnFailedDefense()
+    {
+        
     }
 
     public virtual void Parry()
@@ -43,7 +61,9 @@ public class DefenseCore : MonoBehaviour, IOnDeath
             _isParrying = true;
             _isBlocking = true;
             // Set movement disable here
-            _iFrames = StartCoroutine(IFrames(1f));
+            _anim.Play("Block");
+            _anim.SetBool("Blocking",_isBlocking);
+            _iFrames = StartCoroutine(IFrames(0.5f));
         }
         
     }
@@ -59,7 +79,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
             {
                 _rigid.AddForce(-50f * transform.localScale.x * Vector3.right, ForceMode.Impulse);
             }
-
+            
             _iFrames = StartCoroutine(IFrames(1f));
 
         }

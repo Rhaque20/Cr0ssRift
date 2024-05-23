@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
@@ -18,6 +19,24 @@ public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
     public void SwitchIn()
     {
         
+    }
+
+    protected override IEnumerator StaggerTimer()
+    {
+        if (!_isArmored)
+        {
+            GetComponent<GlobalVariables>().setMove?.Invoke(false);
+            _anim.Play("Stagger");
+            _anim.SetBool("Staggered",true);
+            GetComponent<PlayerDefenseCore>().OnFailedDefense();
+        }
+        
+        _spriteRenderer.color = Color.red;
+        
+
+        yield return new WaitForSeconds(_staggerDuration);
+
+        Recovery();
     }
 
     public void SwitchOut()

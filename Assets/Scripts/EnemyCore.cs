@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -54,43 +55,49 @@ public class EnemyCore : CombatCore
 
     public override void HitScan()
     {
-        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.transform.localScale);
+        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.size);
         _hurtBox.gameObject.SetActive(true);
-        Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
+        List<Collider> entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.size,_hurtBox.transform.localRotation,_hitLayers).ToList();
         _hurtBox.gameObject.SetActive(false);
 
-        bool _scannedBoxFirst = false, _scannedPlayer = false;
+        bool _parryDetected = false;
 
-        if (entitiesHit.Length > 0)
+        if (entitiesHit.Count > 0)
         {
+            // Given the enemy would only be able to scan two things a parry box or the player can brute force finding parry
+            // int i = 0;
+            // foreach(Collider entity in entitiesHit)
+            // {
+            //     if(entity.CompareTag("Block"))
+            //     {
+            //         Debug.Log("Scanned counterbox "+entity.name);
+            //         _parryDetected = true;
+            //         break;
+            //     }
+            //     i++;
+            // }
+
+            // if(entitiesHit.Count - 1 == 0)
+            //     return;
+            // else
+            //     entitiesHit.RemoveAt(i);
+            
             foreach(Collider entity in entitiesHit)
             {
-                if(entity.CompareTag("Block"))
+                PlayerDefenseCore _playerDefenseCore = entity.GetComponent<PlayerDefenseCore>();
+                Debug.Log("Hit "+entity.name);
+                if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform))
                 {
-                    Debug.Log("Scanned counterbox");
-                    if (!_scannedPlayer)
-                        _scannedBoxFirst = true;
+                    Debug.Log("Parry!");
+                    continue;
                 }
-                else
-                {
-                    Stats stat = entity.GetComponent<Stats>();
-                    Debug.Log("Hit "+entity.name);
-                    stat.DamageProcess(_activeSkill,_enemyStats);
 
-                    if(!stat.isDead)
-                        entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-                    
-                    _scannedPlayer = true;
-                }
-            }
+                Stats stat = entity.GetComponent<Stats>();
+                stat.DamageProcess(_activeSkill,_enemyStats);
 
-            if(_scannedBoxFirst)
-            {
-                Debug.Log("hit the counter box first");
-            }
-            else
-            {
-                Debug.Log("Hit the player first");
+                if(!stat.isDead)
+                    entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                
             }
         }
     }

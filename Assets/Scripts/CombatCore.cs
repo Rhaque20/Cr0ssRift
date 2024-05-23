@@ -34,6 +34,13 @@ public class CombatCore : MonoBehaviour, IOnDeath
 
     }
 
+    public bool IsFacingEachOther(Transform target)
+    {
+        float dot = Vector3.Dot(transform.right * target.transform.localScale.x, (target.position - transform.position).normalized);
+        Debug.Log("Dot product is "+dot);
+        return dot <= -0.7;
+    }
+
     public virtual void HitScan()
     {
         Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.transform.localScale);

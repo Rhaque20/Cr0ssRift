@@ -20,6 +20,8 @@ public class PlayerCore : CombatCore,ISwitchCharacter
     protected PlayerStats _playerStats;
 
     protected PlayerVariables _playerVariables;
+
+    protected PlayerDefenseCore _playerDefenseCore;
     
     // Start is called before the first frame update
     protected override void Start()
@@ -32,7 +34,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         _playerStats = GetComponent<PlayerStats>();
 
         _animOverrideController = _playerVariables.animOverrideController;
-        _playerVariables.onForcedUnSummon += SetCanSummonFamiliar;
+        _playerDefenseCore = GetComponent<PlayerDefenseCore>();
     }
 
     protected void SetCanSummonFamiliar()
@@ -42,7 +44,8 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
     public void AttackAction(InputAction.CallbackContext ctx)
     {
-        Attack();
+        if(!_playerDefenseCore.isParrying)
+            Attack();
     }
 
     public void ActivateFamiliarAction(InputAction.CallbackContext ctx)
@@ -130,6 +133,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
         _playerVariables.onSummonFamiliar -= _playerStats.SetElement;
         _playerVariables.onSummonFamiliar -= ActivateFamiliar;
+        _playerVariables.onParryEnd -= Recover;
     }
 
     public virtual void SwitchIn()
@@ -144,6 +148,8 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         _playerControls.Combat.ToggleFamiliar.performed += ActivateFamiliarAction;
 
         _playerVariables.onForcedUnSummon += SetCanSummonFamiliar;
+
+        _playerVariables.onParryEnd += Recover;
 
         _playerVariables.onSummonFamiliar += _playerStats.SetElement;
         _playerVariables.onSummonFamiliar += ActivateFamiliar;

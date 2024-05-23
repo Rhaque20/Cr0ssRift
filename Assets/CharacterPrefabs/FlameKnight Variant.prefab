@@ -441,6 +441,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4616713426768774296, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
+      propertyPath: m_Name
+      value: EnemyParryBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616713426768774296, guid: 46c54d359d1ffd84cb19cdfceeec280b,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

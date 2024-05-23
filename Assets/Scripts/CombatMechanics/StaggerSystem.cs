@@ -19,6 +19,11 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         get { return _staggerDuration; }
     }
 
+    public bool isStaggered
+    {
+        get { return !_isArmored; }
+    }
+
     protected void Start()
     {
         _rigid = GetComponent<Rigidbody>();
@@ -48,7 +53,7 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         GetComponent<CombatCore>().Recover();
     }
 
-    protected IEnumerator StaggerTimer()
+    protected virtual IEnumerator StaggerTimer()
     {
         if (!_isArmored)
         {
