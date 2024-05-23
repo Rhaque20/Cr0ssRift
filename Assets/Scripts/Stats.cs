@@ -75,6 +75,8 @@ public class Stats : MonoBehaviour
         yield return new WaitForSeconds(5f);
         FullRestoreArmor();
         _regenerateArmor = null;
+        float armorRatio = (_maxArmor != 0 ? (float)_currentArmor/_maxArmor : 0);
+        _allVariables.onArmorUpdate?.Invoke(armorRatio);
     }
 
     public virtual void FullRestoreArmor()
@@ -118,6 +120,10 @@ public class Stats : MonoBehaviour
         if (_maxArmor != 0 && (ElementModifier(attribute) >= 2.0f || attribute == EnumLib.Element.Physical))
         {
             _currentArmor = Mathf.Clamp(_currentArmor - armorDamage, 0,_maxArmor);
+
+            float armorRatio = (_maxArmor != 0 ? (float)_currentArmor/_maxArmor : 0);
+            _allVariables.onArmorUpdate?.Invoke(armorRatio);
+
             if (_currentArmor <= 0 && _regenerateArmor == null)
             {
                 _allVariables.onArmorBreak?.Invoke(false);
@@ -175,7 +181,7 @@ public class Stats : MonoBehaviour
 
         _currentHP = Mathf.Clamp(_currentHP - finalDamage,0,_maxHP);
 
-        _allVariables.onHealthUpdate?.Invoke(_currentHP/_maxHP);
+        _allVariables.onHealthUpdate?.Invoke((float)_currentHP/_maxHP);
 
         if (_currentHP == 0)
         {

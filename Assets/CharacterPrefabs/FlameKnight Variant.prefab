@@ -462,7 +462,12 @@ PrefabInstance:
     - target: {fileID: 5624906176336083712, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
       propertyPath: _maxArmor
-      value: 50
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193518424538797616, guid: 46c54d359d1ffd84cb19cdfceeec280b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.81
       objectReference: {fileID: 0}
     - target: {fileID: 6201681579451358059, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}

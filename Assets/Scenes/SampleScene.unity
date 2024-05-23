@@ -10887,7 +10887,7 @@ MonoBehaviour:
   _isPenalized: 0
   _healDelay: 1
   _penaltyDuration: 5
-  _spDrainOnField: 10
+  _spDrainOnField: 5
   _spRegenOnField: 2
   _spRegenOffField: 5
 --- !u!1 &1122129476
@@ -22518,7 +22518,7 @@ MonoBehaviour:
   _isPenalized: 0
   _healDelay: 1
   _penaltyDuration: 5
-  _spDrainOnField: 2.5
+  _spDrainOnField: 5
   _spRegenOnField: 2
   _spRegenOffField: 5
 --- !u!114 &2110504461
