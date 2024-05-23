@@ -161,9 +161,12 @@ public class Stats : MonoBehaviour
         return modifier;
     }
 
+    // Later on remove instance of global and replace with enemy
     public virtual void Death()
     {
         onDeath?.Invoke();
+
+        LevelManager.instance.DecreaseTally();
 
         Delegate[] delegateArray = onDeath.GetInvocationList();
         Debug.Log("List of delegates is length "+delegateArray.Length);

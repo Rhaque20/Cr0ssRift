@@ -181,7 +181,7 @@
                 {
                     "name": "",
                     "id": "11e332a0-603d-48a1-bffe-d509185fcbca",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -192,7 +192,7 @@
                 {
                     "name": "",
                     "id": "c9350460-ded9-42a2-b979-394d3f41781d",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -201,37 +201,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Button With One Modifier",
-                    "id": "e452f2e3-2148-4cd3-855c-1b021810a480",
-                    "path": "ButtonWithOneModifier",
+                    "name": "",
+                    "id": "1ab3f6f6-0ab2-479b-b45c-a1ba20478c59",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ChargeAttack",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "Modifier",
-                    "id": "ceea489b-5ea0-4e96-b64d-79ecbedf4e90",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "ChargeAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Button",
-                    "id": "31a38670-09a9-4318-98bd-5e5f34fc8b80",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "ChargeAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         }
