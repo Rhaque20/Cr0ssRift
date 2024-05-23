@@ -8,6 +8,7 @@ public class PlayerBars : MonoBehaviour
     [SerializeField]private TMP_Text _curHPText,_maxHPText;
 
     [SerializeField]private bool _isMiniBar = false;
+    [SerializeField]private Image _coolDownDisplay;
 
     public void SetHealthBar(int _currentHP,int _maxHP)
     {
@@ -45,5 +46,10 @@ public class PlayerBars : MonoBehaviour
     public void SetArmorBar(float ratio)
     {
         _armorBar.fillAmount = ratio;
+    }
+
+    public void SetCoolDown(float ratio)
+    {
+        _coolDownDisplay.fillAmount = ratio;
     }
 }

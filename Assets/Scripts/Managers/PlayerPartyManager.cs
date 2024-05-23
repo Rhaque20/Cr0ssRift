@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class PlayerPartyManager : MonoBehaviour
     private int _active = 0;
 
     List<OffFieldRecovery> _offFieldRecovery = new ();
+    Coroutine _switchCoolDown = null;
 
     public Action<bool> onGameOver;
 
@@ -63,6 +65,18 @@ public class PlayerPartyManager : MonoBehaviour
             }
         }
 
+    }
+
+    private IEnumerator SwitchCoolDown(int index)
+    {
+        float timeRemaining = 4f;
+        while (timeRemaining > 0)
+        {
+            PlayerUIManager.instance.SetMiniBarCooldown(timeRemaining/4f,index);
+            yield return new WaitForSeconds(Time.deltaTime);
+            timeRemaining -= Time.deltaTime;
+        }
+        _switchCoolDown = null;
     }
 
     void Start()
@@ -119,6 +133,12 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void SwitchDirection(bool _switchLeft)
     {
+        if (_switchCoolDown != null)
+        {
+            Debug.Log("Switching under cooldown");
+
+            return;
+        }
         int _leftActive,_rightActive;
 
             _leftActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
@@ -183,12 +203,12 @@ public class PlayerPartyManager : MonoBehaviour
 
         Debug.Log("Switching in to "+_players[_tempActive].name);
 
+        _players[_tempActive].SetActive(true);
+
         foreach(ISwitchCharacter comp in switchComps)
         {
             comp.SwitchIn();
         }
-
-        _players[_tempActive].SetActive(true);
 
         SetCharacterPosition(_tempActive);
 
@@ -199,6 +219,11 @@ public class PlayerPartyManager : MonoBehaviour
 
         PlayerUIManager.instance.ToggleMiniBarDisplay(_active,true);
         PlayerUIManager.instance.ToggleMiniBarDisplay(_tempActive,false);
+
+        if(_switchCoolDown == null)
+        {
+            _switchCoolDown = StartCoroutine(SwitchCoolDown(_active));
+        }
 
         _active = _tempActive;
 

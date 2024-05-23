@@ -62,6 +62,7 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
         _isBlocking = false;
         _anim.SetBool("Blocking",_isBlocking);
         _playerVariables.setMove?.Invoke(true);
+        Debug.Log("Released blocking");
     }
 
     public override void OnFailedDefense()
@@ -101,5 +102,10 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
         _playerControls.Combat.Parry.performed += ParryAction;
         _playerControls.Combat.Parry.canceled += ReleaseBlock;
         _playerControls.Combat.Dodge.performed += DodgeAction;
+    }
+
+    public override void OnDeath()
+    {
+        SwitchOut();
     }
 }

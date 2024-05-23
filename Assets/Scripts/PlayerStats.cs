@@ -37,10 +37,15 @@ public class PlayerStats : Stats,ISwitchCharacter
         get { return _playerVariables; }
     }
 
+    public bool mercyFramesActive
+    {
+        get{return _mercyTimer != null;}
+    }
+
 
     public override void DamageProcess(Skill skillReceived, Stats _attackerStats)
     {
-        if(!_mercyFramesActive)
+        if(!mercyFramesActive)
             base.DamageProcess(skillReceived, _attackerStats);
     }
 
@@ -96,8 +101,6 @@ public class PlayerStats : Stats,ISwitchCharacter
 
     private IEnumerator MercyTimer()
     {
-        _mercyFramesActive = true;
-
         if (_currentArmor == 0)
         {
             Physics.IgnoreLayerCollision(6,7,true);
@@ -107,7 +110,6 @@ public class PlayerStats : Stats,ISwitchCharacter
             yield return new WaitForSeconds(_playerVariables.playerStaggerSystem.staggerDuration * 0.5f);
         
         Physics.IgnoreLayerCollision(6,7,false);
-        _mercyFramesActive = false;
         _mercyTimer = null;
     }
 
@@ -181,12 +183,13 @@ public class PlayerStats : Stats,ISwitchCharacter
         if (_mercyTimer != null)
         {
             StopCoroutine(_mercyTimer);
-            _mercyFramesActive = false;
         }
     }
 
     public void SwitchIn()
     {
-        
+        if(_playerVariables == null)
+            Start();
+        _mercyTimer = StartCoroutine(MercyTimer());
     }
 }

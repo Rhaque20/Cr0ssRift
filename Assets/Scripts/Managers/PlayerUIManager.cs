@@ -38,6 +38,11 @@ public class PlayerUIManager : MonoBehaviour
         SetArmorBar((float)stats.currentArmor/(float)stats.maxArmor);
     }
 
+    public void SetMiniBarCooldown(float ratio, int index)
+    {
+        _playerBars[index + 1].SetCoolDown(ratio);
+    }
+
     public void SetHealthBar(int _currentHP, int _maxHP)
     {
         _playerBars[MAINBAR].SetHealthBar(_currentHP, _maxHP);
