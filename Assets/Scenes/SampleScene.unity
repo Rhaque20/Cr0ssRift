@@ -2768,7 +2768,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 80
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -2795,7 +2795,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 53.7, y: 9.8, z: 21.3}
+  m_LocalPosition: {x: 5.61, y: 9.8, z: -13.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7768,6 +7768,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 94d220f6-b279-4daa-bfbc-f618b64e4d58
     m_ActionName: Combat/ToggleFamiliar[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eef061fc-59c6-4f9d-b172-9df29eabe1e2
+    m_ActionName: Combat/PauseGame[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat
@@ -11447,7 +11451,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 3
+  m_Priority: 1
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -22969,6 +22973,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153145975559650296, guid: 8539c8d4098687a42b39d0b0f0fff82a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6310878452394445120, guid: 8539c8d4098687a42b39d0b0f0fff82a,
         type: 3}

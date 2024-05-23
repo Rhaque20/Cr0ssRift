@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class Skill: ScriptableObject
 {
@@ -12,6 +13,13 @@ public class Skill: ScriptableObject
 
     [SerializeField] protected AnimationClip[] _attackAnimations = new AnimationClip[2];
     [SerializeField] protected bool _isChargeable = false;
+
+    [SerializeField] protected EnumLib.SkillCategory[] _skillTags = new EnumLib.SkillCategory[0];
+
+    public bool ContainsTag(EnumLib.SkillCategory tag)
+    {
+        return _skillTags.Contains(tag);
+    }
 
     public AnimationClip ReturnAttackAnimation(int index)
     {

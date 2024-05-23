@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 70
   _armorDamage: 40
-  _statusDamage: 40
+  _statusDamage: 100
   _attribute: 1
   _attackAnimations:
   - {fileID: 7400000, guid: 21e75dabc1dae13429ed62f3c099d95e, type: 2}
   - {fileID: 7400000, guid: aa4ff4fb425876e44a19039ff6f00d09, type: 2}
   _isChargeable: 0
-  _coolDown: 0
+  _skillTags: 
+  _coolDown: 4
   _idleTime: 2

@@ -9,11 +9,14 @@ public class CombatCore : MonoBehaviour, IOnDeath
     [SerializeField]protected BoxCollider _hurtBox;
     [SerializeField]protected LayerMask _hitLayers;
 
+    protected CapsuleCollider _capsuleCollider;
+
     protected bool _isAttacking = false, _canAttack = true;
     // Start is called before the first frame update
     protected virtual void Start()
     {
         _anim = transform.GetChild(0).GetComponent<Animator>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     public virtual void Attack()

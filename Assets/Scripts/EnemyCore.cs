@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyCore : CombatCore
@@ -9,11 +10,18 @@ public class EnemyCore : CombatCore
     protected EnemySkill _activeSkill = null;
     protected Coroutine _idleTimer = null;
 
+    protected Coroutine[] _cooldowns;
+
     protected EnemyMovement _enemyMove;
 
     protected EnemyVariables _enemyVariables;
 
     protected EnemyStats _enemyStats;
+
+    protected int _usedMoveIndex = -1;
+
+    protected const int NORMALATTACK = 0;
+    
     void Start()
     {
         base.Start();
@@ -34,6 +42,13 @@ public class EnemyCore : CombatCore
         GetComponent<EnemyStats>().onDeath += OnDeath;
 
         _enemyStats = GetComponent<EnemyStats>();
+
+        _cooldowns = new Coroutine[_moveSet.Length];
+        
+        for(int i = 0; i < _moveSet.Length; i++)
+        {
+            _cooldowns[i] = null;
+        }
             
     }
 
@@ -44,14 +59,38 @@ public class EnemyCore : CombatCore
         Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
         _hurtBox.gameObject.SetActive(false);
 
+        bool _scannedBoxFirst = false, _scannedPlayer = false;
+
         if (entitiesHit.Length > 0)
         {
             foreach(Collider entity in entitiesHit)
             {
-                Stats stat = entity.GetComponent<Stats>();
-                Debug.Log("Hit "+entity.name);
-                stat.DamageProcess(_activeSkill,_enemyStats);
-                entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                if(entity.CompareTag("Block"))
+                {
+                    Debug.Log("Scanned counterbox");
+                    if (!_scannedPlayer)
+                        _scannedBoxFirst = true;
+                }
+                else
+                {
+                    Stats stat = entity.GetComponent<Stats>();
+                    Debug.Log("Hit "+entity.name);
+                    stat.DamageProcess(_activeSkill,_enemyStats);
+
+                    if(!stat.isDead)
+                        entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                    
+                    _scannedPlayer = true;
+                }
+            }
+
+            if(_scannedBoxFirst)
+            {
+                Debug.Log("hit the counter box first");
+            }
+            else
+            {
+                Debug.Log("Hit the player first");
             }
         }
     }
@@ -61,6 +100,14 @@ public class EnemyCore : CombatCore
         PlayerPartyManager.instance.onPlayerSwitched -= UpdateTarget;
         if (_idleTimer != null)
             StopCoroutine(_idleTimer);
+
+        foreach(Coroutine skillCoolDown in _cooldowns)
+        {
+            if(skillCoolDown != null)
+            {
+                StopCoroutine(skillCoolDown);
+            }
+        }
     }
 
     protected IEnumerator IdleTimer(float idleTime)
@@ -79,9 +126,23 @@ public class EnemyCore : CombatCore
         if (_activeSkill == null)
             _idleTimer = StartCoroutine(IdleTimer(2f));
         else
+        {
+            if(_activeSkill.coolDown != 0)
+            {
+                _cooldowns[_usedMoveIndex] = StartCoroutine(Cooldown(_usedMoveIndex,_activeSkill.coolDown));
+            }
             _idleTimer = StartCoroutine(IdleTimer(_activeSkill.idleTime));
+        }
         
         _activeSkill = null;
+    }
+
+    protected IEnumerator Cooldown(int index, float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+
+        _cooldowns[_usedMoveIndex] = null;
+
     }
 
     public override void Attack()
@@ -100,7 +161,7 @@ public class EnemyCore : CombatCore
             _canAttack = false;
 
             _activeSkill = _moveSet[0];
-;
+
         }
     }
 
