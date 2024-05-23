@@ -134,21 +134,24 @@ public class EnemyCore : CombatCore
             _idleTimer = StartCoroutine(IdleTimer(2f));
         else
         {
-            if(_activeSkill.coolDown != 0)
+            if(_activeSkill.coolDown != 0 && _cooldowns[_usedMoveIndex] == null)
             {
+                Debug.Log("Setting skill "+_usedMoveIndex+"cooldown of "+_activeSkill.name+" to "+_activeSkill.coolDown);
                 _cooldowns[_usedMoveIndex] = StartCoroutine(Cooldown(_usedMoveIndex,_activeSkill.coolDown));
             }
             _idleTimer = StartCoroutine(IdleTimer(_activeSkill.idleTime));
         }
         
         _activeSkill = null;
+        _usedMoveIndex = -1;
     }
 
     protected IEnumerator Cooldown(int index, float cooldown)
     {
         yield return new WaitForSeconds(cooldown);
 
-        _cooldowns[_usedMoveIndex] = null;
+        _cooldowns[index] = null;
+        Debug.Log("Ended cooldown of "+_moveSet[index]);
 
     }
 
