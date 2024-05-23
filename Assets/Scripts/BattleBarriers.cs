@@ -6,7 +6,12 @@ public class BattleBarriers : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField]bool _triggerDirectionPos = true;
+    public enum TriggerDirection
+    {
+        PositiveX,NegativeX,PositiveZ,NegativeZ
+    }
+
+    [SerializeField]TriggerDirection _triggerDir;
     [SerializeField]int index = 1;
 
     BoxCollider _collisionBox;
@@ -16,11 +21,33 @@ public class BattleBarriers : MonoBehaviour
         _collisionBox = GetComponent<BoxCollider>();
     }
 
+    bool Activated(Vector3 position)
+    {
+        bool value = false;
+        switch(_triggerDir)
+        {
+            case TriggerDirection.PositiveX:
+                value = position.x > transform.position.x;
+                break;
+             case TriggerDirection.NegativeX:
+                value = position.x < transform.position.x;
+                break;
+            case TriggerDirection.PositiveZ:
+                value = position.z > transform.position.z;
+                break;
+            case TriggerDirection.NegativeZ:
+                value = position.z < transform.position.z;
+                break;
+        }
+
+        return value;
+    }
+
     void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            if (other.transform.position.x > transform.position.x &&  _triggerDirectionPos)
+            if (Activated(other.transform.position))
             {
                 LevelManager.instance.SpawnWave(index);
                 _collisionBox.isTrigger = false;
