@@ -409,6 +409,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1.75
       objectReference: {fileID: 0}
+    - target: {fileID: 3651649429010961289, guid: 46c54d359d1ffd84cb19cdfceeec280b,
+        type: 3}
+      propertyPath: _isArmored
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3719796275003850871, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
       propertyPath: m_LocalScale.x

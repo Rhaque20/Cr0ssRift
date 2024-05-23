@@ -8,6 +8,10 @@ public class KnightCore : EnemyCore
     public override void SkillSelect()
     {
         float distance = Vector3.Distance(transform.position,_targetPos.position);
+        if (distance > 2f + _capsuleCollider.radius)
+        {
+            _usedMoveIndex = CHARGE;
+        }
         if( distance <= 2f + _capsuleCollider.radius && distance > 1f + _capsuleCollider.radius)
         {
             if(_cooldowns[FLAMEBURST] == null)

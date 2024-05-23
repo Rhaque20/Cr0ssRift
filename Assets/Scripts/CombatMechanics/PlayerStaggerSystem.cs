@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
 {
+    PlayerForces _playerForces;
 
+    void Start()
+    {
+        base.Start();
+        _playerForces = GetComponent<PlayerForces>();
+    }
     protected override void Recovery()
     {
         _anim.SetBool("Staggered",false);
@@ -19,6 +25,20 @@ public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
     public void SwitchIn()
     {
         
+    }
+
+    public override void KnockBack(Vector3 attackerPos)
+    {
+        if (!_isArmored)
+            _playerForces.Knockback(_knockBackPower, attackerPos,_staggerDuration);
+
+        if(_staggerTimer != null)
+        {
+            StopCoroutine(_staggerTimer);
+        }
+
+        _staggerTimer = StartCoroutine(StaggerTimer());
+
     }
 
     protected override IEnumerator StaggerTimer()

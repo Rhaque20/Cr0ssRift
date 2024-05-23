@@ -88,7 +88,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             foreach(Collider entity in entitiesHit)
             {
                 Debug.Log("Hit "+entity.name);
-                entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                entity.GetComponent<EnemyStaggerSystem>().KnockBack(transform.position);
                 // Will need to rescale this once skills roll in
                 if (_normalAttacks[_currentChain].canOverrideElement)
                 {

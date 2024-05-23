@@ -41,6 +41,16 @@ public class CombatCore : MonoBehaviour, IOnDeath
         return dot <= -0.7;
     }
 
+    public virtual void DealDamage(Collider entity)
+    {
+        Stats stat = entity.GetComponent<Stats>();
+        Debug.Log("Hit "+entity.name);
+        entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+        stat.DealArmorDamage(10,EnumLib.Element.Physical);
+        stat.DealDamage(10,EnumLib.Element.Physical,GetComponent<Stats>());
+        stat.DealStatusDamage(10,EnumLib.Status.Paralyze);
+    }
+
     public virtual void HitScan()
     {
         Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.transform.localScale);
@@ -52,12 +62,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         {
             foreach(Collider entity in entitiesHit)
             {
-                Stats stat = entity.GetComponent<Stats>();
-                Debug.Log("Hit "+entity.name);
-                entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-                stat.DealArmorDamage(10,EnumLib.Element.Physical);
-                stat.DealDamage(10,EnumLib.Element.Physical,GetComponent<Stats>());
-                stat.DealStatusDamage(10,EnumLib.Status.Paralyze);
+                DealDamage(entity);
             }
         }
     }

@@ -21,5 +21,6 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 4e57283e83d68c24c84d28228fc54e70, type: 2}
   - {fileID: 7400000, guid: 2e7e16edabf59be4b95e27d3c1ffd7c2, type: 2}
   _isChargeable: 1
+  _skillTags: 010000000300000006000000
   _coolDown: 0
   _idleTime: 2

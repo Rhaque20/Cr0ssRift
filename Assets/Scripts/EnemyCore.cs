@@ -9,7 +9,7 @@ public class EnemyCore : CombatCore
     protected Transform _targetPos;
 
     protected EnemySkill _activeSkill = null;
-    protected Coroutine _idleTimer = null;
+    protected Coroutine _idleTimer = null, _attackDelay = null;
 
     protected Coroutine[] _cooldowns;
 
@@ -53,6 +53,28 @@ public class EnemyCore : CombatCore
             
     }
 
+    public override void DealDamage(Collider entity)
+    {
+        PlayerDefenseCore _playerDefenseCore = entity.GetComponent<PlayerDefenseCore>();
+
+        Debug.Log("Hit "+entity.name);
+
+        if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+        {
+            Debug.Log("Parry!");
+            return;
+        }
+
+        if(_activeSkill == null)
+            Debug.Log("Active skill is null!");
+
+        Stats stat = entity.GetComponent<Stats>();
+        entity.GetComponent<Stats>().DamageProcess(_activeSkill,_enemyStats);
+
+        if(!stat.isDead)
+            entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+    }
+
     public override void HitScan()
     {
         Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.size);
@@ -60,43 +82,11 @@ public class EnemyCore : CombatCore
         List<Collider> entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.size,_hurtBox.transform.localRotation,_hitLayers).ToList();
         _hurtBox.gameObject.SetActive(false);
 
-        bool _parryDetected = false;
-
         if (entitiesHit.Count > 0)
-        {
-            // Given the enemy would only be able to scan two things a parry box or the player can brute force finding parry
-            // int i = 0;
-            // foreach(Collider entity in entitiesHit)
-            // {
-            //     if(entity.CompareTag("Block"))
-            //     {
-            //         Debug.Log("Scanned counterbox "+entity.name);
-            //         _parryDetected = true;
-            //         break;
-            //     }
-            //     i++;
-            // }
-
-            // if(entitiesHit.Count - 1 == 0)
-            //     return;
-            // else
-            //     entitiesHit.RemoveAt(i);
-            
+        {   
             foreach(Collider entity in entitiesHit)
             {
-                PlayerDefenseCore _playerDefenseCore = entity.GetComponent<PlayerDefenseCore>();
-                Debug.Log("Hit "+entity.name);
-                if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform))
-                {
-                    Debug.Log("Parry!");
-                    continue;
-                }
-
-                Stats stat = entity.GetComponent<Stats>();
-                stat.DamageProcess(_activeSkill,_enemyStats);
-
-                if(!stat.isDead)
-                    entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+                DealDamage(entity);
                 
             }
         }
@@ -155,11 +145,35 @@ public class EnemyCore : CombatCore
 
     }
 
+    protected IEnumerator AttackDelay(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        _anim.SetBool("Charging",true);
+        _attackDelay = null;
+    }
+    
+
     public override void Attack()
     {
-        _animOverrideController["Attack"] = _activeSkill.ReturnAttackAnimation(0);
-        _animOverrideController["Recover"] = _activeSkill.ReturnAttackAnimation(1);
-        _anim.Play("Attack");
+        if (_activeSkill.ContainsTag(EnumLib.SkillCategory.Charge))
+        {
+            _animOverrideController["ChargeWindUp"] = _activeSkill.ReturnAttackAnimation(0);
+            _animOverrideController["ActiveCharge"] = _activeSkill.ReturnAttackAnimation(1);
+            _animOverrideController["Recover"] = _activeSkill.ReturnAttackAnimation(2);
+
+            _anim.SetBool("Charging",false);
+            _anim.Play("ChargeWindUp");
+            Debug.Log("Setting up attack delay again: "+_attackDelay == null);
+            _attackDelay = StartCoroutine(AttackDelay(2f));
+
+        }
+        else
+        {
+            _animOverrideController["Attack"] = _activeSkill.ReturnAttackAnimation(0);
+            _animOverrideController["Recover"] = _activeSkill.ReturnAttackAnimation(1);
+            _anim.Play("Attack");
+        }
+        
         _enemyVariables.setMove?.Invoke(false);
     }
 
