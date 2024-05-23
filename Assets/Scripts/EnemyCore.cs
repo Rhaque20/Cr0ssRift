@@ -64,6 +64,11 @@ public class EnemyCore : CombatCore
             Debug.Log("Parry!");
             return;
         }
+        else if(_playerDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+        {
+            Debug.Log("Evaded");
+            return;
+        }
 
         if(_activeSkill == null)
             Debug.Log("Active skill is null!");

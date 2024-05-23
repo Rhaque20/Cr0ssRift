@@ -36,6 +36,7 @@ public class EnemyForces : Forces
                 _enemyCore.DealDamage(collision.collider);
                 _collidedTargets.Add(collision.collider);
                 Physics.IgnoreCollision(_capsuleCollider,collision.collider,true);
+                _dealsContactDamage = false;
             }
             else if(collision.collider.CompareTag("Enemy"))
             {

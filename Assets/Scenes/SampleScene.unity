@@ -27261,6 +27261,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1957832919}
     m_Modifications:
+    - target: {fileID: 3053274872914534669, guid: 7028b148111265541858843dead7c571,
+        type: 3}
+      propertyPath: _dodgePower
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5338591382034855753, guid: 7028b148111265541858843dead7c571,
         type: 3}
       propertyPath: m_Name

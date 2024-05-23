@@ -5,6 +5,7 @@ using UnityEngine;
 public class DefenseCore : MonoBehaviour, IOnDeath
 {
     [SerializeField]protected bool _isParryFocused = true, _isBlocking = false;
+    [SerializeField]protected float _dodgePower = 10f;
 
     protected bool _isParrying = false, _isDodging = false;
 
@@ -20,6 +21,11 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     public bool isParrying
     {
         get { return _isParrying;}
+    }
+
+    public bool isDodging
+    {
+        get { return _isDodging;}
     }
 
     protected virtual void Start()
@@ -74,13 +80,13 @@ public class DefenseCore : MonoBehaviour, IOnDeath
         {
             _isDodging = true;
             if(_movement.direction != Vector3.zero)
-                _rigid.AddForce(50f * _movement.direction,ForceMode.Impulse);
+                _rigid.AddForce(_dodgePower * _movement.direction,ForceMode.Impulse);
             else
             {
-                _rigid.AddForce(-50f * transform.localScale.x * Vector3.right, ForceMode.Impulse);
+                _rigid.AddForce(-_dodgePower * transform.localScale.x * Vector3.right, ForceMode.Impulse);
             }
             
-            _iFrames = StartCoroutine(IFrames(1f));
+            _iFrames = StartCoroutine(IFrames(0.5f));
 
         }
     }

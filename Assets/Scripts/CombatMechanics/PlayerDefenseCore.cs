@@ -10,6 +10,7 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
     PlayerVariables _playerVariables;
     public void Start()
     {
+        Debug.Log("Start on player defense core has been called");
         base.Start();
         _playerVariables = GetComponent<PlayerVariables>();
         _playerControls = _playerVariables.playerControls;
@@ -44,9 +45,16 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
             Parry();
     }
 
+    private void DodgeAction(InputAction.CallbackContext ctx)
+    {
+        if(CanActivate())
+            Dodge();
+    }
+
     public override bool CanActivate()
     {
-        return (!_playerVariables.playerStaggerSystem.isStaggered && !_playerVariables.playerStats.isDead && _canDefend);
+        return !_playerVariables.playerStaggerSystem.isStaggered && !_playerVariables.playerStats.isDead
+         && _canDefend && !_isParrying && !_isDodging;
     }
 
     private void ReleaseBlock(InputAction.CallbackContext ctx)
@@ -83,6 +91,7 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
 
         _playerControls.Combat.Parry.performed -= ParryAction;
         _playerControls.Combat.Parry.canceled -= ReleaseBlock;
+        _playerControls.Combat.Dodge.performed -= DodgeAction;
     }
 
     public virtual void SwitchIn()
@@ -91,5 +100,6 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
             Start();
         _playerControls.Combat.Parry.performed += ParryAction;
         _playerControls.Combat.Parry.canceled += ReleaseBlock;
+        _playerControls.Combat.Dodge.performed += DodgeAction;
     }
 }
