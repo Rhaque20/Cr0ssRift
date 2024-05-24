@@ -18,11 +18,25 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
 
     protected override IEnumerator IFrames(float duration)
     {
+        Debug.Log("Triggering iframes");
         _playerVariables.setMove?.Invoke(false);
         _canDefend = false;
+
+        if (_isParrying)
+        {
+            _parrySignal.SetActive(true);
+        }
+        else if (_isDodging)
+        {
+            _dodgeSignal.SetActive(true);
+        }
+
         yield return new WaitForSeconds(duration);
         _isParrying = false;
         _isDodging = false;
+
+        _parrySignal.SetActive(false);
+        _dodgeSignal.SetActive(false);
 
         if(!_isBlocking)
         {

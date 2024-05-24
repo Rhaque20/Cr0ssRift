@@ -13,7 +13,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
 
     protected Coroutine _iFrames = null;
 
-    [SerializeField]protected BoxCollider _parryBox;
+    [SerializeField]protected GameObject _parrySignal, _dodgeSignal;
     protected Rigidbody _rigid;
 
     protected Animator _anim;
@@ -39,9 +39,21 @@ public class DefenseCore : MonoBehaviour, IOnDeath
 
     protected virtual IEnumerator IFrames(float duration)
     {
+
+        if (_isParrying)
+        {
+            _parrySignal.SetActive(true);
+        }
+        else if (_isDodging)
+        {
+            _dodgeSignal.SetActive(true);
+        }
         yield return new WaitForSeconds(duration);
         _isParrying = false;
         _isDodging = false;
+
+        _parrySignal.SetActive(false);
+        _dodgeSignal.SetActive(false);
 
         if(!_isBlocking)
         {
