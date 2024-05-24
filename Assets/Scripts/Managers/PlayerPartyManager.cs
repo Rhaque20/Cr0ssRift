@@ -75,6 +75,10 @@ public class PlayerPartyManager : MonoBehaviour
             PlayerUIManager.instance.SetMiniBarCooldown(timeRemaining/4f,index);
             yield return new WaitForSeconds(Time.deltaTime);
             timeRemaining -= Time.deltaTime;
+            if (timeRemaining <= 0f)
+            {
+                PlayerUIManager.instance.SetMiniBarCooldown(0/4f,index);
+            }
         }
         _switchCoolDown = null;
     }

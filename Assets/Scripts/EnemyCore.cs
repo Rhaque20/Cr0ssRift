@@ -59,19 +59,19 @@ public class EnemyCore : CombatCore
 
         Debug.Log("Hit "+entity.name);
 
+        if(_activeSkill == null)
+            Debug.Log("Active skill is null!");
+
         if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
         {
             Debug.Log("Parry!");
             return;
         }
-        else if(_playerDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+        else if(_playerDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
         {
             Debug.Log("Evaded");
             return;
         }
-
-        if(_activeSkill == null)
-            Debug.Log("Active skill is null!");
 
         Stats stat = entity.GetComponent<Stats>();
         entity.GetComponent<Stats>().DamageProcess(_activeSkill,_enemyStats);

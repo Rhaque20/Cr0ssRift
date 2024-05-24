@@ -40,6 +40,7 @@ public class Forces : MonoBehaviour, IOnDeath
             }
         }
         _dealsContactDamage = false;
+        _rigid.velocity = Vector3.zero;
 
         yield return new WaitForSeconds(0.5f);
         _rigid.drag = 0f;
@@ -81,6 +82,8 @@ public class Forces : MonoBehaviour, IOnDeath
         {
             StopCoroutine(_forceTimer);
         }
+
+        _dealsContactDamage = false;
 
         if(_collidedTargets.Count > 0)
         {

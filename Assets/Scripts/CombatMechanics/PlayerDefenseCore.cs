@@ -33,6 +33,7 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
         _playerVariables.onParryEnd?.Invoke();
 
         _anim.SetTrigger("iFrameEnd");
+        _rigid.velocity = Vector3.zero;
 
         yield return new WaitForSeconds(0.5f);
         _canDefend = true;
@@ -90,9 +91,14 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
         _isBlocking = false;
         _isParrying = false;
 
+        _canDefend = true;
+
+        _playerVariables.onParryEnd?.Invoke();
+
         _playerControls.Combat.Parry.performed -= ParryAction;
         _playerControls.Combat.Parry.canceled -= ReleaseBlock;
         _playerControls.Combat.Dodge.performed -= DodgeAction;
+        _rigid.velocity = Vector3.zero;
     }
 
     public virtual void SwitchIn()

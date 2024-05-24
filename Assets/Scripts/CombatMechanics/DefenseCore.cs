@@ -7,6 +7,8 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     [SerializeField]protected bool _isParryFocused = true, _isBlocking = false;
     [SerializeField]protected float _dodgePower = 10f;
 
+    protected int _maxDodges = 1, _currentDodges = 0;
+
     protected bool _isParrying = false, _isDodging = false;
 
     protected Coroutine _iFrames = null;
@@ -85,6 +87,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
             {
                 _rigid.AddForce(-_dodgePower * transform.localScale.x * Vector3.right, ForceMode.Impulse);
             }
+            _anim.Play("Dodge");
             
             _iFrames = StartCoroutine(IFrames(0.5f));
 

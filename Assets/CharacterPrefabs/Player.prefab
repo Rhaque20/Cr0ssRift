@@ -430,6 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isParryFocused: 1
   _isBlocking: 0
+  _dodgePower: 20
   _parryBox: {fileID: 0}
 --- !u!114 &6690404854556910590
 MonoBehaviour:
