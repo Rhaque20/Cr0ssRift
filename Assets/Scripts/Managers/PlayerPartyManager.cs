@@ -18,7 +18,7 @@ public class PlayerPartyManager : MonoBehaviour
     private int _active = 0;
 
     List<OffFieldRecovery> _offFieldRecovery = new ();
-    Coroutine _switchCoolDown = null;
+    Coroutine[] _switchCoolDown = new Coroutine[3];
 
     public Action<bool> onGameOver;
 
@@ -31,12 +31,14 @@ public class PlayerPartyManager : MonoBehaviour
         _playerControls = new PlayerControls();
         _playerControls.Combat.Enable();
         _playerControls.Combat.SwitchLeft.performed += ctx => SwitchDirection(true);
+        _playerControls.Combat.SwitchRight.performed += ctx => SwitchDirection(false);
 
         for(int i = 0; i < transform.childCount; i++)
         {
-            if (i == 3)
+            if (i == 3 || !transform.GetChild(i).CompareTag("Player"))
                 break;
             
+            _switchCoolDown[i] = null;
             _players.Add(transform.GetChild(i).gameObject);
 
             _players[i].GetComponent<PlayerVariables>().Initialize(_playerControls);
@@ -80,7 +82,7 @@ public class PlayerPartyManager : MonoBehaviour
                 PlayerUIManager.instance.SetMiniBarCooldown(0/4f,index);
             }
         }
-        _switchCoolDown = null;
+        _switchCoolDown[index] = null;
     }
 
     void Start()
@@ -137,18 +139,31 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void SwitchDirection(bool _switchLeft)
     {
-        if (_switchCoolDown != null)
-        {
-            Debug.Log("Switching under cooldown");
-
-            return;
-        }
         int _leftActive,_rightActive;
 
             _leftActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
             _rightActive = (_active + 1) % _players.Count;
 
         PlayerStats _newStats;
+
+        if (_switchLeft)
+        {
+            if (_switchCoolDown[_leftActive] != null)
+            {
+                Debug.Log("Switching under cooldown left side");
+
+                return;
+            }
+        }
+        else
+        {
+            if (_switchCoolDown[_rightActive] != null)
+            {
+                Debug.Log("Switching under cooldown right side");
+
+                return;
+            }
+        }
 
         if(_switchLeft)
         {
@@ -194,6 +209,8 @@ public class PlayerPartyManager : MonoBehaviour
 
         Debug.Log("Switching out of "+_players[_active].name);
 
+        PlayerStats _newStats;
+
         foreach(ISwitchCharacter comp in switchComps)
         {
             comp.SwitchOut();
@@ -224,9 +241,11 @@ public class PlayerPartyManager : MonoBehaviour
         PlayerUIManager.instance.ToggleMiniBarDisplay(_active,true);
         PlayerUIManager.instance.ToggleMiniBarDisplay(_tempActive,false);
 
-        if(_switchCoolDown == null)
+        _newStats = _players[_active].GetComponent<PlayerStats>();
+
+        if(_switchCoolDown[_active] == null && !_newStats.isDead)
         {
-            _switchCoolDown = StartCoroutine(SwitchCoolDown(_active));
+            _switchCoolDown[_active] = StartCoroutine(SwitchCoolDown(_active));
         }
 
         _active = _tempActive;

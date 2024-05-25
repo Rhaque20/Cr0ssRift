@@ -64,6 +64,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SwitchRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""0dd016d3-8b72-46a2-bbe0-9a64fa21534c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ToggleFamiliar"",
                     ""type"": ""Button"",
                     ""id"": ""94d220f6-b279-4daa-bfbc-f618b64e4d58"",
@@ -232,6 +241,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ChargeAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60bb7aee-bd0e-47b9-9825-89f39cebe0ba"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -250,6 +270,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_NormalAttack = m_Combat.FindAction("NormalAttack", throwIfNotFound: true);
         m_Combat_ChargeAttack = m_Combat.FindAction("ChargeAttack", throwIfNotFound: true);
         m_Combat_SwitchLeft = m_Combat.FindAction("SwitchLeft", throwIfNotFound: true);
+        m_Combat_SwitchRight = m_Combat.FindAction("SwitchRight", throwIfNotFound: true);
         m_Combat_ToggleFamiliar = m_Combat.FindAction("ToggleFamiliar", throwIfNotFound: true);
         m_Combat_PauseGame = m_Combat.FindAction("PauseGame", throwIfNotFound: true);
         m_Combat_Parry = m_Combat.FindAction("Parry", throwIfNotFound: true);
@@ -319,6 +340,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_NormalAttack;
     private readonly InputAction m_Combat_ChargeAttack;
     private readonly InputAction m_Combat_SwitchLeft;
+    private readonly InputAction m_Combat_SwitchRight;
     private readonly InputAction m_Combat_ToggleFamiliar;
     private readonly InputAction m_Combat_PauseGame;
     private readonly InputAction m_Combat_Parry;
@@ -331,6 +353,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @NormalAttack => m_Wrapper.m_Combat_NormalAttack;
         public InputAction @ChargeAttack => m_Wrapper.m_Combat_ChargeAttack;
         public InputAction @SwitchLeft => m_Wrapper.m_Combat_SwitchLeft;
+        public InputAction @SwitchRight => m_Wrapper.m_Combat_SwitchRight;
         public InputAction @ToggleFamiliar => m_Wrapper.m_Combat_ToggleFamiliar;
         public InputAction @PauseGame => m_Wrapper.m_Combat_PauseGame;
         public InputAction @Parry => m_Wrapper.m_Combat_Parry;
@@ -356,6 +379,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchLeft.started += instance.OnSwitchLeft;
             @SwitchLeft.performed += instance.OnSwitchLeft;
             @SwitchLeft.canceled += instance.OnSwitchLeft;
+            @SwitchRight.started += instance.OnSwitchRight;
+            @SwitchRight.performed += instance.OnSwitchRight;
+            @SwitchRight.canceled += instance.OnSwitchRight;
             @ToggleFamiliar.started += instance.OnToggleFamiliar;
             @ToggleFamiliar.performed += instance.OnToggleFamiliar;
             @ToggleFamiliar.canceled += instance.OnToggleFamiliar;
@@ -384,6 +410,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchLeft.started -= instance.OnSwitchLeft;
             @SwitchLeft.performed -= instance.OnSwitchLeft;
             @SwitchLeft.canceled -= instance.OnSwitchLeft;
+            @SwitchRight.started -= instance.OnSwitchRight;
+            @SwitchRight.performed -= instance.OnSwitchRight;
+            @SwitchRight.canceled -= instance.OnSwitchRight;
             @ToggleFamiliar.started -= instance.OnToggleFamiliar;
             @ToggleFamiliar.performed -= instance.OnToggleFamiliar;
             @ToggleFamiliar.canceled -= instance.OnToggleFamiliar;
@@ -428,6 +457,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnChargeAttack(InputAction.CallbackContext context);
         void OnSwitchLeft(InputAction.CallbackContext context);
+        void OnSwitchRight(InputAction.CallbackContext context);
         void OnToggleFamiliar(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
         void OnParry(InputAction.CallbackContext context);

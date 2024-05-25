@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchRight",
+                    "type": "Button",
+                    "id": "0dd016d3-8b72-46a2-bbe0-9a64fa21534c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ToggleFamiliar",
                     "type": "Button",
                     "id": "94d220f6-b279-4daa-bfbc-f618b64e4d58",
@@ -208,6 +217,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChargeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60bb7aee-bd0e-47b9-9825-89f39cebe0ba",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
