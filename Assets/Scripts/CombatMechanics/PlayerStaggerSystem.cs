@@ -11,17 +11,22 @@ public class PlayerStaggerSystem : StaggerSystem, ISwitchCharacter
         base.Start();
         _playerForces = GetComponent<PlayerForces>();
     }
-    protected override void Recovery()
-    {
-        _anim.SetBool("Staggered",false);
-        GetComponent<GlobalVariables>().setMove?.Invoke(true);
-        _staggerTimer = null;
+    // protected override void Recovery()
+    // {
+    //     if(!_isArmored)
+    //     {
+    //         _anim.SetBool("Staggered",false);
+    //         GetComponent<GlobalVariables>().setMove?.Invoke(true);
+    //         GetComponent<PlayerCore>().Recover();
+    //     }
+        
+    //     _staggerTimer = null;
         
 
-        _spriteRenderer.color = Color.white;
+    //     _spriteRenderer.color = Color.white;
 
-        GetComponent<PlayerCore>().Recover();
-    }
+        
+    // }
     public void SwitchIn()
     {
         

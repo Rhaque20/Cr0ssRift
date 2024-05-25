@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: LucanNA3
   m_EditorClassIdentifier: 
   _damage: 10
-  _armorDamage: 5
+  _armorDamage: 2
   _statusDamage: 0
-  _attribute: 0
+  _attribute: 1
   _attackAnimations:
   - {fileID: 7400000, guid: 3c88983d51aac0d48803f874d0eb6138, type: 2}
   - {fileID: 7400000, guid: a7d1858f63721a545abafd286fb01188, type: 2}
   _isChargeable: 0
   _skillTags: 
   SPCost: 0
-  _canOverrideElement: 0
+  _canOverrideElement: 1

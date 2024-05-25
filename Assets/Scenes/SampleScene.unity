@@ -7859,6 +7859,7 @@ MonoBehaviour:
   - {fileID: 202218765}
   - {fileID: 5843188910909287484}
   - {fileID: 1051886837}
+  - {fileID: 2103068949}
   _statusUI: {fileID: 751016040}
   _gameOverScreen: {fileID: 1035019961}
   _pauseScreen: {fileID: 1568387487}
@@ -8693,6 +8694,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &826479482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 826479483}
+  m_Layer: 0
+  m_Name: Props
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &826479483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826479482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1957832919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &829374477
 GameObject:
   m_ObjectHideFlags: 0
@@ -30723,6 +30755,7 @@ Transform:
   - {fileID: 1772525077}
   - {fileID: 1732512043}
   - {fileID: 4915047654560797434}
+  - {fileID: 826479483}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1978012311
@@ -32517,6 +32550,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2103068947}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2103068949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5120031752724673982, guid: 56ef3a08ce5d4a7479322a98a5ddd9fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 2103068947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e3af152a6b89e41840caa48c08d6c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2110504458
 GameObject:
   m_ObjectHideFlags: 0
@@ -33119,7 +33164,7 @@ PrefabInstance:
     - target: {fileID: 6310878452394445120, guid: 8539c8d4098687a42b39d0b0f0fff82a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

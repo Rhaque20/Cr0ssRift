@@ -44,13 +44,12 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         {
             _anim.SetBool("Staggered",false);
             GetComponent<GlobalVariables>().setMove?.Invoke(true);
-            _staggerTimer = null;
+            GetComponent<CombatCore>().Recover();
         }
         
+        _staggerTimer = null;
 
         _spriteRenderer.color = Color.white;
-
-        GetComponent<CombatCore>().Recover();
     }
 
     protected virtual IEnumerator StaggerTimer()

@@ -22,6 +22,11 @@ public class EnemyCore : CombatCore
     protected int _usedMoveIndex = -1;
 
     protected const int NORMALATTACK = 0;
+
+    public EnemySkill activeSkill
+    {
+        get { return _activeSkill; }
+    }
     
     void Start()
     {
