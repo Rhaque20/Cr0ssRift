@@ -15,4 +15,10 @@ public class GlobalVariables : MonoBehaviour
 
     public Action statusTick;
     public Action onDeath;
+    [SerializeField]protected AnimatorOverrideController _animOverrideController;
+
+    public AnimatorOverrideController animOverrideController
+    {
+        get {return _animOverrideController;}
+    }
 }

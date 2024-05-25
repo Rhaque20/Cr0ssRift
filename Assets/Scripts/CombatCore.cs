@@ -17,9 +17,15 @@ public class CombatCore : MonoBehaviour, IOnDeath
     {
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
+        _animOverrideController = GetComponent<GlobalVariables>().animOverrideController;
     }
 
     public virtual void Attack()
+    {
+
+    }
+
+    public virtual void SpecialAction()
     {
 
     }

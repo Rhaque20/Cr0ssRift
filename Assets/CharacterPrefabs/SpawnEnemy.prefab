@@ -59,7 +59,7 @@ MonoBehaviour:
   _hurtBox: {fileID: 7722136405821507523}
   _hitLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 64
   _moveSet:
   - {fileID: 11400000, guid: 8b25f394af44f514697c06b134337de0, type: 2}
 --- !u!136 &3411280128564203320
@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc8da730dd14d24eba20b10ab9a7a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animOverrideController: {fileID: 0}
 --- !u!114 &5624906176336083712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +174,8 @@ MonoBehaviour:
   _isParryFocused: 1
   _isBlocking: 0
   _dodgePower: 10
-  _parryBox: {fileID: 0}
+  _parrySignal: {fileID: 6064231636296860678}
+  _dodgeSignal: {fileID: 2485147599714285809}
 --- !u!114 &3651649429010961289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +515,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4187920206686437037}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.13}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children:

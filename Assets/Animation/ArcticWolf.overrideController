@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ArcticWolf
+  m_Controller: {fileID: 9100000, guid: 252c37605db07554fb03ce3e00d292ff, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 216403403836ea14dbae53355644c506, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ab8ae664ab8d2bc4492817ca979a1096, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ca805579d8e28f642be15bea8a94582a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ea90e6b2205b4b949ab95bc2adaf446e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7ea82555e2e436a42821b6f995af3d91, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9d0eb80dfba7bea478fa25b0d7e89172, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c5388f0168688fa409fbb4b8367b4b22, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 06106ca19b7e2d049b4835b453911e92, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7d849e9d06af53645ab5845d3b7a74b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9d0eb80dfba7bea478fa25b0d7e89172, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 164a9f6c83056364b8ccdfb26750ac83, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ddd0befe093ede2438d276a486e41025, type: 2}

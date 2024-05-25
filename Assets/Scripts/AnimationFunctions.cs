@@ -21,4 +21,9 @@ public class AnimationFunctions : MonoBehaviour
     {
         _forces.Charge(power);
     }
+
+    public void SpecialAction()
+    {
+        _combatCore.SpecialAction();
+    }
 }

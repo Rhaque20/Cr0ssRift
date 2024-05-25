@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerVariables: GlobalVariables
 {
 
-    [SerializeField]private AnimatorOverrideController _animOverrideController;
+    
     private PlayerControls _playerControls;
 
     private PlayerStaggerSystem _playerStaggerSystem;
@@ -24,11 +24,6 @@ public class PlayerVariables: GlobalVariables
     public PlayerControls playerControls
     {
         get { return _playerControls;}
-    }
-
-    public AnimatorOverrideController animOverrideController
-    {
-        get {return _animOverrideController;}
     }
 
     public PlayerStaggerSystem playerStaggerSystem

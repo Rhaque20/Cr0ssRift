@@ -107,7 +107,7 @@ public class PlayerStats : Stats,ISwitchCharacter
             yield return new WaitForSeconds(2f + _playerVariables.playerStaggerSystem.staggerDuration);
         }
         else
-            yield return new WaitForSeconds(_playerVariables.playerStaggerSystem.staggerDuration * 0.5f);
+            yield return new WaitForSeconds(_playerVariables.playerStaggerSystem.staggerDuration * 0.1f);
         
         Physics.IgnoreLayerCollision(6,7,false);
         _mercyTimer = null;
