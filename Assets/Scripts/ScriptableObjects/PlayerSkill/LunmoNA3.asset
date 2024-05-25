@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ddd79168ce167d4a980ead41d7bbe1f, type: 3}
   m_Name: LunmoNA3
   m_EditorClassIdentifier: 
-  _damage: 40
+  _damage: 60
   _armorDamage: 10
   _statusDamage: 0
   _attribute: 0
   _attackAnimations:
   - {fileID: 7400000, guid: ca75f9ec861706a44abcd8ca0af98ce8, type: 2}
   - {fileID: 7400000, guid: 0e65f61d135936748a8885d0881a9ff9, type: 2}
+  _isChargeable: 0
+  _skillTags: 
   SPCost: 0
+  _canOverrideElement: 0

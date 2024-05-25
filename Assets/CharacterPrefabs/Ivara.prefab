@@ -274,6 +274,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 2e61e7f8984558f40bd8906db53804db,
         type: 2}
+    - target: {fileID: 2856716798624490716, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -420929030, guid: af914ba35c8764140ac8a5b928822b99,
+        type: 3}
     - target: {fileID: 4047552453774066945, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: _animOverrideController
@@ -308,7 +314,7 @@ PrefabInstance:
     - target: {fileID: 6413755830488799313, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6413755830488799313, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
@@ -329,6 +335,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_ActionName
       value: Combat/ToggleFamiliar[/Keyboard/r]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413755830488799313, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_ActionName
+      value: Combat/Parry[/Keyboard/space]
       objectReference: {fileID: 0}
     - target: {fileID: 7079510383464676423, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}

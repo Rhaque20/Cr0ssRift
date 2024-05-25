@@ -543,7 +543,7 @@ MonoBehaviour:
   _hurtBox: {fileID: 8606232278944508191}
   _hitLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 128
   _normalAttacks:
   - {fileID: 11400000, guid: 8221708c4c092cc40ad1d4602446cb54, type: 2}
   - {fileID: 11400000, guid: 1a7c772bc4504024c938bee75a626f52, type: 2}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ddd79168ce167d4a980ead41d7bbe1f, type: 3}
-  m_Name: LunmoNA2
+  m_Name: LucanNA3
   m_EditorClassIdentifier: 
-  _damage: 40
-  _armorDamage: 10
+  _damage: 10
+  _armorDamage: 5
   _statusDamage: 0
   _attribute: 0
   _attackAnimations:
-  - {fileID: 7400000, guid: ebe34e36493873f49b0ed97e5e6c3865, type: 2}
-  - {fileID: 7400000, guid: 266a285a55f00474c98523b2881aca68, type: 2}
+  - {fileID: 7400000, guid: 3c88983d51aac0d48803f874d0eb6138, type: 2}
+  - {fileID: 7400000, guid: a7d1858f63721a545abafd286fb01188, type: 2}
   _isChargeable: 0
   _skillTags: 
   SPCost: 0

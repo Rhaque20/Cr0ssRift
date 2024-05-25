@@ -32,17 +32,9 @@ public class IvaraCore : PlayerCore
     protected override void Start()
     {
         base.Start();
-        PlayerControls playerInputActions = GetComponent<PlayerVariables>().playerControls;
 
-
-        //playerInputActions.Combat.NormalAttack.performed += ctx => Attack();
-        //playerInputActions.Combat.NormalAttack.canceled += ctx => Attack();
-        //playerInputActions.Combat.ChargeAttack.performed += HoldInput;
-
-        _animOverrideController = GetComponent<PlayerVariables>().animOverrideController;
-
-        _chargedAttackAction = playerInputActions.Combat.ChargeAttack;
-        _normalAttackAction = playerInputActions.Combat.NormalAttack;
+        _chargedAttackAction = _playerControls.Combat.ChargeAttack;
+        _normalAttackAction = _playerControls.Combat.NormalAttack;
 
         _activeCamera = Camera.main;
 
@@ -59,13 +51,6 @@ public class IvaraCore : PlayerCore
 
     public override void Attack()
     {
-        // if (_heldTime < _maxHeldTime)
-        //     Debug.Log("Releasing a bolt");
-        // else
-        //     Debug.Log("Too long to be a tap");
-
-        // _heldTime = 0;
-
         if(_boltPower >= 1.0f)
         {
             Debug.Log("Releasing a bolt");

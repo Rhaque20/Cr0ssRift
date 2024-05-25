@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b3e50d1caa80ecd4185ba7c956327736
+guid: 546f43debb7f2504cb621b3077b01d97
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,64 +110,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LunmoIcon
+      name: LucanIdle
       rect:
         serializedVersion: 2
         x: 0
-        y: 500
-        width: 500
-        height: 500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 128
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90083adf0c039d74eb69c9ab01630a55
-      internalID: 1524236499
+      spriteID: 2dfbd750bf8ecf84983b81aad99f2469
+      internalID: -1522631527
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IvaraIcon
+      name: LucanWalk1
       rect:
         serializedVersion: 2
-        x: 500
-        y: 500
-        width: 500
-        height: 500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d290703b07f5f94abd0efac30de01bb
-      internalID: -721916897
+      spriteID: 2b94f94f8608fb44b94e10e4fce0d333
+      internalID: 252252322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LoreleiIcon
+      name: LucanWalk2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2bf07a0ac8795945bc63f364897536b
+      internalID: 1806680413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LucanWalk3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0683128898c01c14ba5cac1b56c2ea54
+      internalID: 783610371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LucanWalk4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 500
-        height: 500
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fd49f78ea88f6047ad165b0eee7af08
-      internalID: -630283989
+      spriteID: 5c76eeffa3d979a44b641b87fd559f26
+      internalID: -2040989296
       vertices: []
       indices: 
       edges: []
@@ -175,7 +217,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 858aa1462ad025a488cc6babc39b1f6a
+    spriteID: 53ab7aa430b99324da6fb7a86933211a
     internalID: 0
     vertices: []
     indices: 
@@ -183,9 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      IvaraIcon: -721916897
-      LoreleiIcon: -630283989
-      LunmoIcon: 1524236499
+      LucanIdle: -1522631527
+      LucanWalk1: 252252322
+      LucanWalk2: 1806680413
+      LucanWalk3: 783610371
+      LucanWalk4: -2040989296
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
