@@ -82,7 +82,8 @@ public class PlayerStats : Stats,ISwitchCharacter
 
     public void SetElement(bool _isSummoned)
     {
-        _attribute = (_isSummoned ? EnumLib.Element.Physical : _familiarElement);
+        Debug.Log("Changing element "+_isSummoned);
+        _attribute = (_isSummoned ? _familiarElement : EnumLib.Element.Physical);
         _hasFamiliarSummoned = _isSummoned;
     }
 

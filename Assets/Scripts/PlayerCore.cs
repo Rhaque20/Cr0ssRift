@@ -59,7 +59,11 @@ public class PlayerCore : CombatCore,ISwitchCharacter
     public void ActivateFamiliarAction(InputAction.CallbackContext ctx)
     {
         if (_canSummonFamiliar && _summonCooldown == null)
+        {
+            Debug.Log("Has summoned familar is set to "+_hasFamiliarSummoned);
             _playerVariables.onSummonFamiliar?.Invoke(!_hasFamiliarSummoned);
+        }
+            
         else
             Debug.Log(" and summon Cooldown is null "+_summonCooldown == null);
     }

@@ -178,7 +178,7 @@ MonoBehaviour:
   _dodgePower: 10
   _parrySignal: {fileID: 6064231636296860678}
   _dodgeSignal: {fileID: 2485147599714285809}
-  _defenseEffect: {fileID: 0}
+  _defenseEffect: {fileID: 2375784864296645525}
 --- !u!114 &3651649429010961289
 MonoBehaviour:
   m_ObjectHideFlags: 0

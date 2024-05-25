@@ -107,6 +107,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     public virtual void Counter(Stats attackerStats)
     {
         attackerStats.CounterArmorDamage(10);
+        DefenseEffect();
     }
 
     public virtual void Dodge()
