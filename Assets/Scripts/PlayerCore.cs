@@ -22,6 +22,10 @@ public class PlayerCore : CombatCore,ISwitchCharacter
     protected PlayerVariables _playerVariables;
 
     protected PlayerDefenseCore _playerDefenseCore;
+
+    protected Animator _familiar;
+
+    protected Coroutine _summonCooldown = null;
     
     // Start is called before the first frame update
     protected override void Start()
@@ -35,6 +39,8 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
         _animOverrideController = _playerVariables.animOverrideController;
         _playerDefenseCore = GetComponent<PlayerDefenseCore>();
+        _familiar = transform.GetChild(1).GetComponent<Animator>();
+        _familiar.gameObject.SetActive(false);
     }
 
     protected void SetCanSummonFamiliar()
@@ -50,15 +56,26 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
     public void ActivateFamiliarAction(InputAction.CallbackContext ctx)
     {
-        if (_canSummonFamiliar)
+        if (_canSummonFamiliar && _summonCooldown == null)
             _playerVariables.onSummonFamiliar?.Invoke(!_hasFamiliarSummoned);
         else
-            Debug.Log("Wait for familiar to recharge");
+            Debug.Log(" and summon Cooldown is null "+_summonCooldown == null);
     }
 
     public void ActivateFamiliar(bool value)
     {
         _hasFamiliarSummoned = value;
+        if (value)
+        {
+            _familiar.gameObject.SetActive(value);
+            _familiar.Play("Summon");
+        }
+        else
+        {
+            _summonCooldown = StartCoroutine(SummonCooldown());
+        }
+        
+        _familiar.SetBool("Summoned",value);
     }
 
     public override void Attack()
@@ -118,10 +135,23 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         _playerVariables.setMove?.Invoke(true);
     }
 
+    public IEnumerator SummonCooldown()
+    {
+        yield return new WaitForSeconds(3f);
+        _summonCooldown = null;
+    }
+
     public virtual void SwitchOut()
     {
         _hasBuffer = false;
         _canAttack = true;
+
+        if( _summonCooldown != null)
+        {
+            StopCoroutine( _summonCooldown);
+            _summonCooldown = null;
+        }
+
         _playerControls.Combat.NormalAttack.performed -= AttackAction;
         _playerControls.Combat.ToggleFamiliar.performed -= ActivateFamiliarAction;
 
@@ -153,6 +183,11 @@ public class PlayerCore : CombatCore,ISwitchCharacter
 
         _playerVariables.onSummonFamiliar += _playerStats.SetElement;
         _playerVariables.onSummonFamiliar += ActivateFamiliar;
+        if(_summonCooldown != null)
+        {
+            Debug.Log("Somehow summoncooldown wasn't null on new switch in");
+            _summonCooldown = null;
+        }
         
     }
 }

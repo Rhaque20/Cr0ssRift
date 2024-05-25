@@ -33,6 +33,12 @@ PrefabInstance:
       propertyPath: _familiarElement
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5910991522153402699, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 1fc84451214c3fc4d8a29c5b0480daf8,
+        type: 2}
     - target: {fileID: 6321358393822328408, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: _combatCore

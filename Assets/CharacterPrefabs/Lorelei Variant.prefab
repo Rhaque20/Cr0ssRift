@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 105481252733059395, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1921159755131004772, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
@@ -35,6 +35,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 9069c0e041a84c44fb6fc137451c3d79,
         type: 2}
+    - target: {fileID: 4329460766871266611, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -154207555, guid: 63e77f8f9d4a91442adc60f7ad18a49b,
+        type: 3}
     - target: {fileID: 5482788087448792120, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: m_Name
@@ -55,6 +61,12 @@ PrefabInstance:
       propertyPath: _familiarElement
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5910991522153402699, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: c8789c6da6168fc47a0b1b2bc71cfb5d,
+        type: 2}
     - target: {fileID: 6321358393822328408, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: _combatCore
