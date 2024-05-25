@@ -96,7 +96,7 @@ public class IvaraCore : PlayerCore
         {
             Debug.Log("Winding up a bolt");
             _charging = true;
-            _boltPower += _chargeRate * Time.deltaTime;
+            _boltPower += _chargeRate * Time.deltaTime * (_hasFamiliarSummoned ? 2 : 1);
 
             if (_chargeBar)
             {
