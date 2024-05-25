@@ -106,13 +106,29 @@ public class Stats : MonoBehaviour
     public virtual void DamageProcess(Skill skillReceived, Stats _attackerStats)
     {
         DealDamage(skillReceived.damage,skillReceived.attribute, _attackerStats);
-        DealArmorDamage(skillReceived.armorDamage,skillReceived.attribute);
-        DealStatusDamage(skillReceived.statusDamage,(EnumLib.Status)skillReceived.attribute);
+
+        if (!_isDead)
+        {
+            DealArmorDamage(skillReceived.armorDamage,skillReceived.attribute);
+            DealStatusDamage(skillReceived.statusDamage,(EnumLib.Status)skillReceived.attribute);
+        }
+        
     }
 
     public virtual void DealStatusDamage(int statusDamage,EnumLib.Status status)
     {
 
+    }
+
+    public virtual void CounterArmorDamage(int armorDMG)
+    {
+        
+        DealArmorDamage(armorDMG,EnumLib.Element.Physical);
+
+        if(_currentArmor <= 0)
+        {
+            _allVariables.onCountered?.Invoke();
+        }
     }
 
     public virtual void DealArmorDamage(int armorDamage,EnumLib.Element attribute)
@@ -156,6 +172,11 @@ public class Stats : MonoBehaviour
             if(_attribute == EnumLib.Element.Fire)
                 modifier = 2;
             break;
+        }
+
+        if (modifier >= 2)
+        {
+            Debug.Log("EFFECTIVE!");
         }
 
         return modifier;

@@ -9,7 +9,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
 
     protected int _maxDodges = 1, _currentDodges = 0;
 
-    protected bool _isParrying = false, _isDodging = false;
+    protected bool _isParrying = false, _isDodging = false, _effectTriggered = false;
 
     protected Coroutine _iFrames = null;
 
@@ -19,6 +19,8 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     protected Animator _anim;
 
     protected Movement _movement;
+    
+    [SerializeField]GameObject _defenseEffect;
 
     public bool isParrying
     {
@@ -74,6 +76,20 @@ public class DefenseCore : MonoBehaviour, IOnDeath
         
     }
 
+    protected IEnumerator DefenseEffectTimer()
+    {
+        _defenseEffect.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        _defenseEffect.SetActive(false);
+        _effectTriggered = false;
+    }
+
+    public virtual void DefenseEffect()
+    {
+        _effectTriggered = true;
+        StartCoroutine(DefenseEffectTimer());
+    }
+
     public virtual void Parry()
     {
         if(!_isDodging && !_isParrying && _iFrames == null)
@@ -86,6 +102,11 @@ public class DefenseCore : MonoBehaviour, IOnDeath
             _iFrames = StartCoroutine(IFrames(0.5f));
         }
         
+    }
+
+    public virtual void Counter(Stats attackerStats)
+    {
+        attackerStats.CounterArmorDamage(10);
     }
 
     public virtual void Dodge()
