@@ -14,6 +14,8 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
 
     protected Coroutine _staggerTimer = null;
 
+    protected Forces _forces;
+
     public float staggerDuration
     {
         get { return _staggerDuration; }
@@ -29,8 +31,10 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         _rigid = GetComponent<Rigidbody>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _anim = transform.GetChild(0).GetComponent<Animator>();
+        _forces = GetComponent<Forces>();
         GetComponent<GlobalVariables>().onArmorBreak += SetIsArmored;
         GetComponent<Stats>().onDeath += OnDeath;
+        GetComponent<GlobalVariables>().onCountered += Stagger;
     }
 
     public void SetIsArmored(bool value)
@@ -68,18 +72,23 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
 
         Recovery();
     }
-
-    public virtual void KnockBack(Vector3 attackerPos)
+    
+    public void Stagger()
     {
-        if (!_isArmored)
-            _rigid.AddForce((attackerPos - transform.position) * -_knockBackPower);
-
         if(_staggerTimer != null)
         {
             StopCoroutine(_staggerTimer);
         }
 
         _staggerTimer = StartCoroutine(StaggerTimer());
+    }
+
+    public virtual void KnockBack(Vector3 attackerPos)
+    {
+        if(!_isArmored)
+            _forces.Knockback(_knockBackPower,attackerPos,_staggerDuration);
+
+        Stagger();
 
     }
 

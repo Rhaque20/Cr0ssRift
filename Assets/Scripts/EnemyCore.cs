@@ -7,8 +7,6 @@ public class EnemyCore : CombatCore
 {
     [SerializeField]protected EnemySkill[] _moveSet = new EnemySkill[1];
     protected Transform _targetPos;
-
-    protected EnemySkill _activeSkill = null;
     protected Coroutine _idleTimer = null, _attackDelay = null;
 
     protected Coroutine[] _cooldowns;
@@ -25,7 +23,7 @@ public class EnemyCore : CombatCore
 
     public EnemySkill activeSkill
     {
-        get { return _activeSkill; }
+        get { return _activeSkill as EnemySkill; }
     }
     
     void Start()
@@ -47,7 +45,7 @@ public class EnemyCore : CombatCore
 
         GetComponent<EnemyStats>().onDeath += OnDeath;
 
-        _enemyStats = GetComponent<EnemyStats>();
+        //_enemyStats = GetComponent<EnemyStats>();
 
         _cooldowns = new Coroutine[_moveSet.Length];
         
@@ -58,32 +56,33 @@ public class EnemyCore : CombatCore
             
     }
 
-    public override void DealDamage(Collider entity)
-    {
-        PlayerDefenseCore _playerDefenseCore = entity.GetComponent<PlayerDefenseCore>();
+    // public override void DealDamage(Collider entity)
+    // {
+    //     PlayerDefenseCore _playerDefenseCore = entity.GetComponent<PlayerDefenseCore>();
 
-        Debug.Log("Hit "+entity.name);
+    //     Debug.Log("Hit "+entity.name);
 
-        if(_activeSkill == null)
-            Debug.Log("Active skill is null!");
+    //     if(_activeSkill == null)
+    //         Debug.Log("Active skill is null!");
 
-        if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
-        {
-            Debug.Log("Parry!");
-            return;
-        }
-        else if(_playerDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
-        {
-            Debug.Log("Evaded");
-            return;
-        }
+    //     if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+    //     {
+    //         Debug.Log("Parry!");
+    //         _playerDefenseCore.Counter(_enemyStats);
+    //         return;
+    //     }
+    //     else if(_playerDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
+    //     {
+    //         Debug.Log("Evaded");
+    //         return;
+    //     }
 
-        Stats stat = entity.GetComponent<Stats>();
-        entity.GetComponent<Stats>().DamageProcess(_activeSkill,_enemyStats);
+    //     Stats stat = entity.GetComponent<Stats>();
+    //     entity.GetComponent<Stats>().DamageProcess(_activeSkill,_enemyStats);
 
-        if(!stat.isDead)
-            entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-    }
+    //     if(!stat.isDead)
+    //         entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+    // }
 
     public override void HitScan()
     {
@@ -134,12 +133,12 @@ public class EnemyCore : CombatCore
             _idleTimer = StartCoroutine(IdleTimer(2f));
         else
         {
-            if(_activeSkill.coolDown != 0 && _cooldowns[_usedMoveIndex] == null)
+            if(activeSkill.coolDown != 0 && _cooldowns[_usedMoveIndex] == null)
             {
-                Debug.Log("Setting skill "+_usedMoveIndex+"cooldown of "+_activeSkill.name+" to "+_activeSkill.coolDown);
-                _cooldowns[_usedMoveIndex] = StartCoroutine(Cooldown(_usedMoveIndex,_activeSkill.coolDown));
+                Debug.Log("Setting skill "+_usedMoveIndex+"cooldown of "+_activeSkill.name+" to "+activeSkill.coolDown);
+                _cooldowns[_usedMoveIndex] = StartCoroutine(Cooldown(_usedMoveIndex,activeSkill.coolDown));
             }
-            _idleTimer = StartCoroutine(IdleTimer(_activeSkill.idleTime));
+            _idleTimer = StartCoroutine(IdleTimer(activeSkill.idleTime));
         }
         
         _activeSkill = null;

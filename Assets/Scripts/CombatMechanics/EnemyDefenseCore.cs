@@ -21,4 +21,9 @@ public class EnemyDefenseCore : DefenseCore
 
         _anim.SetTrigger("iFrameEnd");
     }
+
+    public override void Dodge()
+    {
+
+    }
 }

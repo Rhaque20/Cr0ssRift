@@ -9,6 +9,10 @@ public class CombatCore : MonoBehaviour, IOnDeath
     [SerializeField]protected BoxCollider _hurtBox;
     [SerializeField]protected LayerMask _hitLayers;
 
+    protected Skill _activeSkill;
+
+    protected Stats _stats;
+
     protected CapsuleCollider _capsuleCollider;
 
     protected bool _isAttacking = false, _canAttack = true;
@@ -18,6 +22,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _animOverrideController = GetComponent<GlobalVariables>().animOverrideController;
+        _stats = GetComponent<Stats>();
     }
 
     public virtual void Attack()
@@ -49,12 +54,29 @@ public class CombatCore : MonoBehaviour, IOnDeath
 
     public virtual void DealDamage(Collider entity)
     {
+        DefenseCore _defenseCore = entity.GetComponent<DefenseCore>();
+
+        if(_activeSkill == null)
+            Debug.Log("Active skill is null!");
+
+        if(_defenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+        {
+            Debug.Log("Parry!");
+            _defenseCore.Counter(_stats);
+            return;
+        }
+        else if(_defenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
+        {
+            Debug.Log("Evaded");
+            return;
+        }
+
         Stats stat = entity.GetComponent<Stats>();
-        Debug.Log("Hit "+entity.name);
-        entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-        stat.DealArmorDamage(10,EnumLib.Element.Physical);
-        stat.DealDamage(10,EnumLib.Element.Physical,GetComponent<Stats>());
-        stat.DealStatusDamage(10,EnumLib.Status.Paralyze);
+        entity.GetComponent<Stats>().DamageProcess(_activeSkill,_stats);
+
+        if(!stat.isDead)
+            entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+
     }
 
     public virtual void HitScan()

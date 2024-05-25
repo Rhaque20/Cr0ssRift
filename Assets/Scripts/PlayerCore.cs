@@ -26,6 +26,8 @@ public class PlayerCore : CombatCore,ISwitchCharacter
     protected Animator _familiar;
 
     protected Coroutine _summonCooldown = null;
+
+    // protected PlayerSkill _activeSkill;
     
     // Start is called before the first frame update
     protected override void Start()
@@ -35,7 +37,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         _playerVariables = GetComponent<PlayerVariables>();
         _playerControls = _playerVariables.playerControls;
 
-        _playerStats = GetComponent<PlayerStats>();
+        _playerStats = _stats as PlayerStats;
 
         _animOverrideController = _playerVariables.animOverrideController;
         _playerDefenseCore = GetComponent<PlayerDefenseCore>();
@@ -85,6 +87,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             _isAttacking = true;
             _animOverrideController["Attack"] = _normalAttacks[_currentChain].ReturnAttackAnimation(0);
             _animOverrideController["Recover"] = _normalAttacks[_currentChain].ReturnAttackAnimation(1);
+            _activeSkill = _normalAttacks[_currentChain];
             _anim.Play("Attack");
             _playerVariables.setMove?.Invoke(false);
         }
@@ -93,6 +96,29 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             _hasBuffer = true;
         }
     }
+
+    // public override void DealDamage(Collider entity)
+    // {
+    //     EnemyDefenseCore _enemyDefenseCore = entity.GetComponent<EnemyDefenseCore>();
+
+    //     Debug.Log("Hit "+entity.name);
+
+    //     if(_activeSkill == null)
+    //         Debug.Log("Active skill is null!");
+
+    //     if(_enemyDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+    //     {
+    //         Debug.Log("Parry!");
+    //         return;
+    //     }
+    //     else if(_enemyDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
+    //     {
+    //         Debug.Log("Evaded");
+    //         return;
+    //     }
+
+    //     entity.GetComponent<Stats>().DamageProcess(_activeSkill,_playerStats);
+    // }
 
     public override void HitScan()
     {
@@ -107,7 +133,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
                 Debug.Log("Hit "+entity.name);
                 entity.GetComponent<EnemyStaggerSystem>().KnockBack(transform.position);
                 // Will need to rescale this once skills roll in
-                if (_normalAttacks[_currentChain].canOverrideElement)
+                if (_normalAttacks[_currentChain].canOverrideElement && _hasFamiliarSummoned)
                 {
                     _normalAttacks[_currentChain].attribute = _playerStats.familiarElement;
                 }
@@ -116,7 +142,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
                     _normalAttacks[_currentChain].attribute = EnumLib.Element.Physical;
                 }
                 
-                entity.GetComponent<Stats>().DamageProcess(_normalAttacks[_currentChain],_playerStats);
+                DealDamage(entity);
             }
         }
     }
@@ -131,6 +157,8 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             _hasBuffer = false;
             Attack();
         }
+        else
+            _activeSkill = null;
 
         _playerVariables.setMove?.Invoke(true);
     }

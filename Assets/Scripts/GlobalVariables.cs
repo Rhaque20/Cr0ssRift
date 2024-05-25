@@ -13,6 +13,8 @@ public class GlobalVariables : MonoBehaviour
     public Action<float> onHealthUpdate;
     public Action<float> onArmorUpdate;
 
+    public Action onCountered;
+
     public Action statusTick;
     public Action onDeath;
     [SerializeField]protected AnimatorOverrideController _animOverrideController;
