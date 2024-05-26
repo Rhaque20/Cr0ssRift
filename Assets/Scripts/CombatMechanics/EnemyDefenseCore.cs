@@ -9,6 +9,8 @@ public class EnemyDefenseCore : DefenseCore
         _isParrying = false;
         _isDodging = false;
 
+        _globalVariables.endIframes?.Invoke();
+
         if(!_isBlocking)
         {
             // Set movement enable here
@@ -20,10 +22,7 @@ public class EnemyDefenseCore : DefenseCore
         }
 
         _anim.SetTrigger("iFrameEnd");
-    }
 
-    public override void Dodge()
-    {
-
+        _iFrames = null;
     }
 }

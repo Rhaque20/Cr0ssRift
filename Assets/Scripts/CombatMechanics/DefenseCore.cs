@@ -22,6 +22,8 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     
     [SerializeField]GameObject _defenseEffect;
 
+    protected GlobalVariables _globalVariables;
+
     public bool isParrying
     {
         get { return _isParrying;}
@@ -37,6 +39,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
         _rigid = GetComponent<Rigidbody>();
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _movement = GetComponent<Movement>();
+        _globalVariables = GetComponent<GlobalVariables>();
     }
 
     protected virtual IEnumerator IFrames(float duration)
@@ -108,6 +111,13 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     {
         attackerStats.CounterArmorDamage(10);
         DefenseEffect();
+        _globalVariables.onCountering?.Invoke(attackerStats);
+    }
+
+    public virtual void Evaded(Stats attackerStats)
+    {
+        DefenseEffect();
+        _globalVariables.onEvading?.Invoke(attackerStats);
     }
 
     public virtual void Dodge()

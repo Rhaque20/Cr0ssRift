@@ -34,7 +34,7 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         _forces = GetComponent<Forces>();
         GetComponent<GlobalVariables>().onArmorBreak += SetIsArmored;
         GetComponent<Stats>().onDeath += OnDeath;
-        GetComponent<GlobalVariables>().onCountered += Stagger;
+        GetComponent<GlobalVariables>().onBeingCountered += Stagger;
     }
 
     public void SetIsArmored(bool value)

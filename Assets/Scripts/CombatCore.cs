@@ -15,7 +15,9 @@ public class CombatCore : MonoBehaviour, IOnDeath
 
     protected CapsuleCollider _capsuleCollider;
 
-    protected bool _isAttacking = false, _canAttack = true;
+    protected DefenseCore _defenseCore;
+
+    [SerializeField]protected bool _isAttacking = false, _canAttack = true;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -23,6 +25,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _animOverrideController = GetComponent<GlobalVariables>().animOverrideController;
         _stats = GetComponent<Stats>();
+        _defenseCore = GetComponent<DefenseCore>();
     }
 
     public virtual void Attack()
@@ -41,6 +44,16 @@ public class CombatCore : MonoBehaviour, IOnDeath
     }
 
     public virtual void Recover()
+    {
+
+    }
+
+    public virtual void EvasionEffect(Stats attackerStats)
+    {
+
+    }
+
+    public virtual void ParryEffect(Stats attackerStats)
     {
 
     }
@@ -68,6 +81,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         else if(_defenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
         {
             Debug.Log("Evaded");
+            _defenseCore.Evaded(_stats);
             return;
         }
 

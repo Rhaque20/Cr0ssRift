@@ -26,7 +26,7 @@ public class EnemyCore : CombatCore
         get { return _activeSkill as EnemySkill; }
     }
     
-    void Start()
+    protected override void Start()
     {
         base.Start();
         if (_animOverrideController != null)
@@ -119,8 +119,10 @@ public class EnemyCore : CombatCore
     protected IEnumerator IdleTimer(float idleTime)
     {
         yield return new WaitForSeconds(idleTime);
+        //Deal with isAttacking left true after using slash
         _canAttack = true;
         _targetPos = GetComponent<EnemyMovement>().targetPos;
+        Debug.Log("Ready to fight");
     }
 
     public override void Recover()

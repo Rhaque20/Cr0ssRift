@@ -6,6 +6,13 @@ using UnityEngine;
 public class WolfCore : EnemyCore
 {
     const int WARPATTACK = 0, HOWL = 1, EVADE = 2;
+
+    protected override void Start()
+    {
+        base.Start();
+        _enemyVariables.onEvading += EvasionEffect;
+        _enemyVariables.endIframes += Recover;
+    }
     public override void SpecialAction()
     {
         Debug.Log("Calling special action");
@@ -19,15 +26,43 @@ public class WolfCore : EnemyCore
         }
     }
 
+    public override void EvasionEffect(Stats attackerStats)
+    {
+        Debug.Log("Countered "+attackerStats.name);
+        PlayerStats _playerStats = attackerStats as PlayerStats;
+        
+        _playerStats.DealStatusDamage(10,EnumLib.Status.Frozen);
+    }
+
+    public override void Attack()
+    {
+        if(_usedMoveIndex == EVADE)
+        {
+            _defenseCore.Dodge();
+        }
+        else
+            base.Attack();
+    }
+
     public override void SkillSelect()
     {
         if(Vector3.Distance(transform.position,_targetPos.position) < 2f)
         {
-            _usedMoveIndex = HOWL;
+            if(_cooldowns[EVADE] == null)
+            {
+                Debug.Log("Choosing Evade");
+                _usedMoveIndex = EVADE;
+            }
+            else
+            {
+                _usedMoveIndex = HOWL;
+                Debug.Log("Choosing Howl");
+            }
 
         }
         else
         {
+            Debug.Log("Choosing warp");
             _usedMoveIndex = WARPATTACK;
         }
 
@@ -38,6 +73,13 @@ public class WolfCore : EnemyCore
 
             _activeSkill = _moveSet[_usedMoveIndex];
         }
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+
+        _enemyVariables.onEvading -= EvasionEffect;
     }
 
 }

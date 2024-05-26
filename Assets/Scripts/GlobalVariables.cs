@@ -13,7 +13,12 @@ public class GlobalVariables : MonoBehaviour
     public Action<float> onHealthUpdate;
     public Action<float> onArmorUpdate;
 
-    public Action onCountered;
+    public Action onBeingCountered;
+
+    public Action<Stats> onCountering;
+    public Action<Stats> onEvading;
+
+    public Action endIframes;
 
     public Action statusTick;
     public Action onDeath;

@@ -127,7 +127,7 @@ public class Stats : MonoBehaviour
 
         if(_currentArmor <= 0)
         {
-            _allVariables.onCountered?.Invoke();
+            _allVariables.onBeingCountered?.Invoke();
         }
     }
 

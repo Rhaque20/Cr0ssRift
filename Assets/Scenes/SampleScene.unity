@@ -839,6 +839,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1138051803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &25960600
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.544243
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0817394
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.7553897
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737719240092758829, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4789637183760005883, guid: 7e47463e917149f4885beed4a176182d,
+        type: 3}
+      propertyPath: m_Name
+      value: ArcticWolf Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e47463e917149f4885beed4a176182d, type: 3}
 --- !u!1 &34397712
 GameObject:
   m_ObjectHideFlags: 0
@@ -9460,6 +9528,8 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 128
+  _isAttacking: 0
+  _canAttack: 1
   _normalAttacks:
   - {fileID: 11400000, guid: 6b27198f980085e4ea6bc74c2941aa0a, type: 2}
   - {fileID: 11400000, guid: 518715e578a15434d9920ca558cf5a13, type: 2}
@@ -33629,3 +33699,4 @@ SceneRoots:
   - {fileID: 1634930870}
   - {fileID: 1978012313}
   - {fileID: 2070311667}
+  - {fileID: 25960600}
