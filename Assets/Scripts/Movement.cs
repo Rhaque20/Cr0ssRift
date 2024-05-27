@@ -15,6 +15,8 @@ public class Movement : MonoBehaviour,IOnDeath
 
     protected Vector3 _direction = Vector3.zero;
 
+    protected Stats _stats;
+
     public Vector3 direction
     {
         get { return _direction; }
@@ -25,6 +27,7 @@ public class Movement : MonoBehaviour,IOnDeath
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _rigid = GetComponent<Rigidbody>();
         GetComponent<GlobalVariables>().setMove += SetMove;
+        _stats = GetComponent<Stats>();
     }
 
     protected virtual void Move()

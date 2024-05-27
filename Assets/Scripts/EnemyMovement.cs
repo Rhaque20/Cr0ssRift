@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-
+[RequireComponent(typeof(EnemyStats))]
 public class EnemyMovement : Movement
 {
     [SerializeField] private Transform _targetPos;

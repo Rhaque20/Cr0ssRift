@@ -49,6 +49,19 @@ public class IvaraCore : PlayerCore
         }
     }
 
+    public void SlowdownWhileCharging(InputAction.CallbackContext callback)
+    {
+        if(_boltPower < 1.0f)
+            _playerStats.speedModifier = 0.5f;
+        else
+            _playerStats.speedModifier = 1.0f;
+    }
+
+    public void RevertSpeed(InputAction.CallbackContext callback)
+    {
+        _playerStats.speedModifier = 1.0f;
+    }
+
     public override void Attack()
     {
         if(_boltPower >= 1.0f)
@@ -141,6 +154,8 @@ public class IvaraCore : PlayerCore
         base.SwitchOut();
         if (_aimTelegraph.gameObject.activeSelf)
             _aimTelegraph.gameObject.SetActive(false);
+        _playerControls.Combat.ChargeAttack.performed -= SlowdownWhileCharging;
+        _playerControls.Combat.ChargeAttack.canceled -= RevertSpeed;
     }
 
     public override void SwitchIn()
@@ -149,6 +164,9 @@ public class IvaraCore : PlayerCore
 
         if (!_aimTelegraph.gameObject.activeSelf && _boltPower >= 1f)
             _aimTelegraph.gameObject.SetActive(true);
+
+        _playerControls.Combat.ChargeAttack.performed += SlowdownWhileCharging;
+        _playerControls.Combat.ChargeAttack.canceled += RevertSpeed;
     }
 
     public override void OnDeath()

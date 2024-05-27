@@ -160,6 +160,7 @@ public class PlayerCore : CombatCore,ISwitchCharacter
         {
             _hasBuffer = false;
             Attack();
+            return;
         }
         else
             _activeSkill = null;

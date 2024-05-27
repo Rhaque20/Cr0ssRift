@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerStats))]
 public class PlayerMovement : Movement, ISwitchCharacter
 {
     PlayerInput _playerInput;
@@ -31,7 +32,7 @@ public class PlayerMovement : Movement, ISwitchCharacter
     {
         if (_direction.x != 0)
             FaceDirection(_direction.x);
-        _rigid.MovePosition(transform.position + (_direction.normalized * Time.deltaTime * _moveSpeed));
+        _rigid.MovePosition(transform.position + (_direction.normalized * Time.deltaTime * _moveSpeed * _stats.speedModifier));
         _anim.SetFloat("MoveIntensity",_direction.magnitude);
     }
 

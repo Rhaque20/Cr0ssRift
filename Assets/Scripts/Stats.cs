@@ -16,7 +16,7 @@ public class Stats : MonoBehaviour
 
     protected int _currentHP = 0, _currentArmor = 0;
 
-    protected float _damageModifier = 1,_armorDamageModifier = 1;
+    protected float _damageModifier = 1,_armorDamageModifier = 1, _speedModifier = 1, _damageReduction = 0;
 
     protected Coroutine _regenerateArmor = null;
 
@@ -57,6 +57,12 @@ public class Stats : MonoBehaviour
     public float armorDamageModifier
     {
         get { return _armorDamageModifier; }
+    }
+
+    public float speedModifier
+    {
+        get { return _speedModifier; }
+        set { _speedModifier = value; }
     }
 
     public bool isDead
@@ -124,7 +130,7 @@ public class Stats : MonoBehaviour
 
     public virtual void DamageProcess(Skill skillReceived, Stats _attackerStats)
     {
-        DealDamage(skillReceived.damage,skillReceived.attribute, _attackerStats);
+        DealDamage(skillReceived.damage,skillReceived.attribute, _attackerStats, skillReceived);
 
         if (!_isDead)
         {
@@ -226,10 +232,32 @@ public class Stats : MonoBehaviour
         return new Vector3(transform.position.x + UnityEngine.Random.Range(-0.5f,2f), transform.position.y + UnityEngine.Random.Range(0f,2f), transform.position.z - 0.1f);
     }
 
-    public virtual void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats)
+    public virtual void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats, Skill oncomingSkill)
     {
         double elementModifier = ElementModifier(attribute);
-        double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * elementModifier;
+        float damageRed = 0f;
+
+        if(_allVariables.defenseCore.isBlocking)
+        {
+            if(oncomingSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+            {
+                Debug.Log("Somewhat blocked hit");
+                damageRed = 0.25f;
+            }
+            else if(oncomingSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
+            {
+                Debug.Log("Broke through guard!");
+                damageRed = 0f;
+            }
+            else
+            {
+                Debug.Log("Blocked hit");
+                damageRed = 0.75f;
+            }
+        }
+
+
+        double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * elementModifier * (1 - damageRed);
 
         int finalDamage = (int)Mathf.Round((float)damageCalc);
 
