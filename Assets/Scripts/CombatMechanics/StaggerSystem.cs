@@ -44,7 +44,7 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
 
     protected virtual void Recovery()
     {
-        if(!_isArmored)
+        if(!_isArmored || _anim.GetBool("Staggered"))
         {
             _anim.SetBool("Staggered",false);
             GetComponent<GlobalVariables>().setMove?.Invoke(true);
@@ -70,6 +70,8 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
 
         yield return new WaitForSeconds(_staggerDuration);
 
+        Debug.Log("Ending stagger");
+
         Recovery();
     }
     
@@ -78,8 +80,9 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
         if(_staggerTimer != null)
         {
             StopCoroutine(_staggerTimer);
+            Debug.Log("Canceling stagger");
         }
-
+        Debug.Log("Starting stagger");
         _staggerTimer = StartCoroutine(StaggerTimer());
     }
 
