@@ -72,7 +72,7 @@ AnimationClip:
     - time: 0
       value: {fileID: -876546973899608171, guid: 6d0510094bc1249419c03f474d895d08,
         type: 3}
-    - time: 0.75
+    - time: 1
       value: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     attribute: m_Materials.Array.data[0]
     path: 
@@ -135,7 +135,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.8333333
+    m_StopTime: 1.0833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

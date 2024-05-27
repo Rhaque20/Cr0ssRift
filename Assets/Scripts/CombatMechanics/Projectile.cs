@@ -16,6 +16,8 @@ public class Projectile : MonoBehaviour
     protected GameObject _originalPrefab;
 
     protected Rigidbody _rigid;
+
+    protected Coroutine _bulletLife = null;
     
     void Start()
     {
@@ -39,7 +41,8 @@ public class Projectile : MonoBehaviour
             _isFriendly = false;
         }
 
-        _hurtBox.enabled = true;
+        if(_hurtBox != null)
+            _hurtBox.enabled = true;
     }
 
     public void SetUpPrefab(GameObject prefab)
@@ -65,11 +68,20 @@ public class Projectile : MonoBehaviour
             ProjectileManager.instance.ReturnProjectile(gameObject,_originalPrefab);
     }
 
-    public void FireAtAPosition(Vector3 position, float force)
+    private IEnumerator ProjectileLife(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _rigid.velocity = Vector3.zero;
+        _rigid.angularVelocity = Vector3.zero;
+        ReturnProjectile();
+    }
+
+    public void FireAtAPosition(Vector3 position, float force, float duration)
     {
         if(_rigid != null)
         {
             _rigid.AddForce((position - transform.position).normalized * force,ForceMode.Impulse);
+            _bulletLife = StartCoroutine(ProjectileLife(duration));
         }
         else
             Debug.Log("Rigidbody is null");

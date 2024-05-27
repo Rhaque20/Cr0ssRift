@@ -1,14 +1,30 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OgreCore : EnemyCore
 {
     const int SLAM = 0, WAVE = 1, ORB = 2;
-    [SerializeField]GameObject _columnObject;
+    [SerializeField]GameObject _columnObject, _lightningBullet;
     private int _columnsSpawned = 0, _maxColumnSpawns = 3;
     int part = 1;
 
-    private Coroutine _columnSpawnTimer = null;
+    private Coroutine _columnSpawnTimer = null, _orbFuryRest = null;
+    Projectile[] _bulletSet = new Projectile[10];
+
+    private Vector3[] _bulletPositions = new Vector3[10];
+
+    protected override void Start()
+    {
+        base.Start();
+        ProjectileManager.instance.AddProjectile(_lightningBullet,10);
+        for(int i = 0; i < 10; i++)
+        {
+            _bulletSet[i] = ProjectileManager.instance.SummonProjectile(_lightningBullet).GetComponent<Projectile>();
+            _bulletSet[i].gameObject.SetActive(false);
+            _bulletSet[i].SetUpProjectile(_enemyStats,_moveSet[ORB]);
+        }
+    }
 
     public override void SpecialAction()
     {
@@ -20,14 +36,21 @@ public class OgreCore : EnemyCore
         {
             if (part == 1)
             {
-
+                for(int i = 0; i < _bulletPositions.Length; i++)
+                {
+                    _bulletSet[i].transform.position = new Vector3(transform.position.x,8f, transform.position.z);
+                    _bulletSet[i].gameObject.SetActive(true);
+                }
+                part++;
             }
             else
             {
                 part = 1;
+                _orbFuryRest = StartCoroutine(OrbFury());
             }
         }
     }
+
 
     private IEnumerator SpawnMultipleColumns()
     {
@@ -45,8 +68,14 @@ public class OgreCore : EnemyCore
         _columnSpawnTimer = null;
     }
 
-    private IEnumerator OrbFuryRest()
+    private IEnumerator OrbFury()
     {
+        for(int i = 0; i < 10; i++)
+        {
+            _bulletSet[i].FireAtAPosition(_targetPos.position,20,2f);
+            yield return new WaitForSeconds(0.125f);
+        }
+
         yield return new WaitForSeconds(2f);
         Recover();
     }
@@ -56,6 +85,10 @@ public class OgreCore : EnemyCore
         if(Vector3.Distance(transform.position,_targetPos.position) < 4f && _columnSpawnTimer == null)
         {
             _usedMoveIndex = SLAM;
+        }
+        else
+        {
+            _usedMoveIndex = ORB;
         }
 
         if(_usedMoveIndex != -1)
@@ -73,4 +106,14 @@ public class OgreCore : EnemyCore
     //     SpecialAction();
     //     base.Recover();
     // }
+
+     public override void OnDeath()
+    {
+        if(_columnSpawnTimer != null)
+            StopCoroutine(_columnSpawnTimer);
+        if(_orbFuryRest != null)
+            StopCoroutine(_orbFuryRest);
+        
+        base.OnDeath();
+    }
 }

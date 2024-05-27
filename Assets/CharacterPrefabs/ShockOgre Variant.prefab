@@ -300,3 +300,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db86f53cfbb944c43a38b29c3ca209ec, type: 2}
   _columnObject: {fileID: 1521693035455794535, guid: aebb86603e26517469804c8e73d7d3b5,
     type: 3}
+  _lightningBullet: {fileID: 7847084978647527818, guid: 44606c248b613ef4caa1c7880b127a90,
+    type: 3}

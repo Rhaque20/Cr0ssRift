@@ -42,8 +42,9 @@ public class EnemyCore : CombatCore
         _enemyVariables = GetComponent<EnemyVariables>();
 
         PlayerPartyManager.instance.onPlayerSwitched += UpdateTarget;
+        _enemyStats = _stats as EnemyStats;
 
-        GetComponent<EnemyStats>().onDeath += OnDeath;
+        _enemyStats.onDeath += OnDeath;
 
         //_enemyStats = GetComponent<EnemyStats>();
 
