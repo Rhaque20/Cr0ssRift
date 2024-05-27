@@ -4,7 +4,8 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField]Transform _barriers;
     [SerializeField]Transform _enemyWaves;
-    [SerializeField]BattleZones[] _battleZones = new BattleZones[0];
+    [SerializeField]Transform _battleZoneParent;
+    BattleZones[] _battleZones;
     public static LevelManager instance;
 
     [SerializeField]int _currentWaveCount = 0, _currentWave = 0;
@@ -16,6 +17,12 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _battleZones = new BattleZones[_battleZoneParent.childCount];
+
+        for(int i = 0; i < _battleZoneParent.childCount; i++)
+        {
+            _battleZones[i] = _battleZoneParent.GetChild(i).GetComponent<BattleZones>();
+        }
         _currentWaveCount = _enemyWaves.GetChild(_currentWave).transform.childCount;
 
         if(_currentWaveCount == 0)
@@ -35,6 +42,9 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnWave(int index)
     {
+        if (index < 0)
+            return;
+        
         _enemyWaves.GetChild(index).gameObject.SetActive(true);
         _currentWaveCount = _enemyWaves.GetChild(index).childCount;
         _currentWave = index;
