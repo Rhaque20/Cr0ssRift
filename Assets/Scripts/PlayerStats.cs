@@ -156,7 +156,8 @@ public class PlayerStats : Stats,ISwitchCharacter
 
     public override void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats)
     {
-        double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * ElementModifier(attribute);
+        double elementModifier = ElementModifier(attribute);
+        double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * elementModifier;
 
         damageCalc *= _attackerStats.damageModifier;
         int finalDamage = (int)Mathf.Round((float)damageCalc);
@@ -164,6 +165,22 @@ public class PlayerStats : Stats,ISwitchCharacter
         _currentHP = Mathf.Clamp(_currentHP - finalDamage,0,_maxHP);
 
         PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP);
+
+        int efficacyType;
+
+        if(IsWeakness(attribute))
+        {
+            efficacyType = EFFECTIVE;
+        }
+        else
+        {
+            if(elementModifier >= 1.0f)
+                efficacyType = NORMAL;
+            else
+                efficacyType = RESIST;
+        }
+
+        DamageNumberManager.instance.GenerateDMGNum(attribute,finalDamage,GenerateRandomPosition(),efficacyType);
 
         if (_currentHP == 0)
         {

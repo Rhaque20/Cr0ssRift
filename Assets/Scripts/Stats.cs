@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
+
+    protected const int NORMAL = 0, EFFECTIVE = 1,RESIST = 2;
     [SerializeField]protected int _maxHP = 100, _maxArmor = 50;
 
     [Range(0,20)]
@@ -60,6 +62,23 @@ public class Stats : MonoBehaviour
     public bool isDead
     {
         get { return _isDead; }
+    }
+
+    public bool IsWeakness(EnumLib.Element attribute)
+    {
+        switch(attribute)
+        {
+            case EnumLib.Element.Fire:
+            if (_attribute == EnumLib.Element.Ice)
+                return true;
+            break;
+            case EnumLib.Element.Ice:
+            if(_attribute == EnumLib.Element.Fire)
+                return true;
+            break;
+        }
+
+        return false;
     }
 
     public void Start()
@@ -133,8 +152,13 @@ public class Stats : MonoBehaviour
 
     public virtual void DealArmorDamage(int armorDamage,EnumLib.Element attribute)
     {
-        if (_maxArmor != 0 && (ElementModifier(attribute) >= 2.0f || attribute == EnumLib.Element.Physical))
+        double modifier = ElementModifier(attribute);
+        if (_maxArmor != 0 && modifier >= 1.0)
         {
+            if (attribute != EnumLib.Element.Physical && !IsWeakness(attribute))
+            {
+                armorDamage = (int)Mathf.Ceil((float)armorDamage * 0.25f);
+            }
             _currentArmor = Mathf.Clamp(_currentArmor - armorDamage, 0,_maxArmor);
 
             float armorRatio = (_maxArmor != 0 ? (float)_currentArmor/_maxArmor : 0);
@@ -197,13 +221,35 @@ public class Stats : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public Vector3 GenerateRandomPosition()
+    {
+        return new Vector3(transform.position.x + UnityEngine.Random.Range(-0.5f,2f), transform.position.y + UnityEngine.Random.Range(0f,2f), transform.position.z - 0.1f);
+    }
+
     public virtual void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats)
     {
-        double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * ElementModifier(attribute);
+        double elementModifier = ElementModifier(attribute);
+        double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * elementModifier;
 
         int finalDamage = (int)Mathf.Round((float)damageCalc);
 
         _currentHP = Mathf.Clamp(_currentHP - finalDamage,0,_maxHP);
+
+        int efficacyType;
+
+        if(IsWeakness(attribute))
+        {
+            efficacyType = EFFECTIVE;
+        }
+        else
+        {
+            if(elementModifier >= 1.0f)
+                efficacyType = NORMAL;
+            else
+                efficacyType = RESIST;
+        }
+
+        DamageNumberManager.instance.GenerateDMGNum(attribute,finalDamage,GenerateRandomPosition(),efficacyType);
 
         _allVariables.onHealthUpdate?.Invoke((float)_currentHP/_maxHP);
 

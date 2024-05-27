@@ -490,6 +490,11 @@ PrefabInstance:
       propertyPath: _maxArmor
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 5624906176336083712, guid: 46c54d359d1ffd84cb19cdfceeec280b,
+        type: 3}
+      propertyPath: _attribute
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6193518424538797616, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
       propertyPath: m_LocalPosition.z

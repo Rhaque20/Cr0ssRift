@@ -76,7 +76,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
     {
         DefenseCore _defenseCore = entity.GetComponent<DefenseCore>();
 
-        Debug.Log("Dealing damage");
+        Debug.Log("Dealing damage to "+entity.name);
         if(_defenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
         {
             Debug.Log("Parry!");
