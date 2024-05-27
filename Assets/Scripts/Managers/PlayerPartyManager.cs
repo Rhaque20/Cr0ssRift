@@ -30,8 +30,10 @@ public class PlayerPartyManager : MonoBehaviour
 
         _playerControls = new PlayerControls();
         _playerControls.Combat.Enable();
-        _playerControls.Combat.SwitchLeft.performed += ctx => SwitchDirection(true);
-        _playerControls.Combat.SwitchRight.performed += ctx => SwitchDirection(false);
+        _playerControls.Combat.Switch1.performed += ctx =>SwitchToCharacter(0);
+        _playerControls.Combat.Switch2.performed += ctx => SwitchToCharacter(1);
+        _playerControls.Combat.Switch3.performed += ctx => SwitchToCharacter(2);
+
 
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -142,6 +144,29 @@ public class PlayerPartyManager : MonoBehaviour
             SwitchCharacter(_tempActive);
         }
 
+    }
+
+    public void SwitchToCharacter(int index)
+    {
+        if (index == _active)
+            return;
+
+        if(index >= _players.Count || index < 0)
+            return;
+
+        if (_switchCoolDown[index] != null)
+        {
+            Debug.Log("Switch under cooldown");
+            return;
+        }
+
+        PlayerStats _newStats = _players[index].GetComponent<PlayerStats>();
+
+        if(!_newStats.isDead)
+        {
+            SwitchCharacter(index);
+        }
+        
     }
 
     public void SwitchDirection(bool _switchLeft)

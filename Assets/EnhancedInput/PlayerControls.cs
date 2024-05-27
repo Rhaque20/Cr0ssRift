@@ -107,6 +107,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch1"",
+                    ""type"": ""Button"",
+                    ""id"": ""c596385c-b13b-4814-bad9-e01f2c93d536"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch2"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b7107c3-25cc-464f-bd44-9b2873df6f2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch3"",
+                    ""type"": ""Button"",
+                    ""id"": ""ffa2ef4f-b41e-4ff2-8c4f-11a43fd766f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +279,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a150adc-4567-4d13-ae27-cd2c14e2368b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1954296-77ff-4952-95ad-92f2081f4ac7"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""953b729c-ac30-4e22-96b4-5b2015f7c3e5"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -275,6 +335,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_PauseGame = m_Combat.FindAction("PauseGame", throwIfNotFound: true);
         m_Combat_Parry = m_Combat.FindAction("Parry", throwIfNotFound: true);
         m_Combat_Dodge = m_Combat.FindAction("Dodge", throwIfNotFound: true);
+        m_Combat_Switch1 = m_Combat.FindAction("Switch1", throwIfNotFound: true);
+        m_Combat_Switch2 = m_Combat.FindAction("Switch2", throwIfNotFound: true);
+        m_Combat_Switch3 = m_Combat.FindAction("Switch3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -345,6 +408,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_PauseGame;
     private readonly InputAction m_Combat_Parry;
     private readonly InputAction m_Combat_Dodge;
+    private readonly InputAction m_Combat_Switch1;
+    private readonly InputAction m_Combat_Switch2;
+    private readonly InputAction m_Combat_Switch3;
     public struct CombatActions
     {
         private @PlayerControls m_Wrapper;
@@ -358,6 +424,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @PauseGame => m_Wrapper.m_Combat_PauseGame;
         public InputAction @Parry => m_Wrapper.m_Combat_Parry;
         public InputAction @Dodge => m_Wrapper.m_Combat_Dodge;
+        public InputAction @Switch1 => m_Wrapper.m_Combat_Switch1;
+        public InputAction @Switch2 => m_Wrapper.m_Combat_Switch2;
+        public InputAction @Switch3 => m_Wrapper.m_Combat_Switch3;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -394,6 +463,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @Switch1.started += instance.OnSwitch1;
+            @Switch1.performed += instance.OnSwitch1;
+            @Switch1.canceled += instance.OnSwitch1;
+            @Switch2.started += instance.OnSwitch2;
+            @Switch2.performed += instance.OnSwitch2;
+            @Switch2.canceled += instance.OnSwitch2;
+            @Switch3.started += instance.OnSwitch3;
+            @Switch3.performed += instance.OnSwitch3;
+            @Switch3.canceled += instance.OnSwitch3;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -425,6 +503,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @Switch1.started -= instance.OnSwitch1;
+            @Switch1.performed -= instance.OnSwitch1;
+            @Switch1.canceled -= instance.OnSwitch1;
+            @Switch2.started -= instance.OnSwitch2;
+            @Switch2.performed -= instance.OnSwitch2;
+            @Switch2.canceled -= instance.OnSwitch2;
+            @Switch3.started -= instance.OnSwitch3;
+            @Switch3.performed -= instance.OnSwitch3;
+            @Switch3.canceled -= instance.OnSwitch3;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -462,5 +549,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPauseGame(InputAction.CallbackContext context);
         void OnParry(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnSwitch1(InputAction.CallbackContext context);
+        void OnSwitch2(InputAction.CallbackContext context);
+        void OnSwitch3(InputAction.CallbackContext context);
     }
 }
