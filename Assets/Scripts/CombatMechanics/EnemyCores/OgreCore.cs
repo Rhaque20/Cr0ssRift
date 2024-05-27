@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OgreCore : EnemyCore
@@ -11,6 +12,8 @@ public class OgreCore : EnemyCore
 
     private Coroutine _columnSpawnTimer = null, _orbFuryRest = null;
     Projectile[] _bulletSet = new Projectile[10];
+
+    [SerializeField]SphereCollider _hurtSphere;
 
     private Vector3[] _bulletPositions = new Vector3[10];
 
@@ -24,6 +27,32 @@ public class OgreCore : EnemyCore
             _bulletSet[i].gameObject.SetActive(false);
             _bulletSet[i].SetUpProjectile(_enemyStats,_moveSet[ORB]);
         }
+    }
+
+    public override void HitScan()
+    {
+        if(_usedMoveIndex == WAVE)
+        {
+            Debug.Log(this.name+"'s Hurtbox has position "+_hurtBox.transform.position);
+            _hurtSphere.gameObject.SetActive(true);
+            List<Collider> entitiesHit = Physics.OverlapSphere(_hurtBox.transform.position, _hurtSphere.radius * transform.GetChild(0).localScale.y,_hitLayers).ToList();
+            _hurtBox.gameObject.SetActive(false);
+
+            if (entitiesHit.Count > 0)
+            {   
+                foreach(Collider entity in entitiesHit)
+                {
+                    DealDamage(entity);
+                    
+                }
+            }
+            else
+            {
+                Debug.Log("Hit nothing");
+            }
+        }
+        else
+            base.HitScan();
     }
 
     public override void SpecialAction()
@@ -82,9 +111,14 @@ public class OgreCore : EnemyCore
 
     public override void SkillSelect()
     {
-        if(Vector3.Distance(transform.position,_targetPos.position) < 4f && _columnSpawnTimer == null)
+        if(Vector3.Distance(transform.position,_targetPos.position) < ActualDistance(4f))
         {
-            _usedMoveIndex = SLAM;
+            int randomChoice = Random.Range(0,2);
+            
+            if(_columnSpawnTimer == null && randomChoice == 0)
+                _usedMoveIndex = SLAM;
+            else
+                _usedMoveIndex = WAVE;
         }
         else
         {

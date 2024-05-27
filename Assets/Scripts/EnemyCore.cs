@@ -85,6 +85,11 @@ public class EnemyCore : CombatCore
     //         entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
     // }
 
+    public float ActualDistance(float originalRange)
+    {
+        return _capsuleCollider.radius + originalRange;
+    }
+
     public override void HitScan()
     {
         Debug.Log(this.name+"'s Hurtbox has position "+_hurtBox.transform.position);

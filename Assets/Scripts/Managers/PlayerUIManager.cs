@@ -43,6 +43,11 @@ public class PlayerUIManager : MonoBehaviour
         _playerBars[index + 1].SetCoolDown(ratio);
     }
 
+    public void SetMiniBarCooldownColor(EnumLib.Status status, int index)
+    {
+        _playerBars[index + 1].SetCoolDownColor(status);
+    }
+
     public void SetHealthBar(int _currentHP, int _maxHP)
     {
         _playerBars[MAINBAR].SetHealthBar(_currentHP, _maxHP);

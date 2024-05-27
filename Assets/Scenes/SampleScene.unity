@@ -2325,6 +2325,10 @@ MonoBehaviour:
   _maxHPText: {fileID: 2048308698}
   _isMiniBar: 0
   _coolDownDisplay: {fileID: 0}
+  _statusColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &212922047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6722,12 +6726,6 @@ Transform:
   - {fileID: 1147288496}
   m_Father: {fileID: 245771883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 161.248}
---- !u!4 &606359841 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1736206607037562553, guid: d272435de7801c042ad9e75e83d7e5f1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1291378772348651849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &619282166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13768,6 +13766,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: babdcec44c8282e4e990f6a47e2430dc, type: 2}
   _columnObject: {fileID: 0}
   _lightningBullet: {fileID: 0}
+  _hurtSphere: {fileID: 0}
 --- !u!1 &1072966232
 GameObject:
   m_ObjectHideFlags: 0
@@ -26499,37 +26498,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1737038561
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1737038562}
-  m_Layer: 7
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1737038562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737038561}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 606359841}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1751024901
 GameObject:
   m_ObjectHideFlags: 0
@@ -33712,11 +33680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1736206607037562553, guid: d272435de7801c042ad9e75e83d7e5f1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1737038562}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d272435de7801c042ad9e75e83d7e5f1, type: 3}
 --- !u!1001 &2053206500071559777

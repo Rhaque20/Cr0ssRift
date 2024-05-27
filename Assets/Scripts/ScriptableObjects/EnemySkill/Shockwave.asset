@@ -17,8 +17,8 @@ MonoBehaviour:
   _statusDamage: 40
   _attribute: 3
   _attackAnimations:
-  - {fileID: 7400000, guid: 7cad842ad03261242a5038ebe39096dc, type: 2}
-  - {fileID: 7400000, guid: 4218c3571160ef545aa0de663dd35eac, type: 2}
+  - {fileID: 7400000, guid: 6d07f21b133384a47acd83e1ad96d37d, type: 2}
+  - {fileID: 7400000, guid: 557712c86c59a3f48945a8f39a1cc725, type: 2}
   _isChargeable: 0
   _skillTags: 05000000
   _coolDown: 3

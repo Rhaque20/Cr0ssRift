@@ -112,6 +112,8 @@ public class PlayerPartyManager : MonoBehaviour
         PlayerStats _newStats = _players[_tempActive].GetComponent<PlayerStats>();
 
         PlayerUIManager.instance.SetHealthBar(0,1,_active);
+        PlayerUIManager.instance.SetMiniBarCooldown(1f,_active);
+        PlayerUIManager.instance.SetMiniBarCooldownColor(EnumLib.Status.Dead,_active);
 
         if (_newStats.isDead)
         {

@@ -517,6 +517,11 @@ MonoBehaviour:
   _maxHPText: {fileID: 0}
   _isMiniBar: 1
   _coolDownDisplay: {fileID: 7770787820826907023}
+  _statusColors:
+  - {r: 0.32941177, g: 0.9882353, b: 1, a: 0.9019608}
+  - {r: 1, g: 0.90588236, b: 0.3254902, a: 0.9019608}
+  - {r: 1, g: 0.101960786, b: 0.21960784, a: 0.9019608}
+  - {r: 0, g: 0, b: 0, a: 0.9019608}
 --- !u!1 &7254703294732725286
 GameObject:
   m_ObjectHideFlags: 0

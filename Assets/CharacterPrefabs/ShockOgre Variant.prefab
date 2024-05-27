@@ -28,7 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5213111755908521592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,6 +84,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5501353485329211389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2349836763149629416}
+  - component: {fileID: 189163546514322656}
+  m_Layer: 0
+  m_Name: HurtSphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2349836763149629416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5501353485329211389}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5213111755908521592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &189163546514322656
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5501353485329211389}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8919359843794034191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -181,7 +234,7 @@ PrefabInstance:
     - target: {fileID: 7196699637293703350, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.670074
+      value: -31.59
       objectReference: {fileID: 0}
     - target: {fileID: 7196699637293703350, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
@@ -253,6 +306,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8036094148289260384}
+    - targetCorrespondingSourceObject: {fileID: 3719796275003850871, guid: 46c54d359d1ffd84cb19cdfceeec280b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2349836763149629416}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1331075702602705248, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
@@ -302,3 +359,4 @@ MonoBehaviour:
     type: 3}
   _lightningBullet: {fileID: 7847084978647527818, guid: 44606c248b613ef4caa1c7880b127a90,
     type: 3}
+  _hurtSphere: {fileID: 189163546514322656}
