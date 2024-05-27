@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShockOgre
+  m_Controller: {fileID: 9100000, guid: 252c37605db07554fb03ce3e00d292ff, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7ea82555e2e436a42821b6f995af3d91, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 043c05486b4bd3f4a9f562ede06c7048, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c5388f0168688fa409fbb4b8367b4b22, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a44d8c5dec089ae468c72e3dd695d15b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7d849e9d06af53645ab5845d3b7a74b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 043c05486b4bd3f4a9f562ede06c7048, type: 2}

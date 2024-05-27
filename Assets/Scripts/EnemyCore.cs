@@ -86,9 +86,9 @@ public class EnemyCore : CombatCore
 
     public override void HitScan()
     {
-        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.size);
+        Debug.Log(this.name+"'s Hurtbox has position "+_hurtBox.transform.position);
         _hurtBox.gameObject.SetActive(true);
-        List<Collider> entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.size,_hurtBox.transform.localRotation,_hitLayers).ToList();
+        List<Collider> entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.size * transform.GetChild(0).localScale.y,_hurtBox.transform.localRotation,_hitLayers).ToList();
         _hurtBox.gameObject.SetActive(false);
 
         if (entitiesHit.Count > 0)
@@ -99,6 +99,10 @@ public class EnemyCore : CombatCore
                 
             }
         }
+        else
+        {
+            Debug.Log("Hit nothing");
+        }
     }
 
     public override void OnDeath()
@@ -106,6 +110,8 @@ public class EnemyCore : CombatCore
         PlayerPartyManager.instance.onPlayerSwitched -= UpdateTarget;
         if (_idleTimer != null)
             StopCoroutine(_idleTimer);
+
+        _enemyVariables.onBeingCountered -= CancelAction;
 
         foreach(Coroutine skillCoolDown in _cooldowns)
         {
@@ -119,7 +125,6 @@ public class EnemyCore : CombatCore
     protected IEnumerator IdleTimer(float idleTime)
     {
         yield return new WaitForSeconds(idleTime);
-        //Deal with isAttacking left true after using slash
         _canAttack = true;
         _targetPos = GetComponent<EnemyMovement>().targetPos;
         Debug.Log("Ready to fight");
@@ -145,6 +150,7 @@ public class EnemyCore : CombatCore
         
         _activeSkill = null;
         _usedMoveIndex = -1;
+        _isCanceled = false;
     }
 
     protected IEnumerator Cooldown(int index, float cooldown)

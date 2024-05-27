@@ -17,7 +17,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
 
     protected DefenseCore _defenseCore;
 
-    [SerializeField]protected bool _isAttacking = false, _canAttack = true;
+    protected bool _isAttacking = false, _canAttack = true, _isCanceled = false;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -26,6 +26,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         _animOverrideController = GetComponent<GlobalVariables>().animOverrideController;
         _stats = GetComponent<Stats>();
         _defenseCore = GetComponent<DefenseCore>();
+        GetComponent<GlobalVariables>().onBeingCountered += CancelAction;
     }
 
     public virtual void Attack()
@@ -36,6 +37,12 @@ public class CombatCore : MonoBehaviour, IOnDeath
     public virtual void SpecialAction()
     {
 
+    }
+
+    public virtual void CancelAction()
+    {
+        Debug.Log("Parry canceled");
+        _isCanceled = true;
     }
 
     public virtual void ChargeAttack()
@@ -69,13 +76,12 @@ public class CombatCore : MonoBehaviour, IOnDeath
     {
         DefenseCore _defenseCore = entity.GetComponent<DefenseCore>();
 
-        if(_activeSkill == null)
-            Debug.Log("Active skill is null!");
-
+        Debug.Log("Dealing damage");
         if(_defenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
         {
             Debug.Log("Parry!");
             _defenseCore.Counter(_stats);
+            GetComponent<GlobalVariables>().onBeingCountered?.Invoke();
             return;
         }
         else if(_defenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
@@ -95,9 +101,9 @@ public class CombatCore : MonoBehaviour, IOnDeath
 
     public virtual void HitScan()
     {
-        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.transform.localScale);
+        Debug.Log(this.name+"'s Hurtbox has size "+_hurtBox.size);
         _hurtBox.gameObject.SetActive(true);
-        Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
+        Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.size,_hurtBox.transform.localRotation,_hitLayers);
         _hurtBox.gameObject.SetActive(false);
 
         if (entitiesHit.Length > 0)
