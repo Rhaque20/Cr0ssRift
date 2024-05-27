@@ -77,13 +77,14 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
     
     public void Stagger()
     {
-        if(_staggerTimer != null)
+        if(_staggerTimer != null && !_isArmored)
         {
             StopCoroutine(_staggerTimer);
             Debug.Log("Canceling stagger");
         }
         Debug.Log("Starting stagger");
-        _staggerTimer = StartCoroutine(StaggerTimer());
+        if (!_isArmored)
+            _staggerTimer = StartCoroutine(StaggerTimer());
     }
 
     public virtual void KnockBack(Vector3 attackerPos)
