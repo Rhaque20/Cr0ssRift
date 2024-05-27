@@ -111,7 +111,7 @@ public class OgreCore : EnemyCore
 
     public override void SkillSelect()
     {
-        if(Vector3.Distance(transform.position,_targetPos.position) < ActualDistance(4f))
+        if(Vector3.Distance(transform.position,_targetPos.position) < ActualDistance(4.5f))
         {
             int randomChoice = Random.Range(0,2);
             
@@ -120,7 +120,7 @@ public class OgreCore : EnemyCore
             else
                 _usedMoveIndex = WAVE;
         }
-        else
+        else if (_cooldowns[ORB] == null)
         {
             _usedMoveIndex = ORB;
         }

@@ -24,8 +24,15 @@ public class GlobalVariables : MonoBehaviour
     public Action onDeath;
     [SerializeField]protected AnimatorOverrideController _animOverrideController;
 
+    protected DefenseCore _defenseCore;
+
     public AnimatorOverrideController animOverrideController
     {
         get {return _animOverrideController;}
+    }
+
+    public DefenseCore defenseCore
+    {
+        get {return _defenseCore;}
     }
 }

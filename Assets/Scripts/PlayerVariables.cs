@@ -46,5 +46,6 @@ public class PlayerVariables: GlobalVariables
         _playerStats.Start();
 
         _playerStaggerSystem = GetComponent<PlayerStaggerSystem>();
+        _defenseCore = GetComponent<PlayerDefenseCore>();
     }
 }

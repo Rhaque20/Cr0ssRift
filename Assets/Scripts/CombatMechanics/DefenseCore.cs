@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class DefenseCore : MonoBehaviour, IOnDeath
 {
-    [SerializeField]protected bool _isParryFocused = true, _isBlocking = false;
+    [SerializeField]protected bool _isParryFocused = true;
     [SerializeField]protected float _dodgePower = 10f;
 
     protected int _maxDodges = 1, _currentDodges = 0;
 
-    protected bool _isParrying = false, _isDodging = false, _effectTriggered = false;
+    protected bool _isParrying = false, _isDodging = false,_isBlocking = false;
+    protected bool _canParry = true, _canDodge = true;
+    protected bool _effectTriggered = false;
 
     protected Coroutine _iFrames = null;
 
@@ -32,6 +34,11 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     public bool isDodging
     {
         get { return _isDodging;}
+    }
+
+    public bool isBlocking
+    {
+        get { return _isBlocking;}
     }
 
     protected virtual void Start()

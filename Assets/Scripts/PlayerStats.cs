@@ -154,10 +154,30 @@ public class PlayerStats : Stats,ISwitchCharacter
         }
     }
 
-    public override void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats)
+    public override void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats, Skill oncomingSkill)
     {
         double elementModifier = ElementModifier(attribute);
         double damageCalc = damage * (_currentArmor > 0 ? 1 - (_defense * 0.04) : 1) * elementModifier;
+        float damageRed = 0;
+
+        if(_playerVariables.defenseCore.isBlocking)
+        {
+            if(oncomingSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+            {
+                Debug.Log("Somewhat blocked hit");
+                damageRed = 0.25f;
+            }
+            else if(oncomingSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
+            {
+                Debug.Log("Broke through guard!");
+                damageRed = 0;
+            }
+            else
+            {
+                Debug.Log("Blocked hit");
+                damageRed = 0.75f;
+            }
+        }
 
         damageCalc *= _attackerStats.damageModifier;
         int finalDamage = (int)Mathf.Round((float)damageCalc);

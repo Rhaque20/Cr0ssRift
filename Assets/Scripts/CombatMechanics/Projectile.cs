@@ -109,15 +109,38 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public bool IsFacingEachOther(Transform target)
+    {
+        float dot = Vector3.Dot(transform.right * target.transform.localScale.x, (target.position - transform.position).normalized);
+        Debug.Log("Dot product is "+dot);
+        return dot <= -0.7;
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") && _isFriendly)
         {
-            other.GetComponent<EnemyStats>().DamageProcess(_activeSkill, _instigator);
+            EnemyDefenseCore _enemyDefense = other.GetComponent<EnemyDefenseCore>();
+            if(_enemyDefense.isParrying && IsFacingEachOther(other.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
+            {
+                
+            }
+            else
+            {
+                other.GetComponent<EnemyStats>().DamageProcess(_activeSkill, _instigator);
+            }
         }
         else if (other.gameObject.CompareTag("Player") && !_isFriendly)
         {
-            other.GetComponent<PlayerStats>().DamageProcess(_activeSkill,_instigator);
+            PlayerDefenseCore _playerDefense = other.GetComponent<PlayerDefenseCore>();
+            if(_playerDefense.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
+            {
+                Debug.Log("Evaded projectile");
+            }
+            else
+            {
+                other.GetComponent<PlayerStats>().DamageProcess(_activeSkill,_instigator);
+            }
         }
     }
     
