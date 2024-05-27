@@ -101,6 +101,11 @@ public class PlayerPartyManager : MonoBehaviour
         SceneManager.LoadScene(scene.name);
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     void SetCharacterPosition(int tempactive)
     {
         _players[tempactive].transform.position = _players[_active].transform.position;
