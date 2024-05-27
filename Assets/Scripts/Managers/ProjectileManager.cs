@@ -18,16 +18,15 @@ public class ProjectileManager : MonoBehaviour
     public void AddProjectile(GameObject projectile, int quantity)
     {
         GameObject temp;
-        Vector3 defaultSize = new Vector3(1,1,1);
 
         if (_queueList.ContainsKey(projectile))
         {
             for(int i = 0; i < quantity; i++)
             {
                 temp = Instantiate(projectile, transform);
-                temp.transform.localScale = defaultSize;
                 _queueList[projectile].Enqueue(temp);
                 temp.GetComponent<Projectile>().SetUpPrefab(projectile);
+                temp.SetActive(false);
             }
             return;
         }
@@ -37,9 +36,9 @@ public class ProjectileManager : MonoBehaviour
         for(int i = 0; i < quantity; i++)
         {
             temp = Instantiate(projectile, transform);
-            temp.transform.localScale = defaultSize;
             queue.Enqueue(temp);
             temp.GetComponent<Projectile>().SetUpPrefab(projectile);
+            temp.SetActive(false);
         }
 
         _queueList.Add(projectile,queue);

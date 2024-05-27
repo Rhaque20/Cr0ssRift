@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -24,7 +26,6 @@ public class IvaraCore : PlayerCore
     private float _heldTime = 0;
 
     [SerializeField]GameObject _bullet;
-
     Vector3 _firingDirection = Vector3.zero;
 
     Camera _activeCamera;
@@ -47,6 +48,10 @@ public class IvaraCore : PlayerCore
         {
             _isReadyIcon = _chargeBar.transform.GetChild(0).GetComponent<Image>();
         }
+
+        Debug.Log("Calling ivara start");
+
+        ProjectileManager.instance.AddProjectile(_bullet,2);
     }
 
     public void SlowdownWhileCharging(InputAction.CallbackContext callback)
@@ -79,17 +84,18 @@ public class IvaraCore : PlayerCore
             GetComponent<PlayerVariables>().setMove?.Invoke(false);
             if (_bullet != null)
             {
-                GameObject temp = Instantiate(_bullet);
+                Projectile _proj;
+                GameObject temp = ProjectileManager.instance.SummonProjectile(_bullet);
 
                 temp.transform.position = new Vector3(transform.position.x,transform.position.y + 0.25f,transform.position.z);
 
-                temp.GetComponent<Projectile>().SetUpProjectile(_playerStats,_normalAttacks[0]);
+                _proj = temp.GetComponent<Projectile>();
 
-                Destroy(temp,1.5f);
+                _proj.SetUpProjectile(_playerStats,_normalAttacks[0]);
 
                 temp.transform.rotation = _aimTelegraph.transform.rotation;
 
-                temp.GetComponent<Rigidbody>().AddForce(_projectileForce*_firingDirection.normalized, ForceMode.Impulse);
+                _proj.FireProjectile(_firingDirection.normalized,_projectileForce,1.5f);
             }
 
             if (_aimTelegraph != null)

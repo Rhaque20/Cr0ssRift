@@ -7,11 +7,12 @@ public class OgreCore : EnemyCore
 {
     const int SLAM = 0, WAVE = 1, ORB = 2;
     [SerializeField]GameObject _columnObject, _lightningBullet;
-    private int _columnsSpawned = 0, _maxColumnSpawns = 3;
+    private int _maxColumnSpawns = 3;
     int part = 1;
 
     private Coroutine _columnSpawnTimer = null, _orbFuryRest = null;
     Projectile[] _bulletSet = new Projectile[10];
+    Projectile[] _columnSet;
 
     [SerializeField]SphereCollider _hurtSphere;
 
@@ -20,12 +21,20 @@ public class OgreCore : EnemyCore
     protected override void Start()
     {
         base.Start();
+
+        _columnSet = new Projectile[_maxColumnSpawns];
+
         ProjectileManager.instance.AddProjectile(_lightningBullet,10);
+        ProjectileManager.instance.AddProjectile(_columnObject,_maxColumnSpawns);
         for(int i = 0; i < 10; i++)
         {
+            if(i < _maxColumnSpawns)
+            {
+                _columnSet[i] = ProjectileManager.instance.SummonProjectile(_columnObject).GetComponent<Projectile>();
+                _columnSet[i].gameObject.SetActive(false);
+            }
             _bulletSet[i] = ProjectileManager.instance.SummonProjectile(_lightningBullet).GetComponent<Projectile>();
             _bulletSet[i].gameObject.SetActive(false);
-            _bulletSet[i].SetUpProjectile(_enemyStats,_moveSet[ORB]);
         }
     }
 
@@ -67,7 +76,8 @@ public class OgreCore : EnemyCore
             {
                 for(int i = 0; i < _bulletPositions.Length; i++)
                 {
-                    _bulletSet[i].transform.position = new Vector3(transform.position.x,8f, transform.position.z);
+                    _bulletSet[i].transform.position = new Vector3(transform.position.x + Random.Range(-2f,2f),8f,
+                     transform.position.z + Random.Range(-2f,2f));
                     _bulletSet[i].gameObject.SetActive(true);
                 }
                 part++;
@@ -84,16 +94,15 @@ public class OgreCore : EnemyCore
     private IEnumerator SpawnMultipleColumns()
     {
         Projectile _projectile;
-        while(_columnsSpawned < _maxColumnSpawns)
+        for(int i = 0; i < _maxColumnSpawns; i++)
         {
-            _projectile = Instantiate(_columnObject).GetComponent<Projectile>();
+            _projectile = _columnSet[i];
             _projectile.transform.position = _targetPos.position;
             _projectile.SetUpSpriteProjectileDelayed(_stats,_moveSet[SLAM]);
-            _columnsSpawned++;
             yield return new WaitForSeconds(0.5f);
-            Destroy(_projectile.gameObject);
+            _projectile.gameObject.SetActive(false);
+
         }
-        _columnsSpawned = 0;
         _columnSpawnTimer = null;
     }
 
@@ -101,6 +110,7 @@ public class OgreCore : EnemyCore
     {
         for(int i = 0; i < 10; i++)
         {
+            _bulletSet[i].SetUpProjectile(_enemyStats,_moveSet[ORB]);
             _bulletSet[i].FireAtAPosition(_targetPos.position,20,2f);
             yield return new WaitForSeconds(0.125f);
         }

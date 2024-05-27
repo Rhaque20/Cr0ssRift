@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
 
     protected Coroutine _bulletLife = null;
     
-    void Start()
+    public void Start()
     {
         _hurtBox = GetComponent<BoxCollider>();
         _anim = GetComponent<Animator>();
@@ -45,8 +45,16 @@ public class Projectile : MonoBehaviour
             _hurtBox.enabled = true;
     }
 
+    public void FireProjectile(Vector3 direction,float force, float duration)
+    {
+        gameObject.SetActive(true);
+        _rigid.AddForce(force * direction.normalized, ForceMode.Impulse);
+        _bulletLife = StartCoroutine(ProjectileLife(duration));
+    }
+
     public void SetUpPrefab(GameObject prefab)
     {
+        Start();
         _originalPrefab = prefab;
     }
 
@@ -80,6 +88,7 @@ public class Projectile : MonoBehaviour
     {
         if(_rigid != null)
         {
+            gameObject.SetActive(true);
             _rigid.AddForce((position - transform.position).normalized * force,ForceMode.Impulse);
             _bulletLife = StartCoroutine(ProjectileLife(duration));
         }
@@ -92,8 +101,10 @@ public class Projectile : MonoBehaviour
         Start();
         if(_anim != null)
         {
+            gameObject.SetActive(true);
             _activeSkill = activeSkill;
             _instigator = instigator;
+
 
             if (instigator as PlayerStats)
             {
