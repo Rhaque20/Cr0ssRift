@@ -1,4 +1,4 @@
-using System;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class CombatCore : MonoBehaviour, IOnDeath
@@ -17,6 +17,12 @@ public class CombatCore : MonoBehaviour, IOnDeath
 
     protected DefenseCore _defenseCore;
 
+    [SerializeField]protected Image _chargeBar;
+
+    protected Image _isReadyIcon;
+
+    protected bool _charging = false;
+
     protected bool _isAttacking = false, _canAttack = true, _isCanceled = false;
     // Start is called before the first frame update
     protected virtual void Start()
@@ -27,6 +33,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         _stats = GetComponent<Stats>();
         _defenseCore = GetComponent<DefenseCore>();
         GetComponent<GlobalVariables>().onBeingCountered += CancelAction;
+        GetComponent<GlobalVariables>().onImmobilized += SetCanAttack;
     }
 
     public virtual void Attack()

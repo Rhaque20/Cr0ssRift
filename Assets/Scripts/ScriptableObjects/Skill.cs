@@ -13,6 +13,7 @@ public class Skill: ScriptableObject
 
     [SerializeField] protected AnimationClip[] _attackAnimations = new AnimationClip[2];
     [SerializeField] protected bool _isChargeable = false;
+    [SerializeField] protected EnumLib.HitPower _hitPower = EnumLib.HitPower.None;
 
     [SerializeField] protected EnumLib.SkillCategory[] _skillTags = new EnumLib.SkillCategory[0];
 
