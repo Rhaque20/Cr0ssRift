@@ -7,6 +7,8 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     [SerializeField]protected bool _isParryFocused = true;
     [SerializeField]protected float _dodgePower = 10f;
 
+    protected bool _canDefend = true;
+
     protected int _maxDodges = 1, _currentDodges = 0;
 
     protected bool _isParrying = false, _isDodging = false,_isBlocking = false;
@@ -47,6 +49,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _movement = GetComponent<Movement>();
         _globalVariables = GetComponent<GlobalVariables>();
+        _globalVariables.onImmobilized += DisableDefend;
     }
 
     protected virtual IEnumerator IFrames(float duration)
@@ -84,6 +87,19 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     public virtual void OnFailedDefense()
     {
         
+    }
+
+    public virtual void DisableDefend(bool value)
+    {
+        if(!value)
+        {
+            if (_iFrames != null)
+            {
+                StopCoroutine(_iFrames);
+            }
+        }
+ 
+        _canDefend = value;
     }
 
     protected IEnumerator DefenseEffectTimer()

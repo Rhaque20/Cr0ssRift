@@ -905,7 +905,7 @@ PrefabInstance:
     - target: {fileID: 4789637183760005883, guid: 7e47463e917149f4885beed4a176182d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10817,6 +10817,7 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 128
+  _chargeBar: {fileID: 0}
   _normalAttacks:
   - {fileID: 11400000, guid: 6b27198f980085e4ea6bc74c2941aa0a, type: 2}
   - {fileID: 11400000, guid: 518715e578a15434d9920ca558cf5a13, type: 2}
@@ -15121,6 +15122,7 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 64
+  _chargeBar: {fileID: 0}
   _moveSet:
   - {fileID: 11400000, guid: babdcec44c8282e4e990f6a47e2430dc, type: 2}
   _columnObject: {fileID: 0}
@@ -37019,6 +37021,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1839207812879596259, guid: d4d7b209da9d8814bb7c99689e6da138,
+        type: 3}
+      propertyPath: _playerStatusTracker
+      value: 
+      objectReference: {fileID: 156845654}
     - target: {fileID: 3047091728276851164, guid: d4d7b209da9d8814bb7c99689e6da138,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -37247,7 +37254,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _playerStatusTracker
       value: 
-      objectReference: {fileID: 1096530714}
+      objectReference: {fileID: 2110504461}
     - target: {fileID: 3363402330837468408, guid: 426943edc97b0224f915ccaa380d77b7,
         type: 3}
       propertyPath: m_LocalPosition.x

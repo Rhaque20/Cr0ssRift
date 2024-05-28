@@ -21,6 +21,11 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
 
     Coroutine _penaltyTimer = null;
 
+    public PlayerStats owner
+    {
+        get { return _owner; }
+    }
+
     public void SetOwner(PlayerStats owner)
     {
         _owner = owner;

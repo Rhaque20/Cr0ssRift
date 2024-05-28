@@ -17,13 +17,7 @@ public class IvaraCore : PlayerCore
 
     [SerializeField]Transform _aimTelegraph;
 
-    [SerializeField]Image _chargeBar;
-
-    Image _isReadyIcon;
-
-    private bool _charging = false;
-
-    private float _heldTime = 0;
+    
 
     [SerializeField]GameObject _bullet;
     Vector3 _firingDirection = Vector3.zero;
@@ -187,12 +181,12 @@ public class IvaraCore : PlayerCore
 
     void Update()
     {
-        if (_chargedAttackAction.IsPressed())
+        if (_chargedAttackAction.IsPressed() && _canAttack)
         {
             ChargeAttack();
         }
 
-        if (_boltPower >= 1.0f)
+        if (_boltPower >= 1.0f && _canAttack)
         {
             AimTracker();
         }

@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
 {
-    protected bool _canDefend = true;
     protected PlayerControls _playerControls;
     PlayerVariables _playerVariables;
 

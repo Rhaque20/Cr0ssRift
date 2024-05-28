@@ -4,14 +4,66 @@ using UnityEngine;
 
 public class PlayerStatusTracker : StatusTracker
 {
+    PlayerStats _playerStats;
+
+    public override void SetUpTracker(GlobalVariables globalVariables)
+    {
+        _globalVariables = globalVariables;
+        
+        if (globalVariables is PlayerVariables)
+        {
+            _playerStats = (globalVariables as PlayerVariables).playerStats;
+        }
+    }
+
+    public void CheckActiveCCStatus()
+    {
+        if(_statusTimers[FROZEN] != null || _statusTimers[PARALYZE] != null)
+        {
+            _globalVariables.onImmobilized?.Invoke(false);
+        }
+    }
+    
     protected override IEnumerator StatusTimer(EnumLib.Status statusType)
     {
-        float maxDuration = 15,duration = maxDuration;
+        float maxDuration = _maxDuration,duration = maxDuration;
+        float timePassed = 0, timeReduction = 0;
+        
+        if (statusType == EnumLib.Status.Frozen || statusType == EnumLib.Status.Paralyze)
+        {
+            _globalVariables.onImmobilized?.Invoke(false);
+        }
+
         while (duration > 0)
         {
-            duration -= Time.deltaTime;
+            if (_playerStats.gameObject.activeSelf)
+            {
+                timeReduction = Time.deltaTime;
+            }
+            else
+            {
+                timeReduction = 1.5f * Time.deltaTime;
+            }
+
+            duration -= timeReduction;
+            timePassed += timeReduction;
             PlayerUIManager.instance.StatusDisplayTick(statusType,duration/maxDuration);
+
+            if(timePassed > 1)
+            {
+                timePassed = 0;
+                if(statusType == EnumLib.Status.Burn || statusType == EnumLib.Status.Corrosion)
+                {
+                    _playerStats.DealDamageByStatus(10,statusType);
+                }
+            }
+
             yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        if (statusType == EnumLib.Status.Frozen || statusType == EnumLib.Status.Paralyze)
+        {
+            _globalVariables.onImmobilized?.Invoke(true);
         }
 
         _statusTimers[(int)statusType] = null;

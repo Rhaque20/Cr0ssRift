@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StatusTracker : MonoBehaviour
 {
+    protected const int WEAKEN = 0, BURN = 1, FROZEN = 2, PARALYZE = 3;
+    protected float _maxDuration = 15;
     [Serializable]
     public struct StatusAilment
     {
@@ -27,7 +29,9 @@ public class StatusTracker : MonoBehaviour
 
     protected Coroutine[] _statusTimers = new Coroutine[Enum.GetNames(typeof(EnumLib.Status)).Length];
 
-    protected void Start()
+    protected GlobalVariables _globalVariables;
+
+    protected virtual void Start()
     {
         _activeStatuses = new StatusAilment[Enum.GetNames(typeof(EnumLib.Status)).Length];
 
@@ -38,6 +42,21 @@ public class StatusTracker : MonoBehaviour
         }
     }
 
+    public bool HasStatus(EnumLib.Status status)
+    {
+        return _statusTimers[(int)status] != null;
+    }
+
+    public bool HasBuildUp(EnumLib.Status status)
+    {
+        return _activeStatuses[(int)status].statusBuildUp > 0;
+    }
+
+    public virtual void SetUpTracker(GlobalVariables global)
+    {
+        _globalVariables = global;
+    }
+
     protected int GetThreshold(int statusIndex)
     {
         return (_statusBuildUps[statusIndex].maxBuildUp + _statusBuildUps[statusIndex].thresholdIncrease
@@ -46,7 +65,7 @@ public class StatusTracker : MonoBehaviour
 
     protected virtual IEnumerator StatusTimer(EnumLib.Status statusType)
     {
-        float duration = 15;
+        float duration = _maxDuration;
         while (duration > 0)
         {
             duration -= Time.deltaTime;

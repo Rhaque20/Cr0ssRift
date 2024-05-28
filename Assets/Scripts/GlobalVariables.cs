@@ -13,6 +13,8 @@ public class GlobalVariables : MonoBehaviour
     public Action<float> onHealthUpdate;
     public Action<float> onArmorUpdate;
 
+    public Action<bool> onImmobilized;
+
     public Action onBeingCountered;
 
     public Action<Stats> onCountering;

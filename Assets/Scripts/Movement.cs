@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour,IOnDeath
         _anim = transform.GetChild(0).GetComponent<Animator>();
         _rigid = GetComponent<Rigidbody>();
         GetComponent<GlobalVariables>().setMove += SetMove;
+        GetComponent<GlobalVariables>().onImmobilized += SetMove;
         _stats = GetComponent<Stats>();
     }
 

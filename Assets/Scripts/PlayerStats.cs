@@ -114,6 +114,24 @@ public class PlayerStats : Stats,ISwitchCharacter
         _mercyTimer = null;
     }
 
+    public override void DealDamageByStatus(int damage, EnumLib.Status statusEffect)
+    {
+        base.DealDamageByStatus(damage, statusEffect);
+        
+        if(gameObject.activeSelf)
+            PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP);
+        else
+            PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP,transform.GetSiblingIndex());
+        
+
+        if (_currentHP == 0)
+        {
+            _isDead = true;
+            Debug.Log("Defeated "+this.name);
+            _playerVariables.onDeath?.Invoke();
+        }
+    }
+
     public void RecoverSP(float spAmount)
     {
 
@@ -152,6 +170,10 @@ public class PlayerStats : Stats,ISwitchCharacter
         {
             _playerStatusTracker.ApplyBuildUp(status,statusDamage);
         }
+        else
+        {
+            Debug.Log("status tracker is null");
+        }
     }
 
     public override void DealDamage(int damage, EnumLib.Element attribute, Stats _attackerStats, Skill oncomingSkill)
@@ -186,21 +208,7 @@ public class PlayerStats : Stats,ISwitchCharacter
 
         PlayerUIManager.instance.SetHealthBar(_currentHP,_maxHP);
 
-        int efficacyType;
-
-        if(IsWeakness(attribute))
-        {
-            efficacyType = EFFECTIVE;
-        }
-        else
-        {
-            if(elementModifier >= 1.0f)
-                efficacyType = NORMAL;
-            else
-                efficacyType = RESIST;
-        }
-
-        DamageNumberManager.instance.GenerateDMGNum(attribute,finalDamage,GenerateRandomPosition(),efficacyType);
+        PrintDamageNumber(finalDamage,attribute);
 
         if (_currentHP == 0)
         {

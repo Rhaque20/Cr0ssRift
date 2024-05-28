@@ -39,12 +39,17 @@ public class PlayerPartyManager : MonoBehaviour
         {
             if (i == 3 || !transform.GetChild(i).CompareTag("Player"))
                 break;
-            
-            _switchCoolDown[i] = null;
+
             _players.Add(transform.GetChild(i).gameObject);
 
-            _players[i].GetComponent<PlayerVariables>().Initialize(_playerControls);
-            _players[i].GetComponent<PlayerVariables>().onDeath += ForceSwitch;
+            PlayerVariables _playerVar = _players[i].GetComponent<PlayerVariables>();
+            
+            _switchCoolDown[i] = null;
+
+            _playerVar.Initialize(_playerControls);
+            _playerVar.onDeath += ForceSwitch;
+
+            _playerStates[i].GetComponent<PlayerStatusTracker>().SetUpTracker(_playerVar);
 
             _offFieldRecovery.Add(_playerStates[i].GetComponent<OffFieldRecovery>());
 
@@ -59,7 +64,7 @@ public class PlayerPartyManager : MonoBehaviour
                     comp.SwitchIn();
                 }
                 _offFieldRecovery[i].SwitchIn();
-                _players[i].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[i].SetPenalize;
+                _playerVar.onForcedUnSummon += _offFieldRecovery[i].SetPenalize;
                 PlayerUIManager.instance.ToggleMiniBarDisplay(i,false);
             }
             else
@@ -115,8 +120,8 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void ForceSwitch()
     {
-        int _tempActive = (_active + 1) % _players.Count;
-        PlayerStats _newStats = _players[_tempActive].GetComponent<PlayerStats>();
+        int tempActive = (_active + 1) % _players.Count;
+        PlayerStats _newStats = _players[tempActive].GetComponent<PlayerStats>();
 
         PlayerUIManager.instance.SetHealthBar(0,1,_active);
         PlayerUIManager.instance.SetMiniBarCooldown(1f,_active);
@@ -124,8 +129,8 @@ public class PlayerPartyManager : MonoBehaviour
 
         if (_newStats.isDead)
         {
-            _tempActive = (_tempActive + 1) % _players.Count;
-            _newStats = _players[_tempActive].GetComponent<PlayerStats>();
+            tempActive = (tempActive + 1) % _players.Count;
+            _newStats = _players[tempActive].GetComponent<PlayerStats>();
 
             if (_newStats.isDead)
             {
@@ -136,12 +141,12 @@ public class PlayerPartyManager : MonoBehaviour
             }
             else
             {
-                SwitchCharacter(_tempActive);
+                SwitchCharacter(tempActive);
             }
         }
         else
         {
-            SwitchCharacter(_tempActive);
+            SwitchCharacter(tempActive);
         }
 
     }
@@ -235,7 +240,7 @@ public class PlayerPartyManager : MonoBehaviour
         }
     }
 
-    public void SwitchCharacter(int _tempActive)
+    public void SwitchCharacter(int tempActive)
     {
         ISwitchCharacter[] switchComps = _players[_active].GetComponentsInChildren<ISwitchCharacter>(false);
 
@@ -252,26 +257,27 @@ public class PlayerPartyManager : MonoBehaviour
 
         _offFieldRecovery[_active].SwitchOut();
 
-        switchComps = _players[_tempActive].GetComponentsInChildren<ISwitchCharacter>(false);
+        switchComps = _players[tempActive].GetComponentsInChildren<ISwitchCharacter>(false);
 
-        Debug.Log("Switching in to "+_players[_tempActive].name);
+        Debug.Log("Switching in to "+_players[tempActive].name);
 
-        _players[_tempActive].SetActive(true);
+        _players[tempActive].SetActive(true);
 
         foreach(ISwitchCharacter comp in switchComps)
         {
             comp.SwitchIn();
         }
 
-        SetCharacterPosition(_tempActive);
+        SetCharacterPosition(tempActive);
 
-        _offFieldRecovery[_tempActive].SwitchIn();
+        _offFieldRecovery[tempActive].SwitchIn();
+        _playerStates[tempActive].GetComponent<PlayerStatusTracker>().CheckActiveCCStatus();
 
-        _players[_tempActive].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[_tempActive].SetPenalize;
+        _players[tempActive].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[tempActive].SetPenalize;
         _players[_active].GetComponent<PlayerVariables>().onForcedUnSummon -= _offFieldRecovery[_active].SetPenalize;
 
         PlayerUIManager.instance.ToggleMiniBarDisplay(_active,true);
-        PlayerUIManager.instance.ToggleMiniBarDisplay(_tempActive,false);
+        PlayerUIManager.instance.ToggleMiniBarDisplay(tempActive,false);
 
         _newStats = _players[_active].GetComponent<PlayerStats>();
 
@@ -280,7 +286,7 @@ public class PlayerPartyManager : MonoBehaviour
             _switchCoolDown[_active] = StartCoroutine(SwitchCoolDown(_active));
         }
 
-        _active = _tempActive;
+        _active = tempActive;
 
         onPlayerSwitched?.Invoke();
 

@@ -23,7 +23,7 @@ public class StaggerSystem : MonoBehaviour, IOnDeath
 
     public bool isStaggered
     {
-        get { return !_isArmored; }
+        get { return _staggerTimer != null; }
     }
 
     protected void Start()

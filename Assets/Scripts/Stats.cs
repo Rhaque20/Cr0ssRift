@@ -157,6 +157,46 @@ public class Stats : MonoBehaviour
         }
     }
 
+    public virtual void PrintDamageNumber(int damage, EnumLib.Element attribute)
+    {
+        int efficacyType;
+
+        if(IsWeakness(attribute))
+        {
+            efficacyType = EFFECTIVE;
+        }
+        else
+        {
+            double elementModifier = ElementModifier(attribute);
+            if(elementModifier >= 1.0f)
+                efficacyType = NORMAL;
+            else
+                efficacyType = RESIST;
+        }
+
+
+        DamageNumberManager.instance.GenerateDMGNum(attribute,damage,GenerateRandomPosition(),efficacyType);
+    }
+
+    public virtual void DealDamageByStatus(int damage, EnumLib.Status statusEffect)
+    {
+        if ((int)statusEffect == (int)_attribute)
+        {
+            damage = (int)Mathf.Round(damage * 0.5f);
+        }
+
+        if(gameObject.activeSelf)
+        {
+            _currentHP = Mathf.Clamp(_currentHP - damage,0,_maxHP);
+        }
+        else
+        {
+            _currentHP = Mathf.Clamp(_currentHP - damage,1,_maxHP);
+        }
+        if(gameObject.activeSelf)
+            PrintDamageNumber(damage,(EnumLib.Element)statusEffect);
+    }
+
     public virtual void DealArmorDamage(int armorDamage,EnumLib.Element attribute)
     {
         double modifier = ElementModifier(attribute);
