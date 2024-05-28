@@ -6,6 +6,7 @@ public class Stats : MonoBehaviour
 {
 
     protected const int NORMAL = 0, EFFECTIVE = 1,RESIST = 2;
+    [SerializeField]protected bool _immortal = false;
     [SerializeField]protected int _maxHP = 100, _maxArmor = 50;
 
     [Range(0,20)]
@@ -283,9 +284,17 @@ public class Stats : MonoBehaviour
 
         if (_currentHP == 0)
         {
-            _isDead = true;
-            Debug.Log("Defeated "+this.name);
-            Death();
+            if(_immortal)
+            {
+                _currentHP = _maxHP;
+            }
+            else
+            {
+                _isDead = true;
+                Debug.Log("Defeated "+this.name);
+                Death();
+            }
+            
         }
 
     }

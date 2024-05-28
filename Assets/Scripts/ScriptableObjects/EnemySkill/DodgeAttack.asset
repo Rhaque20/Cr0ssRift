@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74983a245ed084a45bc87ff987283ac6, type: 3}
+  m_Name: DodgeAttack
+  m_EditorClassIdentifier: 
+  _damage: 0
+  _armorDamage: 0
+  _statusDamage: 0
+  _attribute: 1
+  _attackAnimations:
+  - {fileID: 7400000, guid: b34db02e1a3a9d449ab5f2a8adb2bcf6, type: 2}
+  - {fileID: 7400000, guid: a6e1c03daa99f1045860a234221df06f, type: 2}
+  _isChargeable: 0
+  _skillTags: 05000000
+  _coolDown: 0
+  _idleTime: 3

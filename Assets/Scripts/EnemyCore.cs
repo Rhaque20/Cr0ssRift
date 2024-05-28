@@ -202,7 +202,7 @@ public class EnemyCore : CombatCore
 
     public override void SkillSelect()
     {
-        if(Vector3.Distance(transform.position,_targetPos.position) < 2f)
+        if(Vector3.Distance(transform.position,_targetPos.position) < ActualDistance(2f))
         {
             _isAttacking = true;
             _canAttack = false;
