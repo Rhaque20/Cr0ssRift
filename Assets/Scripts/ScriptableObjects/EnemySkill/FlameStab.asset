@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74983a245ed084a45bc87ff987283ac6, type: 3}
   m_Name: FlameStab
   m_EditorClassIdentifier: 
-  _damage: 30
+  _damage: 15
   _armorDamage: 20
   _statusDamage: 10
   _attribute: 1
@@ -20,5 +20,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 2bf819cfe1d2a8d4988f99c9a233597c, type: 2}
   - {fileID: 7400000, guid: f00fb0aca602ed64495d66dbd35b8979, type: 2}
   _isChargeable: 0
+  _hitPower: 0
+  _skillTags: 
   _coolDown: 0
   _idleTime: 2

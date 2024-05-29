@@ -81,6 +81,7 @@ public class Projectile : MonoBehaviour
         yield return new WaitForSeconds(duration);
         _rigid.velocity = Vector3.zero;
         _rigid.angularVelocity = Vector3.zero;
+        gameObject.SetActive(false);
         ReturnProjectile();
     }
 

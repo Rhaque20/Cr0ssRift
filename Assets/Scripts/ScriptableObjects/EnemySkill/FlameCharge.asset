@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74983a245ed084a45bc87ff987283ac6, type: 3}
   m_Name: FlameCharge
   m_EditorClassIdentifier: 
-  _damage: 50
+  _damage: 25
   _armorDamage: 40
   _statusDamage: 70
   _attribute: 1
@@ -21,6 +21,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 4e57283e83d68c24c84d28228fc54e70, type: 2}
   - {fileID: 7400000, guid: 2e7e16edabf59be4b95e27d3c1ffd7c2, type: 2}
   _isChargeable: 1
+  _hitPower: 0
   _skillTags: 010000000300000006000000
   _coolDown: 0
   _idleTime: 2
