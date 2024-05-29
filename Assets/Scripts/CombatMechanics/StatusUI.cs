@@ -23,8 +23,16 @@ public class StatusUI : MonoBehaviour
     {
         GameObject statusObject = _statusIcons.GetChild((int)status).gameObject;
 
-        if(!statusObject.activeSelf)
+        if(ratio > 0f)
+        {
+            Debug.Log("status object not active for "+status.ToString());
             statusObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("empty ratio on status display"+status.ToString());
+            statusObject.SetActive(false);
+        }
         
         statusObject.transform.GetChild(0).GetComponent<Image>().fillAmount = ratio;
     }
@@ -37,8 +45,32 @@ public class StatusUI : MonoBehaviour
 
         if (ratio <= 0.0f)
         {
+            Debug.Log("Disabling display for"+status.ToString());
             statusObject.transform.GetChild(0).GetComponent<Image>().fillAmount = 0;
             statusObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Somehow inactive for "+status.ToString());
+            statusObject.SetActive(true);
+        }
+    }
+
+    public void SetStatusDisplayTick(EnumLib.Status status, float ratio, float buildupRatio)
+    {
+        GameObject statusObject = _statusIcons.GetChild((int)status).gameObject;
+        statusObject.transform.GetChild(2).GetComponent<Image>().fillAmount = ratio;
+
+        if (ratio <= 0.0f && buildupRatio <= 0.0f)
+        {
+            Debug.Log("Disabling display for"+status.ToString());
+            statusObject.transform.GetChild(0).GetComponent<Image>().fillAmount = 0;
+            statusObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Somehow inactive for "+status.ToString());
+            statusObject.SetActive(true);
         }
     }
 }

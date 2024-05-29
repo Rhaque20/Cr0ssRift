@@ -24,12 +24,21 @@ public class PlayerStatusTracker : StatusTracker
         {
             _globalVariables.onImmobilized?.Invoke(false);
         }
+        else
+        {
+            _globalVariables.onImmobilized?.Invoke(true);
+        }
     }
     
     protected override IEnumerator StatusTimer(EnumLib.Status statusType)
     {
         float maxDuration = _maxDuration,duration = maxDuration;
         float timePassed = 0, timeReduction = 0;
+
+        StatusAilment newStatusInfo = _activeStatuses[(int)statusType];
+        newStatusInfo.duration = duration;
+
+        _activeStatuses[(int)statusType] = newStatusInfo;
         
         if (statusType == EnumLib.Status.Frozen || statusType == EnumLib.Status.Paralyze)
         {
@@ -49,7 +58,16 @@ public class PlayerStatusTracker : StatusTracker
 
             duration -= timeReduction;
             timePassed += timeReduction;
-            PlayerUIManager.instance.StatusDisplayTick(statusType,duration/maxDuration);
+
+            newStatusInfo = _activeStatuses[(int)statusType];
+            newStatusInfo.duration = duration;
+            
+            _activeStatuses[(int)statusType] = newStatusInfo;
+
+            if (_playerStats.gameObject.activeSelf)
+                PlayerUIManager.instance.StatusDisplayTick(statusType,duration/maxDuration);
+            else
+                PlayerUIManager.instance.StatusDisplayTick(statusType,duration/maxDuration,transform.GetSiblingIndex());
 
             if(timePassed > 1)
             {
@@ -71,7 +89,7 @@ public class PlayerStatusTracker : StatusTracker
         _statusTimers[(int)statusType] = null;
         
         ClearStatus(statusType);
-        _statusVisual = null;
+        _statusVisual.sprite = null;
     }
 
     public override void ApplyBuildUp(EnumLib.Status statusType, int buildUpVal)

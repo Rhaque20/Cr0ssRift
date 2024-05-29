@@ -67,6 +67,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5624906176336083712, guid: 46c54d359d1ffd84cb19cdfceeec280b,
         type: 3}
+      propertyPath: _maxHP
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624906176336083712, guid: 46c54d359d1ffd84cb19cdfceeec280b,
+        type: 3}
       propertyPath: _defense
       value: 6
       objectReference: {fileID: 0}
@@ -190,6 +195,7 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 64
+  _chargeBar: {fileID: 0}
   _moveSet:
   - {fileID: 11400000, guid: 32588337a82b5ce4a9b9a636a50b2d48, type: 2}
   - {fileID: 11400000, guid: e378aa5377499b048bd8afc41c69765f, type: 2}

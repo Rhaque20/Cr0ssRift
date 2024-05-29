@@ -37,6 +37,14 @@ public class LevelManager : MonoBehaviour
         if (_currentWaveCount <= 0)
         {
             _battleZones[_currentWave].Release();  
+            if(_battleZones[_currentWave].isFinalZone)
+            {
+                PlayerUIManager.instance.TriggerVictoryScreen(true);
+            }
+            else if(_battleZones[_currentWave].isChallengeZone)
+            {
+                PlayerUIManager.instance.TriggerChallengeScreen(true);
+            }
         }
     }
 
@@ -49,5 +57,10 @@ public class LevelManager : MonoBehaviour
         _currentWaveCount = _enemyWaves.GetChild(index).childCount;
         _currentWave = index;
         _battleZones[index].LockDown();
+    }
+
+    public void SpawnSpecialWave()
+    {
+
     }
 }

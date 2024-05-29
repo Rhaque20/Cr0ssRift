@@ -168,6 +168,9 @@ public class PlayerStats : Stats,ISwitchCharacter
     {
         if (_playerStatusTracker != null)
         {
+            if ((int)status == (int)_attribute)
+                return;
+            
             _playerStatusTracker.ApplyBuildUp(status,statusDamage);
         }
         else

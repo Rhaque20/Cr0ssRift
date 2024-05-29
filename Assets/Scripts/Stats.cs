@@ -182,7 +182,7 @@ public class Stats : MonoBehaviour
     {
         if ((int)statusEffect == (int)_attribute)
         {
-            damage = (int)Mathf.Round(damage * 0.5f);
+            damage = 0;
         }
 
         if(gameObject.activeSelf)

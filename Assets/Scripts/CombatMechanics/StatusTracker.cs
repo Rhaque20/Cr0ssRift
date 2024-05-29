@@ -34,6 +34,16 @@ public class StatusTracker : MonoBehaviour
 
     protected GlobalVariables _globalVariables;
 
+    public StatusAilment[] activeStatuses
+    {
+        get{ return _activeStatuses;}
+    }
+
+    public StatusBuildUp[] statusBuildUps
+    {
+        get{ return _statusBuildUps;}
+    }
+
     protected virtual void Start()
     {
         _activeStatuses = new StatusAilment[Enum.GetNames(typeof(EnumLib.Status)).Length];

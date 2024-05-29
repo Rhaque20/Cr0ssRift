@@ -2,7 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BattleZones : MonoBehaviour
 {
+    [SerializeField]bool _isFinalZone = false, _isChallengeZone = false;
     [SerializeField]List<BoxCollider> _arenaZones = new List<BoxCollider>();
+
+    public bool isFinalZone
+    {
+        get { return _isFinalZone;}
+    }
+
+    public bool isChallengeZone
+    {
+        get { return _isChallengeZone;}
+    }
 
     public void LockDown()
     {

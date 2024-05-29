@@ -127,7 +127,6 @@ public class OffFieldRecovery : MonoBehaviour, IOnDeath, ISwitchCharacter
 
                 if (_interval >= _healDelay)
                 {
-                    Debug.Log("Recovering");
                     _owner.RecoverHealth(5);
                     _owner.RecoverArmor(5);
                     _interval = 0;
