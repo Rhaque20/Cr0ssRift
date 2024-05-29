@@ -41,6 +41,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -154207555, guid: 63e77f8f9d4a91442adc60f7ad18a49b,
         type: 3}
+    - target: {fileID: 4966701540629803501, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1055986932, guid: ca386029b631b59409194e97014b5c4d,
+        type: 3}
     - target: {fileID: 5482788087448792120, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: m_Name
@@ -155,6 +161,7 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 128
+  _chargeBar: {fileID: 0}
   _normalAttacks:
   - {fileID: 11400000, guid: 62678750e27a66a42a4865cb8fca2361, type: 2}
   - {fileID: 11400000, guid: a4e4a27e5e0ddc943a8bb4e2fba20478, type: 2}

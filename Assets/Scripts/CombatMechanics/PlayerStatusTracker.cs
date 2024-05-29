@@ -6,7 +6,7 @@ public class PlayerStatusTracker : StatusTracker
 {
     PlayerStats _playerStats;
 
-    public override void SetUpTracker(GlobalVariables globalVariables)
+    public override void SetUpTracker(GlobalVariables globalVariables, SpriteRenderer statusSprite)
     {
         _globalVariables = globalVariables;
         
@@ -14,6 +14,8 @@ public class PlayerStatusTracker : StatusTracker
         {
             _playerStats = (globalVariables as PlayerVariables).playerStats;
         }
+
+        _statusVisual = statusSprite;
     }
 
     public void CheckActiveCCStatus()
@@ -69,10 +71,14 @@ public class PlayerStatusTracker : StatusTracker
         _statusTimers[(int)statusType] = null;
         
         ClearStatus(statusType);
+        _statusVisual = null;
     }
 
     public override void ApplyBuildUp(EnumLib.Status statusType, int buildUpVal)
     {
+        if (buildUpVal == 0)
+            return;
+        
         int statusIndex = (int)statusType;
         StatusAilment status = _activeStatuses[statusIndex];
 
@@ -87,6 +93,7 @@ public class PlayerStatusTracker : StatusTracker
                 status.triggered = true;
                 PlayerUIManager.instance.StatusDisplayTick(statusType,1f);
                 _statusTimers[statusIndex] = StartCoroutine(StatusTimer(statusType));
+                _statusVisual.sprite = _statusSprites[statusIndex-1];
                 
             }
         }

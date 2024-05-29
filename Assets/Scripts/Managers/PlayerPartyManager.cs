@@ -49,7 +49,8 @@ public class PlayerPartyManager : MonoBehaviour
             _playerVar.Initialize(_playerControls);
             _playerVar.onDeath += ForceSwitch;
 
-            _playerStates[i].GetComponent<PlayerStatusTracker>().SetUpTracker(_playerVar);
+            _playerStates[i].GetComponent<PlayerStatusTracker>().SetUpTracker(_playerVar,
+            _players[i].transform.Find("Status Sprite").GetComponent<SpriteRenderer>());
 
             _offFieldRecovery.Add(_playerStates[i].GetComponent<OffFieldRecovery>());
 

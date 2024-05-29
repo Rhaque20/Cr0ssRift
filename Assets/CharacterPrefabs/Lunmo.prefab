@@ -265,6 +265,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1229851872166756161, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229851872166756161, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2856716798624490716, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
       propertyPath: m_CastShadows
@@ -274,6 +284,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086985179186111740, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5482788087448792120, guid: c80ef479cb98b3e4bb44a4f11236ddf6,
         type: 3}
@@ -408,12 +423,34 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 128
+  _chargeBar: {fileID: 0}
   _normalAttacks:
   - {fileID: 11400000, guid: 8221708c4c092cc40ad1d4602446cb54, type: 2}
   - {fileID: 11400000, guid: 1a7c772bc4504024c938bee75a626f52, type: 2}
   - {fileID: 11400000, guid: d473edd7dadbd5d44ade603db38805ef, type: 2}
   _hasFamiliarSummoned: 0
   _canSummonFamiliar: 1
+  _chargeLevel:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _crackLevel:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _slashLevel:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &8173963557117506158 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 8606232278944508191, guid: c80ef479cb98b3e4bb44a4f11236ddf6,

@@ -27,6 +27,9 @@ public class StatusTracker : MonoBehaviour
     [SerializeField]protected StatusAilment[] _activeStatuses;
     [SerializeField]protected StatusBuildUp[] _statusBuildUps = new StatusBuildUp[Enum.GetNames(typeof(EnumLib.Status)).Length];
 
+    [SerializeField]protected Sprite[] _statusSprites = new Sprite[3];
+    protected SpriteRenderer _statusVisual;
+
     protected Coroutine[] _statusTimers = new Coroutine[Enum.GetNames(typeof(EnumLib.Status)).Length];
 
     protected GlobalVariables _globalVariables;
@@ -52,9 +55,10 @@ public class StatusTracker : MonoBehaviour
         return _activeStatuses[(int)status].statusBuildUp > 0;
     }
 
-    public virtual void SetUpTracker(GlobalVariables global)
+    public virtual void SetUpTracker(GlobalVariables global, SpriteRenderer statusSprite)
     {
         _globalVariables = global;
+        _statusVisual = statusSprite;
     }
 
     protected int GetThreshold(int statusIndex)
