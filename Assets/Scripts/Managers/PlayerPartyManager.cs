@@ -106,6 +106,12 @@ public class PlayerPartyManager : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene();
         TimeManager.instance.PauseGame(false);
+
+        Delegate[] delegateArray = onGameOver.GetInvocationList();
+
+        foreach (Delegate d in delegateArray)
+            onGameOver -= (Action<bool>)d;     
+        
         SceneManager.LoadScene(scene.name);
     }
 
@@ -137,6 +143,19 @@ public class PlayerPartyManager : MonoBehaviour
             {
                 // Trigger GAME OVER;
                 // Maybe still trigger switch out?
+                ISwitchCharacter[] switchComps = _players[_active].GetComponentsInChildren<ISwitchCharacter>(false);
+
+                Debug.Log("Switching out of "+_players[_active].name);
+
+                foreach(ISwitchCharacter comp in switchComps)
+                {
+                    comp.SwitchOut();
+                }
+                for(int i = 0; i < _players.Count; i++)
+                {
+                    _players[i].GetComponent<PlayerVariables>().CleanUp();
+                }
+
                 onGameOver?.Invoke(true);
                 Debug.Log("Gameover!");
             }
@@ -273,6 +292,8 @@ public class PlayerPartyManager : MonoBehaviour
 
         _offFieldRecovery[tempActive].SwitchIn();
         _playerStates[tempActive].GetComponent<PlayerStatusTracker>().CheckActiveCCStatus();
+        PlayerUIManager.instance.RefreshStatusDisplay(_playerStates[tempActive].GetComponent<PlayerStatusTracker>());
+        PlayerUIManager.instance.RefreshStatusDisplay(_playerStates[_active].GetComponent<PlayerStatusTracker>(),_active);
 
         _players[tempActive].GetComponent<PlayerVariables>().onForcedUnSummon += _offFieldRecovery[tempActive].SetPenalize;
         _players[_active].GetComponent<PlayerVariables>().onForcedUnSummon -= _offFieldRecovery[_active].SetPenalize;

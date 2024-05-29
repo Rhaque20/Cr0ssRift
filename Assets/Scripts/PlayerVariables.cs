@@ -11,14 +11,11 @@ public class PlayerVariables: GlobalVariables
 
     private PlayerStats _playerStats;
 
-    public Action onSwitchOut;
-
-    public Action onAttack;
-
-    public Action onParryEnd;
-
     public Action<bool> onSummonFamiliar;
 
+    public Action onSwitchOut;
+
+    public Action onParryEnd;
     public Action onForcedUnSummon;
 
     public PlayerControls playerControls
@@ -47,5 +44,30 @@ public class PlayerVariables: GlobalVariables
 
         _playerStaggerSystem = GetComponent<PlayerStaggerSystem>();
         _defenseCore = GetComponent<PlayerDefenseCore>();
+    }
+
+    public override void CleanUp()
+    {
+        base.CleanUp();
+
+        Delegate[] delegateArray = onSummonFamiliar.GetInvocationList();
+
+        foreach (Delegate d in delegateArray)
+            onSummonFamiliar -= (Action<bool>)d;
+
+        delegateArray = onSwitchOut.GetInvocationList();
+
+        foreach (Delegate d in delegateArray)
+            onSwitchOut -= (Action)d;   
+
+        delegateArray = onParryEnd.GetInvocationList();
+
+        foreach (Delegate d in delegateArray)
+            onParryEnd -= (Action)d;   
+
+        delegateArray = onForcedUnSummon.GetInvocationList();
+
+        foreach (Delegate d in delegateArray)
+            onForcedUnSummon -= (Action)d;         
     }
 }
