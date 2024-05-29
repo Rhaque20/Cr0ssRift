@@ -15,11 +15,12 @@ MonoBehaviour:
   _damage: 20
   _armorDamage: 5
   _statusDamage: 0
-  _attribute: 1
+  _attribute: 0
   _attackAnimations:
   - {fileID: 7400000, guid: 96d2c5b8616e7524fbd9c2039dd0713b, type: 2}
   - {fileID: 7400000, guid: 8036199a2e8e51041b0f56bb7d6d62ad, type: 2}
   _isChargeable: 0
+  _hitPower: 2
   _skillTags: 06000000
   SPCost: 0
   _canOverrideElement: 1

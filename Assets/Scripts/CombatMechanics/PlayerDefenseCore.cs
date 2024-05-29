@@ -70,6 +70,7 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
         _canDefend = true;
         _iFrames = null;
         _numDodges = _maxDodges;
+        _extendIframes = false;
     }
 
     private void ParryAction(InputAction.CallbackContext ctx)
@@ -84,10 +85,10 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
         {
             _isDodging = true;
             if(_movement.direction != Vector3.zero)
-                _rigid.AddForce(_dodgePower * _movement.direction,ForceMode.Impulse);
+                _rigid.AddForce(_dodgePower * _rigid.mass * _movement.direction,ForceMode.Impulse);
             else
             {
-                _rigid.AddForce(-_dodgePower * transform.localScale.x * Vector3.right, ForceMode.Impulse);
+                _rigid.AddForce(_rigid.mass * -_dodgePower * transform.localScale.x * Vector3.right, ForceMode.Impulse);
             }
             _anim.Play("Dodge");
 
@@ -123,9 +124,12 @@ public class PlayerDefenseCore : DefenseCore,ISwitchCharacter
 
     public override void OnFailedDefense()
     {
+        Debug.Log("Defense fail");
         _isParrying = false;
         _isDodging = false;
         _isBlocking = false;
+        _parrySignal.SetActive(false);
+        _dodgeSignal.SetActive(false);
 
         if(_iFrames != null)
         {

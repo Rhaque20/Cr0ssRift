@@ -55,4 +55,19 @@ public class Skill: ScriptableObject
     {
         get { return _isChargeable;}
     }
+
+    public float ReturnKnockbackForce()
+    {
+        switch(_hitPower)
+        {
+            case EnumLib.HitPower.Weak:
+                return 50f;
+            case EnumLib.HitPower.Strong:
+                return 80f;
+            case EnumLib.HitPower.SuperStrong:
+                return 150f;
+            default:
+                return 0f;
+        }
+    }
 }

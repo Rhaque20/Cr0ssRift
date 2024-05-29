@@ -14,6 +14,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
     protected bool _isParrying = false, _isDodging = false,_isBlocking = false;
     protected bool _canParry = true, _canDodge = true;
     protected bool _effectTriggered = false;
+    protected bool _extendIframes = false;
 
     protected Coroutine _iFrames = null;
 
@@ -77,6 +78,7 @@ public class DefenseCore : MonoBehaviour, IOnDeath
 
         _anim.SetTrigger("iFrameEnd");
         _iFrames = null;
+        _extendIframes = false;
     }
 
     public virtual bool CanActivate()
@@ -135,6 +137,13 @@ public class DefenseCore : MonoBehaviour, IOnDeath
         attackerStats.CounterArmorDamage(10);
         DefenseEffect();
         _globalVariables.onCountering?.Invoke(attackerStats);
+        if(!_extendIframes)
+        {
+            _extendIframes = true;
+            if(_iFrames != null)
+                StopCoroutine(_iFrames);
+            _iFrames = StartCoroutine(IFrames(0.5f));
+        }
     }
 
     public virtual void Evaded(Stats attackerStats)

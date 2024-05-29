@@ -856,6 +856,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0dd016d3-8b72-46a2-bbe0-9a64fa21534c
     m_ActionName: Combat/SwitchRight[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c596385c-b13b-4814-bad9-e01f2c93d536
+    m_ActionName: Combat/Switch1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b7107c3-25cc-464f-bd44-9b2873df6f2c
+    m_ActionName: Combat/Switch2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ffa2ef4f-b41e-4ff2-8c4f-11a43fd766f9
+    m_ActionName: Combat/Switch3[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat
@@ -882,7 +894,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5482788087448792120}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -932,6 +944,7 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 128
+  _chargeBar: {fileID: 0}
   _normalAttacks:
   - {fileID: 11400000, guid: 8221708c4c092cc40ad1d4602446cb54, type: 2}
   - {fileID: 11400000, guid: 1a7c772bc4504024c938bee75a626f52, type: 2}

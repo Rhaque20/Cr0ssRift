@@ -102,7 +102,7 @@ public class CombatCore : MonoBehaviour, IOnDeath
         entity.GetComponent<Stats>().DamageProcess(_activeSkill,_stats);
 
         if(!stat.isDead)
-            entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
+            entity.GetComponent<StaggerSystem>().KnockBack(transform.position, _activeSkill.ReturnKnockbackForce());
 
     }
 

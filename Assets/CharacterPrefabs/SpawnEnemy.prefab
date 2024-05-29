@@ -61,6 +61,7 @@ MonoBehaviour:
   _hitLayers:
     serializedVersion: 2
     m_Bits: 64
+  _chargeBar: {fileID: 0}
   _moveSet:
   - {fileID: 11400000, guid: 8b25f394af44f514697c06b134337de0, type: 2}
 --- !u!136 &3411280128564203320
@@ -128,7 +129,7 @@ MonoBehaviour:
   _moveSpeed: 5
   _targetPos: {fileID: 0}
   _bubbleDistance: 3
-  _ignoreBubble: 1
+  _ignoreBubble: 0
 --- !u!114 &425468529926559776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8c544ec117c00409ded3eaa1445e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHP: 50
+  _immortal: 0
+  _maxHP: 30
   _maxArmor: 0
   _defense: 0
   _attribute: 0
@@ -174,7 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isParryFocused: 1
-  _isBlocking: 0
   _dodgePower: 10
   _parrySignal: {fileID: 6064231636296860678}
   _dodgeSignal: {fileID: 2485147599714285809}
