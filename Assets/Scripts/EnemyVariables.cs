@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class EnemyVariables: GlobalVariables
 {
+    public Action<bool> readyToAttack;
     void Start()
     {
         Debug.Log("Setting up ondeath function");

@@ -9,6 +9,7 @@ public class EnemyMovement : Movement
     [SerializeField] private Transform _targetPos;
     [SerializeField] private float _bubbleDistance = 1f;
     [SerializeField] private bool _ignoreBubble = false;
+    private CapsuleCollider _capsuleCollider;
 
     public Transform targetPos
     {
@@ -20,6 +21,8 @@ public class EnemyMovement : Movement
         RelocatePlayer();
         PlayerPartyManager.instance.onPlayerSwitched += RelocatePlayer;
         GetComponent<EnemyStats>().onDeath += OnDeath;
+        GetComponent<EnemyVariables>().readyToAttack += SetIgnoreBubble;
+        _capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     public override void OnDeath()
@@ -43,7 +46,7 @@ public class EnemyMovement : Movement
         if (targetDir.x != 0)
             FaceDirection(targetDir.x);
 
-        if (Vector3.Distance(transform.position, _targetPos.position) > _bubbleDistance || _ignoreBubble)
+        if (Vector3.Distance(transform.position, _targetPos.position) > _bubbleDistance + _capsuleCollider.radius || _ignoreBubble)
         {
             targetDir = targetDir.normalized;
             _rigid.MovePosition(transform.position + (_moveSpeed * Time.deltaTime * targetDir));

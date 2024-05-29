@@ -22,6 +22,11 @@ public class PlayerForces : Forces,ISwitchCharacter
         _rigid.drag = 0f;
     }
 
+    public void KnockbackWave()
+    {
+        
+    }
+
     public void SwitchIn()
     {
         

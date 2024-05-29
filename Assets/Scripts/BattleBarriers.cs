@@ -45,12 +45,13 @@ public class BattleBarriers : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !_activated)
         {
             if (Activated(other.transform.position))
             {
                 LevelManager.instance.SpawnWave(index);
                 _collisionBox.isTrigger = false;
+                _activated = true;
             }
         }
     }

@@ -130,7 +130,9 @@ public class EnemyCore : CombatCore
 
     protected IEnumerator IdleTimer(float idleTime)
     {
-        yield return new WaitForSeconds(idleTime);
+        yield return new WaitForSeconds(idleTime * 0.9f);
+        _enemyVariables.readyToAttack(true);
+        yield return new WaitForSeconds(idleTime * 0.1f);
         _canAttack = true;
         _targetPos = GetComponent<EnemyMovement>().targetPos;
         Debug.Log("Ready to fight");
@@ -139,6 +141,7 @@ public class EnemyCore : CombatCore
     public override void Recover()
     {
         _enemyVariables.setMove?.Invoke(true);
+        _enemyVariables.readyToAttack(false);
         if (_idleTimer != null)
             StopCoroutine(_idleTimer);
         _isAttacking = false;
