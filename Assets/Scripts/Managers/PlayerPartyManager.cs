@@ -155,10 +155,6 @@ public class PlayerPartyManager : MonoBehaviour
                 {
                     comp.SwitchOut();
                 }
-                for(int i = 0; i < _players.Count; i++)
-                {
-                    _players[i].GetComponent<PlayerVariables>().CleanUp();
-                }
 
                 onGameOver?.Invoke(true);
                 Debug.Log("Gameover!");
