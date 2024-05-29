@@ -4,15 +4,12 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerMovement : Movement, ISwitchCharacter
 {
-    PlayerInput _playerInput;
     PlayerControls _playerControls;
     // Start is called before the first frame update
     void Start()
     {
         _playerControls = GetComponent<PlayerVariables>().playerControls;
         base.Start();
-        
-        // _playerControls.Combat.Movement.performed += GetDirectionFromInput;
         
     }
 

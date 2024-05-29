@@ -46,8 +46,6 @@ public class EnemyCore : CombatCore
 
         _enemyStats.onDeath += OnDeath;
 
-        //_enemyStats = GetComponent<EnemyStats>();
-
         _cooldowns = new Coroutine[_moveSet.Length];
         
         for(int i = 0; i < _moveSet.Length; i++)
@@ -56,34 +54,6 @@ public class EnemyCore : CombatCore
         }
             
     }
-
-    // public override void DealDamage(Collider entity)
-    // {
-    //     PlayerDefenseCore _playerDefenseCore = entity.GetComponent<PlayerDefenseCore>();
-
-    //     Debug.Log("Hit "+entity.name);
-
-    //     if(_activeSkill == null)
-    //         Debug.Log("Active skill is null!");
-
-    //     if(_playerDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
-    //     {
-    //         Debug.Log("Parry!");
-    //         _playerDefenseCore.Counter(_enemyStats);
-    //         return;
-    //     }
-    //     else if(_playerDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
-    //     {
-    //         Debug.Log("Evaded");
-    //         return;
-    //     }
-
-    //     Stats stat = entity.GetComponent<Stats>();
-    //     entity.GetComponent<Stats>().DamageProcess(_activeSkill,_enemyStats);
-
-    //     if(!stat.isDead)
-    //         entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-    // }
 
     public float ActualDistance(float originalRange)
     {
@@ -219,22 +189,6 @@ public class EnemyCore : CombatCore
     {
         _targetPos = PlayerPartyManager.instance.getActivePlayer.transform;
     }
-
-    // public override void HitScan()
-    // {
-    //     _hurtBox.gameObject.SetActive(true);
-    //     Collider[] entitiesHit = Physics.OverlapBox(_hurtBox.transform.position, _hurtBox.transform.localScale,_hurtBox.transform.localRotation,_hitLayers);
-    //     _hurtBox.gameObject.SetActive(false);
-
-    //     if (entitiesHit.Length > 0)
-    //     {
-    //         foreach(Collider entity in entitiesHit)
-    //         {
-    //             Debug.Log("Hit "+entity.name);
-    //             entity.GetComponent<StaggerSystem>().KnockBack(transform.position);
-    //         }
-    //     }
-    // }
 
     protected void Update()
     {

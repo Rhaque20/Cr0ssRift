@@ -144,13 +144,6 @@ public class OgreCore : EnemyCore
         }
     }
 
-    // public override void Recover()
-    // {
-    //     if()
-    //     SpecialAction();
-    //     base.Recover();
-    // }
-
      public override void OnDeath()
     {
         if(_columnSpawnTimer != null)

@@ -72,14 +72,6 @@ public class PlayerStats : Stats,ISwitchCharacter
         _playerVariables = _allVariables as PlayerVariables;
     }
 
-    // public override void FullRestoreArmor()
-    // {
-    //     _currentArmor = _maxArmor;
-    //     _allVariables.onArmorBreak?.Invoke(true);
-        
-    //     PlayerUIManager.instance.SetArmorBar((float)_currentArmor/(float)_maxArmor);
-    // }
-
     public void SetElement(bool _isSummoned)
     {
         Debug.Log("Changing element "+_isSummoned);

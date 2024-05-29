@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -190,10 +188,5 @@ public class IvaraCore : PlayerCore
         {
             AimTracker();
         }
-
-        // if (_normalAttackAction.IsPressed() && _heldTime <= _maxHeldTime)
-        // {
-        //     _heldTime += Time.deltaTime;
-        // }
     }
 }

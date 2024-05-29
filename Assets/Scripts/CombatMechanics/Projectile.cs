@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -61,13 +60,6 @@ public class Projectile : MonoBehaviour
     public void ActivateCollider()
     {
         _hurtBox.enabled = true;
-    }
-    public void DestroyProjectile()
-    {
-        // Will replace with disable when object pooling method established
-        
-        Destroy(this);
-            
     }
 
     public void ReturnProjectile()

@@ -58,9 +58,4 @@ public class LevelManager : MonoBehaviour
         _currentWave = index;
         _battleZones[index].LockDown();
     }
-
-    public void SpawnSpecialWave()
-    {
-
-    }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 public static class EnumLib
 {
     public enum Element{Physical,Fire,Ice,Lightning,Chemical,Rift};

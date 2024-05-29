@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,6 +22,11 @@ public class PlayerPartyManager : MonoBehaviour
     public Action<bool> onGameOver;
 
     bool _gamePaused = false;
+
+    public GameObject getActivePlayer
+    {
+        get{return _players[_active];}
+    }
 
     void Awake()
     {
@@ -194,72 +198,6 @@ public class PlayerPartyManager : MonoBehaviour
         
     }
 
-    public void SwitchDirection(bool _switchLeft)
-    {
-        int _leftActive,_rightActive;
-
-            _leftActive = (_active - 1 < 0 ? _players.Count - 1 : _active - 1);
-            _rightActive = (_active + 1) % _players.Count;
-
-        PlayerStats _newStats;
-
-        if (_switchLeft)
-        {
-            if (_switchCoolDown[_leftActive] != null)
-            {
-                Debug.Log("Switching under cooldown left side");
-
-                return;
-            }
-        }
-        else
-        {
-            if (_switchCoolDown[_rightActive] != null)
-            {
-                Debug.Log("Switching under cooldown right side");
-
-                return;
-            }
-        }
-
-        if(_switchLeft)
-        {
-            _newStats = _players[_leftActive].GetComponent<PlayerStats>();
-            if (!_newStats.isDead)
-            {
-                SwitchCharacter(_leftActive);
-                return;
-            }
-            else
-            {
-                _newStats = _players[_rightActive].GetComponent<PlayerStats>();
-                if(!_newStats.isDead)
-                {
-                    SwitchCharacter(_rightActive);
-                    return;
-                }
-            }
-        }
-        else
-        {
-            _newStats = _players[_rightActive].GetComponent<PlayerStats>();
-            if (!_newStats.isDead)
-            {
-                SwitchCharacter(_rightActive);
-                return;
-            }
-            else
-            {
-                _newStats = _players[_leftActive].GetComponent<PlayerStats>();
-                if (!_newStats.isDead)
-                {
-                    SwitchCharacter(_leftActive);
-                    return;
-                }
-            }
-        }
-    }
-
     public void SwitchCharacter(int tempActive)
     {
         ISwitchCharacter[] switchComps = _players[_active].GetComponentsInChildren<ISwitchCharacter>(false);
@@ -312,10 +250,5 @@ public class PlayerPartyManager : MonoBehaviour
 
         onPlayerSwitched?.Invoke();
 
-    }
-
-    public GameObject getActivePlayer
-    {
-        get{return _players[_active];}
     }
 }

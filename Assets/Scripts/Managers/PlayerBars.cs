@@ -15,7 +15,7 @@ public class PlayerBars : MonoBehaviour
 
     public void SetHealthBar(int _currentHP,int _maxHP)
     {
-        float ratio = (float)_currentHP/(float)_maxHP;
+        float ratio = (float)_currentHP/_maxHP;
         
         if(!_isMiniBar)
         {

@@ -1,5 +1,3 @@
-using System.Collections;
-
 using UnityEngine;
 
 public class KnightCore : EnemyCore
@@ -26,10 +24,6 @@ public class KnightCore : EnemyCore
             {
                 _usedMoveIndex = FLAMEBURST;
             }
-            // else if(_cooldowns[COUNTER] == null)
-            // {
-            //     _usedMoveIndex = COUNTER;
-            // }
             else
             {
                 _usedMoveIndex = NORMALATTACK;

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -100,29 +99,6 @@ public class PlayerCore : CombatCore,ISwitchCharacter
             _hasBuffer = true;
         }
     }
-
-    // public override void DealDamage(Collider entity)
-    // {
-    //     EnemyDefenseCore _enemyDefenseCore = entity.GetComponent<EnemyDefenseCore>();
-
-    //     Debug.Log("Hit "+entity.name);
-
-    //     if(_activeSkill == null)
-    //         Debug.Log("Active skill is null!");
-
-    //     if(_enemyDefenseCore.isParrying && IsFacingEachOther(entity.transform) && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnParryable))
-    //     {
-    //         Debug.Log("Parry!");
-    //         return;
-    //     }
-    //     else if(_enemyDefenseCore.isDodging && !_activeSkill.ContainsTag(EnumLib.SkillCategory.UnDodgeable))
-    //     {
-    //         Debug.Log("Evaded");
-    //         return;
-    //     }
-
-    //     entity.GetComponent<Stats>().DamageProcess(_activeSkill,_playerStats);
-    // }
 
     public override void HitScan()
     {

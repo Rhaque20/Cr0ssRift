@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerVariables: GlobalVariables
 {
-
-    
     private PlayerControls _playerControls;
 
     private PlayerStaggerSystem _playerStaggerSystem;

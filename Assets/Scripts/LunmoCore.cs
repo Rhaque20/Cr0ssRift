@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-
 public class LunmoCore : PlayerCore
 {
     [SerializeField]Sprite[] _chargeLevel = new Sprite[6];
